@@ -1,11 +1,11 @@
-import { definePreset } from '@primeuix/themes';
-import Aura from '@primeuix/themes/aura';
-import type { App } from 'vue';
-import PrimeVue from 'primevue/config';
-import ConfirmationService from 'primevue/confirmationservice';
-import Ripple from 'primevue/ripple';
-import ToastService from 'primevue/toastservice';
-import Tooltip from 'primevue/tooltip';
+import { definePreset } from '@primeuix/themes'
+import Aura from '@primeuix/themes/aura'
+import type { App } from 'vue'
+import PrimeVue from 'primevue/config'
+import ConfirmationService from 'primevue/confirmationservice'
+import Ripple from 'primevue/ripple'
+import ToastService from 'primevue/toastservice'
+import Tooltip from 'primevue/tooltip'
 
 const CrmozPreset = definePreset(Aura, {
     semantic: {
@@ -25,7 +25,7 @@ const CrmozPreset = definePreset(Aura, {
             },
         },
     },
-});
+})
 
 export default function primeVuePlugin(app: App) {
     app.use(PrimeVue, {
@@ -40,11 +40,11 @@ export default function primeVuePlugin(app: App) {
             },
         },
         ripple: true,
-    });
+    })
 
-    app.directive('ripple', Ripple);
-    app.directive('tooltip', Tooltip);
+    app.directive('ripple', Ripple)
+    app.directive('tooltip', Tooltip)
 
-    app.use(ToastService);
-    app.use(ConfirmationService);
+    app.use(ToastService)
+    app.use(ConfirmationService)
 }

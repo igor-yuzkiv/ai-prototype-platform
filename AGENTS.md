@@ -52,14 +52,20 @@ vendor/bin/pint --dirty --format agent
 
 ## Conventions
 
-- Use vue-query for data fetching and mutations
+- Use vue-query for all data fetching and mutations:
+    - Query keys are stored in `config/` — one file per entity (e.g. `config/projects.keys.ts`)
+    - Queries and mutations are extracted into dedicated composables in their respective folders
+      (e.g. `composables/useProjectsList.query.ts`, `composables/useCreateProject.mutation.ts`)
 - Extract shared logic into composables
 - Prefer framework or library components over custom implementations where possible
 
 ## Structure
 
-Keep the frontend structure simple and flat. Follow the structure already used in the project. Do not introduce complex frontend architecture unless explicitly required.
-
+- Keep the frontend structure simple and flat. Follow the structure already used in the project. 
+- Do not introduce complex frontend architecture unless explicitly required.
+- Components are organized into subfolders by feature or entity — do not place all files directly in `components/`.
+- Use barrel `index.ts` files to export from each subfolder.
+- 
 Typical folders:
 
 - `app`
@@ -71,6 +77,16 @@ Typical folders:
 - `mutation`
 - `utils`
 - `libs`
+- `config`
+
+## File Naming
+
+- Vue components — PascalCase: `ProjectCard.vue`, `CreateProjectModal.vue`
+- Composables, services, and other TypeScript files — kebab-case with dot-separated type suffix:
+    - `use.projects-list.query.ts`
+    - `use.create-project.mutation.ts`
+    - `projects.service.ts`
+    - `projects.keys.ts`
 
 ## Code Quality
 

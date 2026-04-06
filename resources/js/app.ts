@@ -1,10 +1,12 @@
-import { createApp } from 'vue';
-import App from '@/App.vue';
-import {registerPlugins} from '@/app/plugins';
-import 'primeicons/primeicons.css';
+import { createApp } from 'vue'
+import App from '@/app/App.vue'
+import { registerPlugins } from '@/app/plugins'
+import router from '@/app/router'
+import 'primeicons/primeicons.css'
 
-const app = createApp(App);
+const app = createApp(App)
 
-registerPlugins(app);
+registerPlugins(app)
+app.use(router)
 
-app.mount('#app');
+app.mount('#app')

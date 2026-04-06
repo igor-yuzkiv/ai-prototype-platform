@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from 'axios'
 
 const httpClient = axios.create({
     baseURL: import.meta.env.VITE_API_BASE_URL || '/api',
@@ -9,6 +9,6 @@ const httpClient = axios.create({
     },
     withCredentials: true,
     withXSRFToken: true,
-});
+})
 
-export { httpClient };
+export { httpClient }

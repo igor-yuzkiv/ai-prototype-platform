@@ -1,15 +1,15 @@
-import { type MaybeRefOrGetter, toValue } from 'vue';
-import { useToast as useBaseToast } from 'primevue';
-import type { ToastMessageOptions } from 'primevue/toast';
+import { type MaybeRefOrGetter, toValue } from 'vue'
+import { useToast as useBaseToast } from 'primevue'
+import type { ToastMessageOptions } from 'primevue/toast'
 
 export function useToast(defaultLife: MaybeRefOrGetter<number> = 5000) {
-    const baseToast = useBaseToast();
+    const baseToast = useBaseToast()
 
     function add(options: ToastMessageOptions) {
         baseToast.add({
             life: toValue(defaultLife),
             ...options,
-        });
+        })
     }
 
     function success(options: ToastMessageOptions) {
@@ -18,7 +18,7 @@ export function useToast(defaultLife: MaybeRefOrGetter<number> = 5000) {
             summary: 'Success',
             life: toValue(defaultLife),
             ...options,
-        });
+        })
     }
 
     function error(options: ToastMessageOptions) {
@@ -27,7 +27,7 @@ export function useToast(defaultLife: MaybeRefOrGetter<number> = 5000) {
             summary: 'Error',
             life: toValue(defaultLife),
             ...options,
-        });
+        })
     }
 
     function warn(options: ToastMessageOptions) {
@@ -36,7 +36,7 @@ export function useToast(defaultLife: MaybeRefOrGetter<number> = 5000) {
             summary: 'Warning',
             life: toValue(defaultLife),
             ...options,
-        });
+        })
     }
 
     function info(options: ToastMessageOptions) {
@@ -45,8 +45,8 @@ export function useToast(defaultLife: MaybeRefOrGetter<number> = 5000) {
             summary: 'Info',
             life: toValue(defaultLife),
             ...options,
-        });
+        })
     }
 
-    return { add, success, error, warn, info };
+    return { add, success, error, warn, info }
 }
