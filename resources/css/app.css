@@ -1,12 +1,17 @@
 @import 'tailwindcss';
 @import 'tailwindcss-primeui';
 
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
 @source '../js/**/*.{js,ts,vue}';
 
-@theme inline {
-    --font-sans:
-        Instrument Sans, ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
-        'Noto Color Emoji';
+
+@layer components {
+    .border,
+    .border-r,
+    .border-l,
+    .border-t,
+    .border-b,
+    .border-x,
+    .border-y {
+        border-color: #e1e1e1;
+    }
 }
