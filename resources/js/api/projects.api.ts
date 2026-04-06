@@ -6,7 +6,7 @@ import type {
 } from '@/types/api.types';
 import type {
     CreateProjectPayload,
-    Project,
+    IProject,
     UpdateProjectPayload,
 } from '@/types/project.types';
 
@@ -15,28 +15,28 @@ function unwrapResource<TResource>(response: ResourceResponse<TResource>): TReso
 }
 
 export const projectsApi = {
-    async list(params?: PaginationParams): Promise<PaginatedCollectionResponse<Project>> {
-        const response = await httpClient.get<PaginatedCollectionResponse<Project>>('/projects', {
+    async list(params?: PaginationParams): Promise<PaginatedCollectionResponse<IProject>> {
+        const response = await httpClient.get<PaginatedCollectionResponse<IProject>>('/projects', {
             params,
         });
 
         return response.data;
     },
 
-    async getById(projectId: number | string): Promise<Project> {
-        const response = await httpClient.get<ResourceResponse<Project>>(`/projects/${projectId}`);
+    async getById(projectId: number | string): Promise<IProject> {
+        const response = await httpClient.get<ResourceResponse<IProject>>(`/projects/${projectId}`);
 
         return unwrapResource(response.data);
     },
 
-    async create(payload: CreateProjectPayload): Promise<Project> {
-        const response = await httpClient.post<ResourceResponse<Project>>('/projects', payload);
+    async create(payload: CreateProjectPayload): Promise<IProject> {
+        const response = await httpClient.post<ResourceResponse<IProject>>('/projects', payload);
 
         return unwrapResource(response.data);
     },
 
-    async update(projectId: number | string, payload: UpdateProjectPayload): Promise<Project> {
-        const response = await httpClient.patch<ResourceResponse<Project>>(
+    async update(projectId: number | string, payload: UpdateProjectPayload): Promise<IProject> {
+        const response = await httpClient.patch<ResourceResponse<IProject>>(
             `/projects/${projectId}`,
             payload,
         );
