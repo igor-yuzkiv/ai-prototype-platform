@@ -1,28 +1,4 @@
-## Project Context
-
-This project is an AI-powered prototype generator.
-
-The goal is to let a user:
-- create a project
-- describe requirements (markdown)
-- generate a working prototype (UI + basic logic)
-- edit and iterate on the result
-
-The system uses LLM agents to:
-- analyze requirements
-- plan structure (files, pages, logic)
-- generate code
-- update existing code based on user feedback
-
-This is a **demo / MVP-oriented system**.
-
-Keep everything simple, practical, and working.
-
-Do not overengineer.
-
----
-
-## Core Principles
+# Core Principles
 
 - Prefer working solutions over perfect architecture
 - Keep everything simple and understandable
@@ -31,115 +7,59 @@ Do not overengineer.
 - Reuse existing logic instead of rewriting
 - Keep the system easy to debug and inspect
 - Favor speed of iteration over purity
+- Tests are not required in this project
 
 ---
 
-## Main Flow (Important)
+# Backend Stack
 
-The system works as a pipeline:
+**Primary:** Laravel with Eloquent models as the main way to work with domain data.
 
-1. User creates project
-2. User writes requirements (markdown)
-3. LLM processes requirements
-4. LLM generates:
-    - file structure
-    - description of files
-    - tasks for implementation
-5. Tasks are executed by agents
-6. Code is generated and written to files
-7. User can:
-    - view files
-    - edit files manually
-    - request changes via LLM
+Additional abstractions may be used only when justified:
 
-Agents MUST respect this flow.
+- DTO
+- Value Object
+- Entity
+- Command / Handler
 
-Do not skip steps.
-Do not merge planning and implementation unless explicitly required.
+For APIs, default to Eloquent API Resources with versioning — unless existing routes don't follow this convention, in which case follow the existing pattern.
 
----
+## Command / Handler Approach
 
-## Backend Stack
+This project follows a lightweight Command / Handler style.
 
-- Laravel
-- Eloquent models
-- PostgreSQL
+- Write operations should preferably use Command + Handler
+- Read operations may use Queries only when needed
+- Do not introduce full CQRS complexity unless the task clearly requires it
+- Avoid ceremony — keep handlers focused and practical
+- Commands should be simple data carriers
+- Handlers should contain the actual application logic
 
-### Backend Rules
+## Code Formatting
 
-- Use Laravel as intended
-- Prefer Eloquent over custom abstractions
-- Do not introduce repository pattern by default
-- Keep controllers thin
-- Put logic in:
-    - Services
-    - Handlers
-    - Models (only if simple)
+After modifying any PHP files, run the formatter before finalizing changes:
+```bash
+vendor/bin/pint --dirty --format agent
+```
 
-### Structure (Preferred)
-
-- `app/Models`
-- `app/Services`
-- `app/Handlers`
-- `app/Http`
-- `app/Console`
-- `app/Libs`
-
-Do not create deep module structures.
-
+> Do not run `--test` mode. Always run with `--format agent` to apply fixes directly.
 
 ---
 
-## Agent Rules
+# Frontend Stack
 
-- Do not redesign the project structure
-- Do not invent new architecture unless required
-- Follow planning output strictly
-- Keep generated code simple and readable
-- Avoid overengineering
-- Avoid “smart” abstractions
+**Libraries:** Vue · TypeScript · PrimeVue · TailwindCSS · ESLint · Prettier
 
-If unsure — choose the simplest working approach.
+## Structure
 
----
+Keep the frontend structure simple and flat. Follow the structure already used in the project. Do not introduce complex frontend architecture unless explicitly required.
 
-## Frontend Stack
+Typical folders:
 
-- Vue
-- TypeScript
-- TailwindCSS
-- PrimeVue
-
-### Frontend Rules
-
-- Keep components simple
-- Use Composition API
-- Avoid large components
-- Put logic into composables when needed
-- Keep UI clean and minimal
-
-Avoid:
-- complex state management
-- unnecessary libraries
-- heavy abstractions
-
----
-
-## Code Style
-
-- Prefer explicit over clever
-- Keep functions small
-- Use clear naming
-- Follow existing patterns in project
-
-Bad:
-- overly generic helpers
-- deep inheritance
-- hidden logic
-
-Good:
-- simple functions
-- predictable structure
-- readable code
-
----
+- `app`
+- `components`
+- `composables`
+- `types`
+- `pages`
+- `utils`
+- `libs`
