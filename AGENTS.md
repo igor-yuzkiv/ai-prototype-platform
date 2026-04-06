@@ -50,6 +50,12 @@ vendor/bin/pint --dirty --format agent
 
 **Libraries:** Vue · TypeScript · PrimeVue · TailwindCSS · ESLint · Prettier
 
+## Conventions
+
+- Use vue-query for data fetching and mutations
+- Extract shared logic into composables
+- Prefer framework or library components over custom implementations where possible
+
 ## Structure
 
 Keep the frontend structure simple and flat. Follow the structure already used in the project. Do not introduce complex frontend architecture unless explicitly required.
@@ -61,5 +67,18 @@ Typical folders:
 - `composables`
 - `types`
 - `pages`
+- `query`
+- `mutation`
 - `utils`
 - `libs`
+
+## Code Quality
+
+After modifying any frontend files, run the following checks before finalizing changes:
+```bash
+npm run types:check
+npm run lint
+npm run format
+```
+
+> Adjust script names to match those defined in `package.json` if they differ.
