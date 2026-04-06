@@ -5,8 +5,8 @@ import ConfirmDialog from 'primevue/confirmdialog';
 import InputText from 'primevue/inputtext';
 import Toast from 'primevue/toast';
 import { ref } from 'vue';
-import { useConfirm } from './composables/useConfirm';
-import { useToast } from './composables/useToast';
+import { useConfirm } from '@/composables/useConfirm';
+import { useToast } from '@/composables/useToast';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 const projectName = ref('CRMOZ PrimeVue');

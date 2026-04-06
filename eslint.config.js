@@ -1,101 +1,37 @@
-import stylistic from '@stylistic/eslint-plugin';
-import { defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript';
-import prettier from 'eslint-config-prettier/flat';
-import importPlugin from 'eslint-plugin-import';
-import vue from 'eslint-plugin-vue';
+import js from '@eslint/js'
+import nx from '@nx/eslint-plugin'
+import pluginVue from 'eslint-plugin-vue'
+import globals from 'globals'
+import tseslint from 'typescript-eslint'
 
-const controlStatements = [
-    'if',
-    'return',
-    'for',
-    'while',
-    'do',
-    'switch',
-    'try',
-    'throw',
-];
-const paddingAroundControl = [
-    ...controlStatements.flatMap((stmt) => [
-        { blankLine: 'always', prev: '*', next: stmt },
-        { blankLine: 'always', prev: stmt, next: '*' },
-    ]),
-];
-
-export default defineConfigWithVueTs(
-    vue.configs['flat/essential'],
-    vueTsConfigs.recommended,
+export default [
+    ...nx.configs['flat/base'],
+    ...nx.configs['flat/typescript'],
+    ...nx.configs['flat/javascript'],
     {
-        plugins: {
-            import: importPlugin,
-        },
-        settings: {
-            'import/resolver': {
-                typescript: {
-                    alwaysTryTypes: true,
-                    project: './tsconfig.json',
-                },
-                node: true,
-            },
-        },
+        ignores: ['**/dist', '**/vite.config.*.timestamp*', '**/vitest.config.*.timestamp*'],
+    },
+    {
+        files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx', '**/*.vue'],
         rules: {
-            'vue/multi-word-component-names': 'off',
-            '@typescript-eslint/no-explicit-any': 'off',
-            '@typescript-eslint/consistent-type-imports': [
+            '@nx/enforce-module-boundaries': [
                 'error',
                 {
-                    prefer: 'type-imports',
-                    fixStyle: 'separate-type-imports',
+                    enforceBuildableLibDependency: true,
+                    allow: ['^.*/eslint(\\.base)?\\.config\\.[cm]?[jt]s$'],
+                    depConstraints: [
+                        {
+                            sourceTag: '*',
+                            onlyDependOnLibsWithTags: ['*'],
+                        },
+                    ],
                 },
             ],
-            'import/order': [
-                'error',
-                {
-                    groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
-                    alphabetize: {
-                        order: 'asc',
-                        caseInsensitive: true,
-                    },
-                },
-            ],
-            'import/consistent-type-specifier-style': [
-                'error',
-                'prefer-top-level',
-            ],
         },
     },
     {
-        plugins: {
-            '@stylistic': stylistic,
-        },
-        rules: {
-            '@stylistic/padding-line-between-statements': [
-                'error',
-                ...paddingAroundControl,
-            ],
-        },
+        files: ['**/*.ts', '**/*.tsx', '**/*.cts', '**/*.mts', '**/*.js', '**/*.jsx', '**/*.cjs', '**/*.mjs'],
+        // Override or add rules here
+        rules: {},
     },
-    {
-        ignores: [
-            'docker/pg-data/**',
-            'vendor',
-            'node_modules',
-            'public',
-            'bootstrap/ssr',
-            'tailwind.config.js',
-            'vite.config.ts',
-            'resources/js/actions/**',
-            'resources/js/components/ui/*',
-            'resources/js/routes/**',
-        ],
-    },
-    prettier, // Turn off all rules that might conflict with Prettier
-    {
-        plugins: {
-            '@stylistic': stylistic,
-        },
-        rules: {
-            curly: ['error', 'all'],
-            '@stylistic/brace-style': ['error', '1tbs', { allowSingleLine: false }],
-        },
-    },
-);
+]

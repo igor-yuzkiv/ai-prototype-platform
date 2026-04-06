@@ -27,7 +27,7 @@ const CrmozPreset = definePreset(Aura, {
     },
 });
 
-export default function primeVue(app: App) {
+export default function primeVuePlugin(app: App) {
     app.use(PrimeVue, {
         theme: {
             preset: CrmozPreset,
