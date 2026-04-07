@@ -11,8 +11,8 @@ class CreateProjectHandler
     public function handle(CreateProjectCommand $command): ProjectModel
     {
         $project = ProjectModel::query()->create([
-            'name'        => $command->name,
-            'description' => $command->description,
+            'name'         => $command->name,
+            'requirements' => $command->requirements,
         ]);
 
         CreateProjectPrototypeJob::dispatch($project->id);

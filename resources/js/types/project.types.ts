@@ -1,20 +1,20 @@
 export interface IProjectSummary {
     id: number
     name: string
-    description: string
+    requirements: string
     prototype_url: string
     created_at: string
     updated_at: string
 }
 
-export interface IProject extends IProjectSummary {}
+export type IProject = IProjectSummary
 
 export interface CreateProjectPayload {
-    name: string
-    description: string
+    name?: string
+    requirements: string
 }
 
 export interface UpdateProjectPayload {
     name?: string
-    description?: string
+    requirements?: string
 }

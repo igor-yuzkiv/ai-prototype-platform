@@ -25,8 +25,8 @@ class IgorTestCommand extends Command
 
     private function test()
     {
-//        $response = (new TestAgent)->prompt('What is the capital of France?');
-//        dd($response);
+        //        $response = (new TestAgent)->prompt('What is the capital of France?');
+        //        dd($response);
 
         $project = ProjectModel::findOrFail(4);
         $locator = app(ProjectPrototypeLocator::class);
@@ -41,7 +41,7 @@ class IgorTestCommand extends Command
         $timestamp = now()->format('Y-m-d H:i:s');
         $project = app(CreateProjectHandler::class)->handle(new CreateProjectCommand(
             name: "Test Project {$timestamp}",
-            description: "Created from igor:test --action=createTestProject at {$timestamp}",
+            requirements: "Created from igor:test --action=createTestProject at {$timestamp}",
         ));
 
         $this->info("Project {$project->id} created.");

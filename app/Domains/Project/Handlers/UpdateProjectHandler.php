@@ -2,8 +2,8 @@
 
 namespace App\Domains\Project\Handlers;
 
-use App\Models\ProjectModel;
 use App\Domains\Project\Commands\UpdateProjectCommand;
+use App\Models\ProjectModel;
 
 class UpdateProjectHandler
 {
@@ -15,8 +15,8 @@ class UpdateProjectHandler
             $attributes['name'] = $command->name;
         }
 
-        if ($command->description !== null) {
-            $attributes['description'] = $command->description;
+        if ($command->requirements !== null) {
+            $attributes['requirements'] = $command->requirements;
         }
 
         if ($attributes !== []) {

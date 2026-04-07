@@ -3,7 +3,6 @@
 
 @source '../js/**/*.{js,ts,vue}';
 
-
 @layer components {
     .border,
     .border-r,

@@ -32,13 +32,13 @@ class ProjectController extends Controller
     public function store(Request $request, CreateProjectHandler $handler)
     {
         $validated = $request->validate([
-            'name'        => ['required', 'string', 'max:255'],
-            'description' => ['required', 'string'],
+            'name'         => ['sometimes', 'nullable', 'string', 'max:255'],
+            'requirements' => ['required', 'string'],
         ]);
 
         $project = $handler->handle(new CreateProjectCommand(
-            name: $validated['name'],
-            description: $validated['description'],
+            name: $validated['name'] ?? 'Prototype '.now()->format('Y-m-d H:i:s'),
+            requirements: $validated['requirements'],
         ));
 
         return (new ProjectResource($project))
@@ -57,13 +57,13 @@ class ProjectController extends Controller
         UpdateProjectHandler $handler,
     ): ProjectResource {
         $validated = $request->validate([
-            'name'        => ['sometimes', 'string', 'max:255'],
-            'description' => ['sometimes', 'string'],
+            'name'         => ['sometimes', 'string', 'max:255'],
+            'requirements' => ['sometimes', 'string'],
         ]);
 
         $project = $handler->handle($project, new UpdateProjectCommand(
             name: $validated['name'] ?? null,
-            description: $validated['description'] ?? null,
+            requirements: $validated['requirements'] ?? null,
         ));
 
         return new ProjectResource($project);

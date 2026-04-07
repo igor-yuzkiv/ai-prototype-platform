@@ -6,6 +6,6 @@ class CreateProjectCommand
 {
     public function __construct(
         public readonly string $name,
-        public readonly string $description,
+        public readonly string $requirements,
     ) {}
 }
