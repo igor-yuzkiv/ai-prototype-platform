@@ -6,19 +6,21 @@ use App\Domains\Project\Commands\CreateProjectCommand;
 use App\Domains\Project\Jobs\CreateProjectPrototypeJob;
 use App\Models\ProjectModel;
 
-class CreateProjectHandler
+readonly class CreateProjectHandler
 {
     public function __construct(
-        private readonly GenerateProjectNameHandler $generateProjectNameHandler,
+        private GenerateProjectNameHandler $generateProjectNameHandler,
+        private NormalizeProjectRequirementsHandler $normalizeProjectRequirementsHandler,
     ) {}
 
     public function __invoke(CreateProjectCommand $command): ProjectModel
     {
         $name = trim($command->name ?? '') ?: ($this->generateProjectNameHandler)($command->requirements);
+        $requirements = ($this->normalizeProjectRequirementsHandler)($command->requirements);
 
         $project = ProjectModel::query()->create([
             'name'         => $name,
-            'requirements' => $command->requirements,
+            'requirements' => $requirements,
         ]);
 
         CreateProjectPrototypeJob::dispatch($project->id);

@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Ai\Agents\NamingAgent;
 use App\Domains\Project\Commands\CreateProjectCommand;
 use App\Domains\Project\Handlers\CreateProjectHandler;
+use App\Domains\Project\Handlers\NormalizeProjectRequirementsHandler;
 use App\Domains\Project\Support\ProjectPrototypeLocator;
 use App\Models\ProjectModel;
 use Illuminate\Console\Command;
@@ -25,18 +26,10 @@ class IgorTestCommand extends Command
 
     private function test()
     {
-        $response = (new NamingAgent)->prompt(
-            prompt: 'Форма для зобру відвідуваності користувачів на навчальну сесію з збором підписів',
-            model: 'gpt-4o-mini',
-        );
-        dd($response);
+        $project = ProjectModel::firstOrFail();
 
-        $project = ProjectModel::findOrFail(4);
-        $locator = app(ProjectPrototypeLocator::class);
-
-        $url = $locator->url($project);
-
-        dd($url);
+        $handler = app(NormalizeProjectRequirementsHandler::class);
+        $handler($project);
     }
 
     private function createTestProject(): void
