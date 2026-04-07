@@ -1,6 +1,8 @@
 @import 'tailwindcss';
 @import 'tailwindcss-primeui';
 @import './variables.css';
+@import './md-editor.css';
+
 @source '../../../../**/*.{html,js,ts,vue,tsx,jsx}';
 
 @custom-variant dark (&:where(.dark, .dark *));
