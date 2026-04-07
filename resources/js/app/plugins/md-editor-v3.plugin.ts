@@ -11,7 +11,7 @@ mdEditorConfig({
         mermaid: { instance: mermaid },
         katex: { instance: katex },
     },
-    katexConfig(base: any) {
+    katexConfig(base: Record<string, unknown>) {
         return {
             ...base,
             strict: false, // Disable strict mode to allow all cyrylic characters
