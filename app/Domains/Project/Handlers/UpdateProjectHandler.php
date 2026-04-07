@@ -7,7 +7,7 @@ use App\Models\ProjectModel;
 
 class UpdateProjectHandler
 {
-    public function handle(ProjectModel $project, UpdateProjectCommand $command): ProjectModel
+    public function __invoke(ProjectModel $project, UpdateProjectCommand $command): ProjectModel
     {
         $attributes = [];
 

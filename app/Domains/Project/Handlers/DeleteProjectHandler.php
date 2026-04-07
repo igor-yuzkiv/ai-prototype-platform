@@ -10,7 +10,7 @@ class DeleteProjectHandler
 {
     public function __construct(private ProjectPrototypeLocator $locator) {}
 
-    public function handle(ProjectModel $project): void
+    public function __invoke(ProjectModel $project): void
     {
         $path = $this->locator->path($project);
 

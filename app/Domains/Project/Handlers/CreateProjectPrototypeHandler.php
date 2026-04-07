@@ -2,8 +2,8 @@
 
 namespace App\Domains\Project\Handlers;
 
-use App\Models\ProjectModel;
 use App\Domains\Project\Support\ProjectPrototypeLocator;
+use App\Models\ProjectModel;
 use Illuminate\Support\Facades\File;
 
 class CreateProjectPrototypeHandler
@@ -12,7 +12,7 @@ class CreateProjectPrototypeHandler
         private readonly ProjectPrototypeLocator $projectPrototypeLocator,
     ) {}
 
-    public function handle(ProjectModel $project): void
+    public function __invoke(ProjectModel $project): void
     {
         $projectPath = $this->projectPrototypeLocator->path($project);
 

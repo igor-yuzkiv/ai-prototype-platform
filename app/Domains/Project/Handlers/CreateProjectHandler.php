@@ -12,9 +12,9 @@ class CreateProjectHandler
         private readonly GenerateProjectNameHandler $generateProjectNameHandler,
     ) {}
 
-    public function handle(CreateProjectCommand $command): ProjectModel
+    public function __invoke(CreateProjectCommand $command): ProjectModel
     {
-        $name = trim($command->name ?? '') ?: $this->generateProjectNameHandler->handle($command->requirements);
+        $name = trim($command->name ?? '') ?: ($this->generateProjectNameHandler)($command->requirements);
 
         $project = ProjectModel::query()->create([
             'name'         => $name,

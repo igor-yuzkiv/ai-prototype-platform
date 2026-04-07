@@ -6,7 +6,7 @@ use App\Ai\Agents\NamingAgent;
 
 class GenerateProjectNameHandler
 {
-    public function handle(string $requirements): string
+    public function __invoke(string $requirements): string
     {
         $response = NamingAgent::make()->prompt(
             prompt: $requirements,

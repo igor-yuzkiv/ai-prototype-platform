@@ -25,7 +25,7 @@ class IgorTestCommand extends Command
 
     private function test()
     {
-        $response = (new NamingAgent())->prompt(
+        $response = (new NamingAgent)->prompt(
             prompt: 'Форма для зобру відвідуваності користувачів на навчальну сесію з збором підписів',
             model: 'gpt-4o-mini',
         );
@@ -42,7 +42,7 @@ class IgorTestCommand extends Command
     private function createTestProject(): void
     {
         $timestamp = now()->format('Y-m-d H:i:s');
-        $project = app(CreateProjectHandler::class)->handle(new CreateProjectCommand(
+        $project = app(CreateProjectHandler::class)(new CreateProjectCommand(
             name: "Test Project {$timestamp}",
             requirements: "Created from igor:test --action=createTestProject at {$timestamp}",
         ));

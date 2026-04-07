@@ -34,6 +34,8 @@ This project follows a lightweight Command / Handler style.
 - Avoid ceremony — keep handlers focused and practical
 - Commands should be simple data carriers
 - Handlers should contain the actual application logic
+- Domain handlers should expose `__invoke(...)` instead of `handle(...)` and be called as invokable objects
+- Keep Laravel framework entrypoints such as job and console command `handle(...)` methods unchanged
 
 ## Code Formatting
 

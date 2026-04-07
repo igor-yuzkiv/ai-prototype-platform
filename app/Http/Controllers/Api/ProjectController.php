@@ -36,7 +36,7 @@ class ProjectController extends Controller
             'requirements' => ['required', 'string'],
         ]);
 
-        $project = $handler->handle(new CreateProjectCommand(
+        $project = $handler(new CreateProjectCommand(
             requirements: $validated['requirements'],
             name: $validated['name'] ?? null,
         ));
@@ -61,7 +61,7 @@ class ProjectController extends Controller
             'requirements' => ['sometimes', 'string'],
         ]);
 
-        $project = $handler->handle($project, new UpdateProjectCommand(
+        $project = $handler($project, new UpdateProjectCommand(
             name: $validated['name'] ?? null,
             requirements: $validated['requirements'] ?? null,
         ));
@@ -71,7 +71,7 @@ class ProjectController extends Controller
 
     public function destroy(ProjectModel $project, DeleteProjectHandler $handler): JsonResponse
     {
-        $handler->handle($project);
+        $handler($project);
 
         return response()->json(status: 204);
     }

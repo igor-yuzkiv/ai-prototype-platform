@@ -26,6 +26,6 @@ class CreateProjectPrototypeJob implements ShouldQueue
             return;
         }
 
-        $handler->handle($project);
+        $handler($project);
     }
 }
