@@ -14,12 +14,13 @@ use Illuminate\Http\Resources\Json\JsonResource;
         $prototypeLocator = app(ProjectPrototypeLocator::class);
 
         return [
-            'id'            => $this->id,
-            'name'          => $this->name,
-            'requirements'  => $this->requirements,
-            'prototype_url' => $prototypeLocator->url($this->resource),
-            'created_at'    => $this->created_at,
-            'updated_at'    => $this->updated_at,
+            'id'                     => $this->id,
+            'name'                   => $this->name,
+            'requirements'           => $this->requirements,
+            'formatted_requirements' => $this->formatted_requirements,
+            'prototype_url'          => $prototypeLocator->url($this->resource),
+            'created_at'             => $this->created_at,
+            'updated_at'             => $this->updated_at,
         ];
     }
 }

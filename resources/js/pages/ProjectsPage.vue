@@ -33,32 +33,25 @@ function createProject() {
 </script>
 
 <template>
-    <div class="flex h-full w-full flex-col overflow-auto bg-gray-50 px-6 py-14">
+    <div class="px-6 py-14 flex h-full w-full flex-col overflow-hidden">
         <main class="container mx-auto flex h-full flex-col overflow-hidden">
-            <h1 class="mb-9 text-center text-[28px] leading-tight font-semibold">
+            <h1 class="mb-9 leading-tight font-semibold text-center text-[28px]">
                 What would you like to build today?
             </h1>
 
-            <form class="mb-12 overflow-hidden rounded-lg border bg-white shadow-sm" @submit.prevent="createProject">
+            <form class="mb-12 rounded-lg shadow-sm app-card border" @submit.prevent="createProject">
                 <Textarea
                     v-model.trim="requirements"
-                    class="w-full resize-none border-0 px-5 py-6 text-sm shadow-none outline-none"
+                    class="border-none bg-transparent shadow-none"
+                    rows="10"
                     placeholder="Describe your prototype idea... (e.g., A real estate dashboard with a map view and property list)"
-                    auto-resize
                     fluid
-                    :pt="{
-                        root: {
-                            class: 'border-0 shadow-none rounded-none focus:ring-0 focus:outline-none',
-                        },
-                    }"
+                    style="resize: none"
                 />
 
-                <div class="flex items-center justify-between border-t px-5 py-3">
-                    <p class="text-xs font-medium text-gray-500">
-                        Describe layout, features, and style in plain English.
-                    </p>
-
+                <div class="p-1 flex items-center justify-end">
                     <Button
+                        text
                         type="submit"
                         label="Generate Prototype"
                         icon="pi pi-sparkles"
@@ -69,36 +62,36 @@ function createProject() {
                 </div>
             </form>
 
-            <section>
+            <section class="flex flex-1 flex-col overflow-hidden">
                 <h2 class="mb-5 text-base font-semibold">Recent Projects</h2>
 
                 <div
                     v-if="recentProjects.length === 0"
-                    class="rounded-lg border border-dashed bg-white p-8 text-center text-sm text-gray-500"
+                    class="app-card rounded-lg p-8 text-sm text-gray-500 border border-dashed text-center"
                 >
                     No recent projects yet.
                 </div>
 
-                <div v-else class="grid grid-cols-1 gap-5 sm:grid-cols-3">
+                <div v-else class="gap-5 sm:grid-cols-3 grid grid-cols-1 overflow-auto">
                     <RouterLink
                         v-for="project in recentProjects"
                         :key="project.id"
                         :to="`/projects/${project.id}`"
-                        class="flex flex-col rounded-md border bg-white p-5 no-underline shadow-sm transition hover:shadow-md"
+                        class="app-card rounded-md p-5 shadow-sm hover:shadow-md flex flex-col border no-underline transition"
                     >
-                        <div class="mb-3 flex items-center gap-2">
-                            <div class="flex h-8 w-8 items-center justify-center rounded bg-primary-500 text-white">
+                        <div class="mb-3 gap-2 flex items-center">
+                            <div class="h-8 w-8 rounded bg-primary-500 text-white flex items-center justify-center">
                                 <Icon icon="tdesign:app" />
                             </div>
 
                             <h3 class="font-semibold">{{ project.name }}</h3>
                         </div>
 
-                        <p class="mb-5 line-clamp-3 text-xs font-medium text-gray-500">
+                        <p class="mb-5 text-xs font-medium text-gray-500 line-clamp-3">
                             {{ project.requirements }}
                         </p>
 
-                        <div class="mt-auto flex items-center gap-1.5 text-xs font-medium text-gray-500">
+                        <div class="gap-1.5 text-xs font-medium text-gray-500 mt-auto flex items-center">
                             <Icon icon="mdi:clock-outline" />
                             <span>{{ formatDate(project.updated_at) }}</span>
                         </div>

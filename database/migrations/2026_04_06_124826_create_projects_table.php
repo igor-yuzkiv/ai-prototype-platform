@@ -12,6 +12,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('requirements');
+            $table->text('formatted_requirements')->nullable();
             $table->timestamps();
         });
     }

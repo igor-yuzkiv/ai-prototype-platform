@@ -1,12 +1,16 @@
+import './app/styles/base.css'
+
 import { createApp } from 'vue'
 import App from '@/app/App.vue'
 import { registerPlugins } from '@/app/plugins'
 import router from '@/app/router'
-import 'primeicons/primeicons.css'
+import { createPinia } from 'pinia'
 
 const app = createApp(App)
+const pinia = createPinia()
 
-registerPlugins(app)
+app.use(pinia)
 app.use(router)
+registerPlugins(app)
 
 app.mount('#app')

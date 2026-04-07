@@ -16,11 +16,12 @@ readonly class CreateProjectHandler
     public function __invoke(CreateProjectCommand $command): ProjectModel
     {
         $name = trim($command->name ?? '') ?: ($this->generateProjectNameHandler)($command->requirements);
-        $requirements = ($this->normalizeProjectRequirementsHandler)($command->requirements);
+        $formattedRequirements = ($this->normalizeProjectRequirementsHandler)($command->requirements);
 
         $project = ProjectModel::query()->create([
-            'name'         => $name,
-            'requirements' => $requirements,
+            'name'                   => $name,
+            'requirements'           => $command->requirements,
+            'formatted_requirements' => $formattedRequirements,
         ]);
 
         CreateProjectPrototypeJob::dispatch($project->id);

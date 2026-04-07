@@ -11,5 +11,6 @@ class ProjectModel extends Model
     protected $fillable = [
         'name',
         'requirements',
+        'formatted_requirements',
     ];
 }
