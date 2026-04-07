@@ -2,13 +2,13 @@
 
 namespace App\Domains\Project\Handlers;
 
-use App\Domains\Project\Support\ProjectPrototypeLocator;
+use App\Domains\Project\Support\ProjectPrototypePathResolver;
 use App\Models\ProjectModel;
 use Illuminate\Support\Facades\File;
 
 class DeleteProjectHandler
 {
-    public function __construct(private ProjectPrototypeLocator $locator) {}
+    public function __construct(private ProjectPrototypePathResolver $locator) {}
 
     public function __invoke(ProjectModel $project): void
     {

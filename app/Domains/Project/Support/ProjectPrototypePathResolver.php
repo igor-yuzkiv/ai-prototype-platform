@@ -4,7 +4,7 @@ namespace App\Domains\Project\Support;
 
 use App\Models\ProjectModel;
 
-class ProjectPrototypeLocator
+class ProjectPrototypePathResolver
 {
     public function folderName(ProjectModel $project): string
     {

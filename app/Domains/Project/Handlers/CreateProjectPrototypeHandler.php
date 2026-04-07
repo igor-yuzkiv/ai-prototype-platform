@@ -2,14 +2,14 @@
 
 namespace App\Domains\Project\Handlers;
 
-use App\Domains\Project\Support\ProjectPrototypeLocator;
+use App\Domains\Project\Support\ProjectPrototypePathResolver;
 use App\Models\ProjectModel;
 use Illuminate\Support\Facades\File;
 
 class CreateProjectPrototypeHandler
 {
     public function __construct(
-        private readonly ProjectPrototypeLocator $projectPrototypeLocator,
+        private readonly ProjectPrototypePathResolver $projectPrototypeLocator,
     ) {}
 
     public function __invoke(ProjectModel $project): void
