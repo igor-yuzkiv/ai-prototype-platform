@@ -20,7 +20,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
             'prototype_url' => $prototypeLocator->url($this->resource),
             'created_at'    => $this->created_at,
             'updated_at'    => $this->updated_at,
-            'artifacts'     => ProjectArtifactResource::collection($this->whenLoaded('artifacts')),
         ];
     }
 }

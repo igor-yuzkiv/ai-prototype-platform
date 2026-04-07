@@ -22,7 +22,6 @@ class ProjectController extends Controller
         ]);
 
         $projects = ProjectModel::query()
-            ->with('artifacts')
             ->latest()
             ->paginate($request->integer('per_page', 15))
             ->withQueryString();
@@ -40,7 +39,7 @@ class ProjectController extends Controller
         $project = $handler->handle(new CreateProjectCommand(
             name: $validated['name'],
             description: $validated['description'],
-        ))->load('artifacts');
+        ));
 
         return (new ProjectResource($project))
             ->response()
@@ -49,7 +48,7 @@ class ProjectController extends Controller
 
     public function show(ProjectModel $project): ProjectResource
     {
-        return new ProjectResource($project->load('artifacts'));
+        return new ProjectResource($project);
     }
 
     public function update(
@@ -67,7 +66,7 @@ class ProjectController extends Controller
             description: $validated['description'] ?? null,
         ));
 
-        return new ProjectResource($project->load('artifacts'));
+        return new ProjectResource($project);
     }
 
     public function destroy(ProjectModel $project, DeleteProjectHandler $handler): JsonResponse

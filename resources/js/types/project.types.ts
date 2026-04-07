@@ -1,5 +1,3 @@
-import type { ProjectArtifactSummary } from '@/types/project_artifact.types'
-
 export interface IProjectSummary {
     id: number
     name: string
@@ -9,9 +7,7 @@ export interface IProjectSummary {
     updated_at: string
 }
 
-export interface IProject extends IProjectSummary {
-    artifacts?: ProjectArtifactSummary[]
-}
+export interface IProject extends IProjectSummary {}
 
 export interface CreateProjectPayload {
     name: string

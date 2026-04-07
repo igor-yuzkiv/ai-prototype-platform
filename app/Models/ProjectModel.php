@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class ProjectModel extends Model
 {
@@ -13,9 +12,4 @@ class ProjectModel extends Model
         'name',
         'description',
     ];
-
-    public function artifacts(): HasMany
-    {
-        return $this->hasMany(ProjectArtifactModel::class, 'project_id');
-    }
 }
