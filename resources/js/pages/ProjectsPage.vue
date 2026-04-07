@@ -4,20 +4,24 @@ import Textarea from 'primevue/textarea'
 import { formatDistanceToNow } from 'date-fns'
 import { computed, ref } from 'vue'
 import { RouterLink } from 'vue-router'
-import { useCreateProjectMutation } from '@/mutation'
+import { useCreateProjectMutation, useDeleteProjectMutation } from '@/mutation'
 import { useProjectsListQuery } from '@/query'
 import { Icon } from '@iconify/vue'
+import { IconButton } from '@/components/button'
+import { useConfirm } from '@/composables'
+import { IProject } from '@/types/project.types'
 
+const confirm = useConfirm()
 const requirements = ref('')
 const createProjectMutation = useCreateProjectMutation(() => {
     requirements.value = ''
 })
 
 const { data } = useProjectsListQuery()
-
 const projects = computed(() => data.value?.data ?? [])
 const recentProjects = computed(() => projects.value)
-const canCreateProject = computed(() => requirements.value.trim().length > 0 && !createProjectMutation.isPending.value)
+const canCreateProject = computed(() => requirements.value.trim().length > 0 && !createProjectMutation.isPending.value && !deleteMutation.isPending.value)
+const deleteMutation = useDeleteProjectMutation()
 
 function formatDate(dateString: string): string {
     return `Updated ${formatDistanceToNow(new Date(dateString), { addSuffix: true })}`
@@ -29,6 +33,16 @@ function createProject() {
     }
 
     createProjectMutation.mutate({ requirements: requirements.value })
+}
+
+async function deleteProject(project: IProject) {
+    const confirmed = await confirm.requireAsync({
+        message: `Delete "${project.name}"?`,
+        icon: 'pi pi-trash',
+        acceptLabel: 'Delete',
+        rejectLabel: 'Cancel',
+    })
+    if (confirmed) deleteMutation.mutate(project.id)
 }
 </script>
 
@@ -70,18 +84,28 @@ function createProject() {
             </div>
 
             <div v-else class="gap-5 sm:grid-cols-3 grid grid-cols-1 overflow-auto">
-                <RouterLink
+                <div
                     v-for="project in recentProjects"
                     :key="project.id"
-                    :to="`/projects/${project.id}`"
-                    class="app-card rounded-md p-5 shadow-sm hover:shadow-md flex flex-col border no-underline transition"
+                    class="app-card rounded-md p-5 shadow-sm hover:shadow-md group flex flex-col border"
                 >
-                    <div class="mb-3 gap-2 flex items-center">
-                        <div class="h-8 w-8 rounded bg-primary-500 text-white flex items-center justify-center">
-                            <Icon icon="tdesign:app" />
-                        </div>
+                    <div class="mb-3 flex items-center justify-between">
+                        <RouterLink class="gap-2 flex items-center" :to="`/projects/${project.id}`">
+                            <div class="h-8 w-8 rounded bg-primary-500 text-white flex items-center justify-center">
+                                <Icon icon="tdesign:app" />
+                            </div>
 
-                        <h3 class="font-semibold">{{ project.name }}</h3>
+                            <h3 class="font-semibold">{{ project.name }}</h3>
+                        </RouterLink>
+
+                        <IconButton
+                            class="opacity-0 transition group-hover:opacity-100"
+                            icon="ant-design:delete-outlined"
+                            severity="danger"
+                            text
+                            :disabled="deleteMutation.isPending.value || createProjectMutation.isPending.value"
+                            @click.stop="deleteProject(project)"
+                        />
                     </div>
 
                     <p class="mb-5 text-xs font-medium text-gray-500 line-clamp-3">
@@ -92,7 +116,7 @@ function createProject() {
                         <Icon icon="mdi:clock-outline" />
                         <span>{{ formatDate(project.updated_at) }}</span>
                     </div>
-                </RouterLink>
+                </div>
             </div>
         </section>
     </div>

@@ -12,7 +12,7 @@ themeStore.initialize()
 
 <template>
     <div class="bg-secondary flex h-screen w-full flex-col overflow-hidden">
-        <main class="relative flex h-screen w-full flex-col overflow-hidden">
+        <main class="relative h-full flex-1 flex-col overflow-hidden">
             <RouterView />
         </main>
 

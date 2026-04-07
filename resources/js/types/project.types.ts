@@ -1,5 +1,5 @@
-export interface IProjectSummary {
-    id: number
+export type IProject = {
+    id: string
     name: string
     requirements: string
     formatted_requirements: string | null
@@ -7,8 +7,6 @@ export interface IProjectSummary {
     created_at: string
     updated_at: string
 }
-
-export type IProject = IProjectSummary
 
 export interface CreateProjectPayload {
     name?: string
