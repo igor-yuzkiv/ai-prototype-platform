@@ -8,7 +8,7 @@ export function useDeleteProjectMutation() {
     const toast = useToast()
 
     return useMutation({
-        mutationFn: (projectId: number) => projectsApi.delete(projectId),
+        mutationFn: (projectId: string) => projectsApi.delete(projectId),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: projectsKeys.list() })
             toast.success({ detail: 'Project deleted' })

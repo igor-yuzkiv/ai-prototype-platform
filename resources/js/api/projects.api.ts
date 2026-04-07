@@ -15,7 +15,7 @@ export const projectsApi = {
         return response.data
     },
 
-    async getById(projectId: number | string): Promise<IProject> {
+    async getById(projectId: string): Promise<IProject> {
         const response = await httpClient.get<ResourceResponse<IProject>>(`/projects/${projectId}`)
 
         return unwrapResource(response.data)
@@ -27,13 +27,13 @@ export const projectsApi = {
         return unwrapResource(response.data)
     },
 
-    async update(projectId: number | string, payload: UpdateProjectPayload): Promise<IProject> {
+    async update(projectId: string, payload: UpdateProjectPayload): Promise<IProject> {
         const response = await httpClient.patch<ResourceResponse<IProject>>(`/projects/${projectId}`, payload)
 
         return unwrapResource(response.data)
     },
 
-    async delete(projectId: number | string): Promise<void> {
+    async delete(projectId: string): Promise<void> {
         await httpClient.delete(`/projects/${projectId}`)
     },
 }
