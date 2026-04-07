@@ -20,7 +20,12 @@ const createProjectMutation = useCreateProjectMutation(() => {
 const { data } = useProjectsListQuery()
 const projects = computed(() => data.value?.data ?? [])
 const recentProjects = computed(() => projects.value)
-const canCreateProject = computed(() => requirements.value.trim().length > 0 && !createProjectMutation.isPending.value && !deleteMutation.isPending.value)
+const canCreateProject = computed(
+    () =>
+        requirements.value.trim().length > 0 &&
+        !createProjectMutation.isPending.value &&
+        !deleteMutation.isPending.value
+)
 const deleteMutation = useDeleteProjectMutation()
 
 function formatDate(dateString: string): string {

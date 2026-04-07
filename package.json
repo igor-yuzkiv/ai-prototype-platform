@@ -30,6 +30,7 @@
     "dependencies": {
         "@guolao/vue-monaco-editor": "^1.6.0",
         "@iconify/vue": "^5.0.0",
+        "@microsoft/fetch-event-source": "^2.0.1",
         "@primeuix/themes": "^2.0.2",
         "@tailwindcss/vite": "^4.1.11",
         "@tanstack/vue-query": "^5.96.2",
@@ -57,8 +58,7 @@
         "typescript": "^5.2.2",
         "vite": "^8.0.0",
         "vue": "^3.5.13",
-        "vue-router": "^5.0.4",
-        "zod": "^4.3.6"
+        "vue-router": "^5.0.4"
     },
     "optionalDependencies": {
         "@rollup/rollup-linux-x64-gnu": "4.9.5",

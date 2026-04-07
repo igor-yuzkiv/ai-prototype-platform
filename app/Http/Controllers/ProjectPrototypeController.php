@@ -9,11 +9,12 @@ class ProjectPrototypeController extends Controller
 {
     public function generate(ProjectModel $project)
     {
-        $model = 'gpt-5.3-codex';
+        $model = 'gpt-5.3-codex'; // gpt-5.3-codex
 
-        return (new GeneratePrototypeAgent)->stream(
-            prompt: $project->formatted_requirements,
-            model: $model
-        );
+        return (new GeneratePrototypeAgent)
+            ->stream(
+                prompt: $project->formatted_requirements,
+                model: $model
+            );
     }
 }
