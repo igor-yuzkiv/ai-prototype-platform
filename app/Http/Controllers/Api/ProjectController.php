@@ -37,8 +37,8 @@ class ProjectController extends Controller
         ]);
 
         $project = $handler->handle(new CreateProjectCommand(
-            name: $validated['name'] ?? 'Prototype '.now()->format('Y-m-d H:i:s'),
             requirements: $validated['requirements'],
+            name: $validated['name'] ?? null,
         ));
 
         return (new ProjectResource($project))
