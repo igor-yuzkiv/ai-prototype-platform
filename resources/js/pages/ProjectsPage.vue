@@ -1,29 +1,26 @@
 <script setup lang="ts">
 import Button from 'primevue/button'
-import Card from 'primevue/card'
 import Textarea from 'primevue/textarea'
-import { format } from 'date-fns'
+import { formatDistanceToNow } from 'date-fns'
 import { computed, ref } from 'vue'
+import { RouterLink } from 'vue-router'
 import { ProjectCardSkeleton } from '@/components/project'
-import { useConfirm } from '@/composables'
-import { useCreateProjectMutation, useDeleteProjectMutation } from '@/mutation'
+import { useCreateProjectMutation } from '@/mutation'
 import { useProjectsListQuery } from '@/query'
-import type { IProjectSummary } from '@/types/project.types'
 
 const requirements = ref('')
-const confirm = useConfirm()
 const createProjectMutation = useCreateProjectMutation(() => {
     requirements.value = ''
 })
-const deleteMutation = useDeleteProjectMutation()
 
 const { data, isLoading } = useProjectsListQuery()
 
 const projects = computed(() => data.value?.data ?? [])
+const recentProjects = computed(() => projects.value.slice(0, 3))
 const canCreateProject = computed(() => requirements.value.trim().length > 0 && !createProjectMutation.isPending.value)
 
 function formatDate(dateString: string): string {
-    return format(new Date(dateString), 'MMM d, yyyy')
+    return `Updated ${formatDistanceToNow(new Date(dateString), { addSuffix: true })}`
 }
 
 function createProject() {
@@ -35,120 +32,97 @@ function createProject() {
 
     createProjectMutation.mutate({ requirements: trimmedRequirements })
 }
-
-async function deleteProject(project: IProjectSummary) {
-    const confirmed = await confirm.requireAsync({
-        message: `Delete "${project.name}"?`,
-        icon: 'pi pi-trash',
-        acceptLabel: 'Delete',
-        rejectLabel: 'Cancel',
-    })
-    if (confirmed) deleteMutation.mutate(project.id)
-}
 </script>
 
 <template>
-    <div class="h-full overflow-auto bg-[#f8f8fb] px-4 py-6">
-        <!-- Header -->
-        <div class="mx-auto flex min-h-full w-full max-w-6xl flex-col">
-            <div class="mb-6">
-                <p class="text-sm font-medium text-slate-400">Prototype platform</p>
-                <h1 class="text-3xl font-semibold text-slate-950">Projects</h1>
-            </div>
+    <div class="h-full overflow-auto bg-[#f8f8f9] px-6 py-14">
+        <main class="mx-auto w-full max-w-[778px]">
+            <h1 class="mb-9 text-center text-[28px] leading-tight font-semibold tracking-[-0.02em] text-[#111827]">
+                What would you like to build today?
+            </h1>
 
             <form
-                class="mb-8 rounded-[28px] border border-slate-200 bg-white p-4 shadow-sm"
+                class="mb-[70px] overflow-hidden rounded-lg border border-[#e5e7eb] bg-white shadow-sm"
                 @submit.prevent="createProject"
             >
-                <label for="project-requirements" class="mb-3 block text-sm font-semibold text-slate-950">
-                    Describe what you want to prototype
-                </label>
-
                 <Textarea
-                    id="project-requirements"
                     v-model="requirements"
-                    class="w-full"
-                    placeholder="Write the requirements for your prototype..."
-                    :rows="4"
+                    class="min-h-[120px] w-full resize-none border-0 px-5 py-6 text-sm text-[#111827] shadow-none outline-none"
+                    placeholder="Describe your prototype idea... (e.g., A real estate dashboard with a map view and property list)"
+                    auto-resize
                     fluid
+                    :pt="{
+                        root: {
+                            class: 'border-0 shadow-none rounded-none focus:ring-0 focus:outline-none',
+                        },
+                    }"
                 />
 
-                <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                    <p class="text-sm text-slate-400">Project name will be generated automatically.</p>
+                <div class="flex min-h-[52px] items-center justify-between border-t border-[#e5e7eb] px-5 py-3">
+                    <p class="text-xs font-medium text-[#7b8794]">
+                        Describe layout, features, and style in plain English.
+                    </p>
                     <Button
                         type="submit"
-                        label="Create prototype"
-                        icon="pi pi-arrow-up-right"
+                        label="Generate Prototype"
+                        icon="pi pi-sparkles"
+                        size="small"
+                        class="rounded-md bg-[#1f75ff] px-4 py-2 text-sm font-medium"
                         :loading="createProjectMutation.isPending.value"
                         :disabled="!canCreateProject"
                     />
                 </div>
             </form>
 
-            <!-- Loading skeleton -->
-            <div v-if="isLoading" class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                <ProjectCardSkeleton v-for="n in 6" :key="n" />
-            </div>
+            <section>
+                <h2 class="mb-5 text-base font-semibold text-[#1f2937]">Recent Projects</h2>
 
-            <!-- Empty state -->
-            <div
-                v-else-if="projects.length === 0"
-                class="flex min-h-[420px] flex-1 flex-col items-center justify-center rounded-[28px] border border-dashed border-slate-200 bg-[#fbfbfd] px-6 py-16 text-center"
-            >
-                <div class="mb-12 flex h-28 w-28 items-center justify-center rounded-xl bg-slate-100 text-slate-400">
-                    <i class="pi pi-folder text-4xl" />
+                <div v-if="isLoading" class="grid grid-cols-1 gap-5 sm:grid-cols-3">
+                    <ProjectCardSkeleton v-for="n in 6" :key="n" />
                 </div>
 
-                <h2 class="mb-6 text-3xl font-semibold text-slate-950">
-                    No projects yet &mdash; create your first prototype
-                </h2>
-
-                <p class="max-w-2xl text-2xl leading-relaxed text-slate-400">
-                    Your archived and completed prototypes will appear here for future reference.
-                </p>
-            </div>
-
-            <!-- Projects grid -->
-            <div v-else class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                <Card
-                    v-for="project in projects"
-                    :key="project.id"
-                    class="border border-stone-200 bg-white shadow-sm transition-shadow hover:shadow-md"
+                <div
+                    v-else-if="recentProjects.length === 0"
+                    class="rounded-lg border border-dashed border-[#d9dee7] bg-white p-8 text-center text-sm text-[#7b8794]"
                 >
-                    <template #title>
-                        <span class="text-base font-semibold text-stone-900">{{ project.name }}</span>
-                    </template>
-                    <template #content>
-                        <p class="line-clamp-2 text-sm text-stone-500">
+                    No recent projects yet.
+                </div>
+
+                <div v-else class="grid grid-cols-1 gap-5 sm:grid-cols-3">
+                    <RouterLink
+                        v-for="(project, index) in recentProjects"
+                        :key="project.id"
+                        :to="`/projects/${project.id}`"
+                        class="flex min-h-[190px] flex-col rounded-md border border-[#e5e7eb] bg-white p-[17px] no-underline shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+                    >
+                        <div
+                            class="mb-[18px] flex h-8 w-8 items-center justify-center rounded bg-[#f3f4f6] text-[#374151]"
+                        >
+                            <i
+                                class="pi text-base"
+                                :class="{
+                                    'pi-th-large': index === 0,
+                                    'pi-inbox': index === 1,
+                                    'pi-comment': index === 2,
+                                }"
+                            />
+                        </div>
+
+                        <h3 class="mb-2 text-sm leading-tight font-semibold text-[#1f2937]">
+                            {{ project.name }}
+                        </h3>
+
+                        <p class="mb-5 line-clamp-3 text-xs leading-[1.45] font-medium text-[#7b8794]">
                             {{ project.requirements }}
                         </p>
-                    </template>
-                    <template #footer>
-                        <div class="flex items-center justify-between">
-                            <span class="text-xs text-stone-400">{{ formatDate(project.created_at) }}</span>
-                            <div class="flex items-center gap-1">
-                                <Button
-                                    icon="pi pi-trash"
-                                    variant="text"
-                                    severity="danger"
-                                    size="small"
-                                    :loading="
-                                        deleteMutation.isPending.value && deleteMutation.variables.value === project.id
-                                    "
-                                    @click="deleteProject(project)"
-                                />
-                                <Button
-                                    as="router-link"
-                                    :to="`/projects/${project.id}`"
-                                    label="Open"
-                                    size="small"
-                                    variant="outlined"
-                                />
-                            </div>
+
+                        <div class="mt-auto flex items-center gap-1.5 text-[11px] font-medium text-[#8b95a1]">
+                            <i class="pi pi-clock text-[11px]" />
+                            <span>{{ formatDate(project.updated_at) }}</span>
                         </div>
-                    </template>
-                </Card>
-            </div>
-        </div>
+                    </RouterLink>
+                </div>
+            </section>
+        </main>
     </div>
 </template>
