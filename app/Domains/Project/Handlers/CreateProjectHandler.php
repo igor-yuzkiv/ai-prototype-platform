@@ -3,7 +3,6 @@
 namespace App\Domains\Project\Handlers;
 
 use App\Domains\Project\Commands\CreateProjectCommand;
-use App\Domains\Project\Jobs\CreateProjectPrototypeJob;
 use App\Models\ProjectModel;
 
 readonly class CreateProjectHandler
@@ -15,17 +14,33 @@ readonly class CreateProjectHandler
 
     public function __invoke(CreateProjectCommand $command): ProjectModel
     {
-        $name = trim($command->name ?? '') ?: ($this->generateProjectNameHandler)($command->requirements);
-        $formattedRequirements = ($this->normalizeProjectRequirementsHandler)($command->requirements);
+        $normalizedRequirements = $this->normalizeRequirements($command->requirements);
+        $name = $this->generateName($command->name, $normalizedRequirements);
 
-        $project = ProjectModel::query()->create([
+        return ProjectModel::query()->create([
             'name'                   => $name,
             'requirements'           => $command->requirements,
-            'formatted_requirements' => $formattedRequirements,
+            'formatted_requirements' => $normalizedRequirements,
         ]);
+    }
 
-        CreateProjectPrototypeJob::dispatch($project->id);
+    private function normalizeRequirements(string $rawRequirements): string
+    {
+        $requirements = trim($rawRequirements);
+        if (empty($requirements)) {
+            throw new \InvalidArgumentException('Project requirements cannot be empty.');
+        }
 
-        return $project;
+        return ($this->normalizeProjectRequirementsHandler)($requirements);
+    }
+
+    private function generateName(?string $name, string $requirements): string
+    {
+        $name = trim($name);
+        if (empty($name)) {
+            return ($this->generateProjectNameHandler)($requirements);
+        }
+
+        return $name;
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources;
 
-use App\Domains\Project\Support\ProjectPrototypePathResolver;
+use App\Domains\Prototype\Support\ProjectPrototypePathResolver;
 use App\Models\ProjectModel;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;

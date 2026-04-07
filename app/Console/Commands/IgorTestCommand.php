@@ -2,11 +2,9 @@
 
 namespace App\Console\Commands;
 
-use App\Ai\Agents\NamingAgent;
 use App\Domains\Project\Commands\CreateProjectCommand;
 use App\Domains\Project\Handlers\CreateProjectHandler;
 use App\Domains\Project\Handlers\NormalizeProjectRequirementsHandler;
-use App\Domains\Project\Support\ProjectPrototypePathResolver;
 use App\Models\ProjectModel;
 use Illuminate\Console\Command;
 

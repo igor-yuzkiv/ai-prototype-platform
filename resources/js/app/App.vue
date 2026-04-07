@@ -11,8 +11,8 @@ themeStore.initialize()
 </script>
 
 <template>
-    <div class="flex h-screen w-full flex-col overflow-hidden">
-        <main class="bg-secondary relative flex h-screen w-full flex-col overflow-hidden">
+    <div class="bg-secondary flex h-screen w-full flex-col overflow-hidden">
+        <main class="relative flex h-screen w-full flex-col overflow-hidden">
             <RouterView />
         </main>
 

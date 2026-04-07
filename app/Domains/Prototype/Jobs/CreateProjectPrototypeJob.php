@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Domains\Project\Jobs;
+namespace App\Domains\Prototype\Jobs;
 
-use App\Domains\Project\Handlers\CreateProjectPrototypeHandler;
+use App\Domains\Prototype\Handlers\CreateProjectPrototypeHandler;
 use App\Models\ProjectModel;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;

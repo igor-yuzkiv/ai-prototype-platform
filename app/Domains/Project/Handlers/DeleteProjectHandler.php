@@ -2,7 +2,7 @@
 
 namespace App\Domains\Project\Handlers;
 
-use App\Domains\Project\Support\ProjectPrototypePathResolver;
+use App\Domains\Prototype\Support\ProjectPrototypePathResolver;
 use App\Models\ProjectModel;
 use Illuminate\Support\Facades\File;
 
