@@ -10,5 +10,5 @@ export type IPrototype = {
 
 export interface CreatePrototypePayload {
     name?: string
-    requirements: string
+    initial_requirements: string
 }

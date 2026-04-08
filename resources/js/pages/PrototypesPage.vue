@@ -12,9 +12,9 @@ import { useConfirm } from '@/composables'
 import { IPrototype } from '@/types/prototype.types'
 
 const confirm = useConfirm()
-const requirements = ref('')
+const initialRequirements = ref('')
 const createPrototypeMutation = useCreatePrototypeMutation(() => {
-    requirements.value = ''
+    initialRequirements.value = ''
 })
 
 const { data } = usePrototypesListQuery()
@@ -22,7 +22,7 @@ const prototypes = computed(() => data.value?.data ?? [])
 const recentPrototypes = computed(() => prototypes.value)
 const canCreatePrototype = computed(
     () =>
-        requirements.value.trim().length > 0 &&
+        initialRequirements.value.trim().length > 0 &&
         !createPrototypeMutation.isPending.value &&
         !deleteMutation.isPending.value
 )
@@ -33,11 +33,11 @@ function formatDate(dateString: string): string {
 }
 
 function createPrototype() {
-    if (!requirements.value || createPrototypeMutation.isPending.value) {
+    if (!initialRequirements.value || createPrototypeMutation.isPending.value) {
         return
     }
 
-    createPrototypeMutation.mutate({ requirements: requirements.value })
+    createPrototypeMutation.mutate({ initial_requirements: initialRequirements.value })
 }
 
 async function deletePrototype(prototype: IPrototype) {
@@ -57,7 +57,7 @@ async function deletePrototype(prototype: IPrototype) {
 
         <form class="mb-12 app-card" @submit.prevent="createPrototype">
             <Textarea
-                v-model.trim="requirements"
+                v-model.trim="initialRequirements"
                 class="border-none bg-transparent shadow-none"
                 rows="10"
                 placeholder="Describe your prototype idea... (e.g., A real estate dashboard with a map view and property list)"

@@ -13,7 +13,7 @@ class PrototypeModel extends Model
 
     protected $fillable = [
         'name',
-        'requirements',
+        'initial_requirements',
         'formatted_requirements',
     ];
 }

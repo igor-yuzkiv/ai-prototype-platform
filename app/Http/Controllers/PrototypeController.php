@@ -29,12 +29,12 @@ class PrototypeController extends Controller
     public function store(Request $request, CreatePrototypeHandler $handler)
     {
         $validated = $request->validate([
-            'name'         => ['sometimes', 'nullable', 'string', 'max:255'],
-            'requirements' => ['required', 'string'],
+            'name'                 => ['sometimes', 'nullable', 'string', 'max:255'],
+            'initial_requirements' => ['required', 'string'],
         ]);
 
         $prototype = $handler(new CreatePrototypeCommand(
-            initialRequirements: $validated['requirements'],
+            initialRequirements: $validated['initial_requirements'],
             name: $validated['name'] ?? null,
         ));
 

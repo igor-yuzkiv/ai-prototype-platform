@@ -2,10 +2,10 @@
 
 namespace App\Domains\Prototype\Commands;
 
-class CreatePrototypeCommand
+readonly class CreatePrototypeCommand
 {
     public function __construct(
-        public readonly string  $initialRequirements,
-        public readonly ?string $name = null,
+        public string $initialRequirements,
+        public ?string $name = null,
     ) {}
 }

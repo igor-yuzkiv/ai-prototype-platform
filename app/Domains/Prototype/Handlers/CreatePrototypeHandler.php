@@ -16,7 +16,7 @@ readonly class CreatePrototypeHandler
 
         return PrototypeModel::query()->create([
             'name'                   => $name,
-            'requirements'           => $command->initialRequirements,
+            'initial_requirements'   => $command->initialRequirements,
             'formatted_requirements' => $normalizedRequirements,
         ]);
     }
