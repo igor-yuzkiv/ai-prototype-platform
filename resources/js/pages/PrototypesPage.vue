@@ -63,7 +63,7 @@ async function deletePrototype(prototype: IPrototypeSummary) {
                 <Button
                     text
                     type="submit"
-                    label="Generate Prototype"
+                    label="Let`s cook!"
                     icon="pi pi-sparkles"
                     size="small"
                     :loading="createPrototypeMutation.isPending.value"
