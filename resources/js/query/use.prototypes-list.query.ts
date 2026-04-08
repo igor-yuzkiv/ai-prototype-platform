@@ -5,7 +5,7 @@ import { computed } from 'vue'
 import { IPrototypeSummary } from '@/types/prototype.types'
 
 export function usePrototypesListQuery() {
-    const {data} = useQuery({
+    const { data, isLoading } = useQuery({
         queryKey: prototypesKeys.list(),
         queryFn: () => prototypesApi.list(),
     })
@@ -15,6 +15,7 @@ export function usePrototypesListQuery() {
     })
 
     return {
+        isLoading,
         data,
         prototypes,
     }

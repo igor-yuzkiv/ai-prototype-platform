@@ -1,1 +1,1 @@
-export { default as PrototypeCard } from './PrototypeCard.vue'
+export { default as PrototypeCard } from './card/PrototypeCard.vue'

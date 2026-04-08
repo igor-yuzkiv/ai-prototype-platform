@@ -9,14 +9,17 @@ import { useConfirm } from '@/composables'
 import { IPrototypeSummary } from '@/types/prototype.types'
 import { PrototypeCard } from '@/components/prototype'
 import { NoDataMessage } from '@/components/typography'
+import { LoadingOverlay } from '@/components/loading'
 
 const confirm = useConfirm()
 
-const { prototypes } = usePrototypesListQuery()
+const { prototypes, isLoading: isLoadingPrototypes } = usePrototypesListQuery()
 
 const createPrototypeMutation = useCreatePrototypeMutation(() => (initialRequirements.value = ''))
 
 const initialRequirements = ref('')
+
+const isLoading = computed(() => isLoadingPrototypes.value || createPrototypeMutation.isPending.value)
 
 const canCreatePrototype = computed(
     () =>
@@ -46,6 +49,7 @@ async function deletePrototype(prototype: IPrototypeSummary) {
 </script>
 
 <template>
+    <LoadingOverlay v-if="isLoading" message="Loading" />
     <div class="p-2 container mx-auto flex h-full flex-col overflow-hidden">
         <h1 class="my-10 leading-tight font-semibold text-center text-[28px]">What would you like to build today?</h1>
 
