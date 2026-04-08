@@ -89,19 +89,20 @@ async function deletePrototype(prototype: IPrototype) {
             </div>
 
             <div v-else class="gap-5 sm:grid-cols-3 grid grid-cols-1 overflow-auto">
-                <div
+                <RouterLink
                     v-for="prototype in recentPrototypes"
                     :key="prototype.id"
                     class="app-card rounded-md p-5 shadow-sm hover:shadow-md group flex flex-col border"
+                    :to="`/prototypes/${prototype.id}`"
                 >
                     <div class="mb-3 flex items-center justify-between">
-                        <RouterLink class="gap-2 flex items-center" :to="`/prototypes/${prototype.id}`">
+                        <div class="gap-2 flex items-center">
                             <div class="h-8 w-8 rounded bg-primary-500 text-white flex items-center justify-center">
                                 <Icon icon="tdesign:app" />
                             </div>
 
                             <h3 class="font-semibold">{{ prototype.name }}</h3>
-                        </RouterLink>
+                        </div>
 
                         <IconButton
                             class="opacity-0 transition group-hover:opacity-100"
@@ -109,19 +110,19 @@ async function deletePrototype(prototype: IPrototype) {
                             severity="danger"
                             text
                             :disabled="deleteMutation.isPending.value || createPrototypeMutation.isPending.value"
-                            @click.stop="deletePrototype(prototype)"
+                            @click.prevent="deletePrototype(prototype)"
                         />
                     </div>
 
                     <p class="mb-5 text-xs font-medium text-gray-500 line-clamp-3">
-                        {{ prototype.initial_requirements }}
+                        {{ prototype.project_overview ?? 'New prototype' }}
                     </p>
 
                     <div class="gap-1.5 text-xs font-medium text-gray-500 mt-auto flex items-center">
                         <Icon icon="mdi:clock-outline" />
                         <span>{{ formatDate(prototype.updated_at) }}</span>
                     </div>
-                </div>
+                </RouterLink>
             </div>
         </section>
     </div>

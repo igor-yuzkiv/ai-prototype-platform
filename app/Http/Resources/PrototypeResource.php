@@ -18,6 +18,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
             'name'                   => $this->name,
             'initial_requirements'   => $this->initial_requirements,
             'formatted_requirements' => $this->formatted_requirements,
+            'project_overview'       => $this->project_overview,
+            'global_rules'           => $this->global_rules,
             'prototype_url'          => $prototypeLocator->url($this->resource),
             'created_at'             => $this->created_at,
             'updated_at'             => $this->updated_at,

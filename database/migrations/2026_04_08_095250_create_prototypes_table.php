@@ -11,8 +11,13 @@ return new class extends Migration
         Schema::create('prototypes', function (Blueprint $table) {
             $table->ulid('id')->primary();
             $table->string('name');
+
             $table->text('initial_requirements');
             $table->text('formatted_requirements')->nullable();
+
+            $table->text('project_overview')->nullable();
+            $table->text('global_rules')->nullable();
+
             $table->timestamps();
         });
     }

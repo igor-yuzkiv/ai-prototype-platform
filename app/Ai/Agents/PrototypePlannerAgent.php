@@ -61,7 +61,6 @@ OUTPUT FORMAT:
 
   "pages": [
     {
-      "id": "short-kebab-case-id",
       "filename": "page-name.html",
       "title": "Human-readable page title",
       "description": "Detailed description of this page: its purpose, what the user sees, what sections it contains, what interactions are possible, and any page-specific logic or data. This will be passed directly to a code generation agent, so be precise and complete."
