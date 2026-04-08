@@ -57,7 +57,7 @@ vendor/bin/pint --dirty --format agent
 - Use vue-query for all data fetching and mutations:
     - Query keys are stored in `config/` — one file per entity (e.g. `config/projects.keys.ts`)
     - Queries and mutations are extracted into dedicated composables in their respective folders
-      (e.g. `composables/useProjectsList.query.ts`, `composables/useCreateProject.mutation.ts`)
+      (e.g. `composables/use.projects-list.query.ts`, `composables/use.create-project.mutation.ts`)
 - Extract shared logic into composables
 - Prefer framework or library components over custom implementations where possible
 
