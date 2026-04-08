@@ -44,6 +44,8 @@ class GeneratePrototypePlanHandler
      */
     private function savePages(PrototypeModel $prototype, Collection $pages): void
     {
+        // TODO: ?delete?
+
         $modelsByAiId = [];
 
         foreach ($pages as $page) {
@@ -53,7 +55,6 @@ class GeneratePrototypePlanHandler
                     'title'       => $page->title,
                     'description' => $page->description,
                     'deep_index'  => $page->deepIndex,
-                    'icon'        => $page->icon,
                 ]
             );
             $modelsByAiId[$page->aiId] = $model;
