@@ -1,2 +1,2 @@
-export { useCreateProjectMutation } from './use.create-project.mutation'
-export { useDeleteProjectMutation } from './use.delete-project.mutation'
+export { useCreatePrototypeMutation } from './use.create-prototype.mutation'
+export { useDeletePrototypeMutation } from './use.delete-prototype.mutation'

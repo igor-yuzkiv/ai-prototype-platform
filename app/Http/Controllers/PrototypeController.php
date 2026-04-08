@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Domains\Project\Commands\CreateProjectCommand;
-use App\Domains\Project\Commands\UpdateProjectCommand;
-use App\Domains\Project\Handlers\CreateProjectHandler;
-use App\Domains\Project\Handlers\DeleteProjectHandler;
-use App\Domains\Project\Handlers\UpdateProjectHandler;
-use App\Http\Resources\ProjectResource;
-use App\Models\ProjectModel;
+use App\Domains\Prototype\Commands\CreatePrototypeCommand;
+use App\Domains\Prototype\Commands\UpdatePrototypeCommand;
+use App\Domains\Prototype\Handlers\CreatePrototypeHandler;
+use App\Domains\Prototype\Handlers\DeletePrototypeHandler;
+use App\Domains\Prototype\Handlers\UpdatePrototypeHandler;
+use App\Http\Resources\PrototypeResource;
+use App\Models\PrototypeModel;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class ProjectController extends Controller
+class PrototypeController extends Controller
 {
     public function index(Request $request)
     {
@@ -20,57 +20,57 @@ class ProjectController extends Controller
             'per_page' => ['nullable', 'integer', 'min:1', 'max:100'],
         ]);
 
-        $projects = ProjectModel::query()
+        $prototypes = PrototypeModel::query()
             ->latest()
             ->paginate($request->integer('per_page', 15))
             ->withQueryString();
 
-        return ProjectResource::collection($projects);
+        return PrototypeResource::collection($prototypes);
     }
 
-    public function store(Request $request, CreateProjectHandler $handler)
+    public function store(Request $request, CreatePrototypeHandler $handler)
     {
         $validated = $request->validate([
             'name'         => ['sometimes', 'nullable', 'string', 'max:255'],
             'requirements' => ['required', 'string'],
         ]);
 
-        $project = $handler(new CreateProjectCommand(
+        $prototype = $handler(new CreatePrototypeCommand(
             requirements: $validated['requirements'],
             name: $validated['name'] ?? null,
         ));
 
-        return (new ProjectResource($project))
+        return (new PrototypeResource($prototype))
             ->response()
             ->setStatusCode(201);
     }
 
-    public function show(ProjectModel $project): ProjectResource
+    public function show(PrototypeModel $prototype): PrototypeResource
     {
-        return new ProjectResource($project);
+        return new PrototypeResource($prototype);
     }
 
     public function update(
         Request $request,
-        ProjectModel $project,
-        UpdateProjectHandler $handler,
-    ): ProjectResource {
+        PrototypeModel $prototype,
+        UpdatePrototypeHandler $handler,
+    ): PrototypeResource {
         $validated = $request->validate([
             'name'         => ['sometimes', 'string', 'max:255'],
             'requirements' => ['sometimes', 'string'],
         ]);
 
-        $project = $handler($project, new UpdateProjectCommand(
+        $prototype = $handler($prototype, new UpdatePrototypeCommand(
             name: $validated['name'] ?? null,
             requirements: $validated['requirements'] ?? null,
         ));
 
-        return new ProjectResource($project);
+        return new PrototypeResource($prototype);
     }
 
-    public function destroy(ProjectModel $project, DeleteProjectHandler $handler): JsonResponse
+    public function destroy(PrototypeModel $prototype, DeletePrototypeHandler $handler): JsonResponse
     {
-        $handler($project);
+        $handler($prototype);
 
         return response()->json(status: 204);
     }

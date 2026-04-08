@@ -10,7 +10,7 @@ use Laravel\Ai\Messages\Message;
 use Laravel\Ai\Promptable;
 use Stringable;
 
-class ProjectNameGeneratorAgent implements Agent, Conversational, HasTools
+class PrototypeNameGeneratorAgent implements Agent, Conversational, HasTools
 {
     use Promptable;
 

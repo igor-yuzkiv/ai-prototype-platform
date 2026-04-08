@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Domains\Project\Handlers;
+namespace App\Domains\Prototype\Handlers;
 
-use App\Ai\Agents\ProjectNameGeneratorAgent;
+use App\Ai\Agents\PrototypeNameGeneratorAgent;
 use App\Ai\Agents\RequirementsInterpreterAgent;
-use App\Domains\Project\Commands\CreateProjectCommand;
-use App\Models\ProjectModel;
+use App\Domains\Prototype\Commands\CreatePrototypeCommand;
+use App\Models\PrototypeModel;
 
-readonly class CreateProjectHandler
+readonly class CreatePrototypeHandler
 {
-    public function __invoke(CreateProjectCommand $command): ProjectModel
+    public function __invoke(CreatePrototypeCommand $command): PrototypeModel
     {
         $normalizedRequirements = $this->normalizeRequirements($command->requirements);
         $name = $this->generateName($command->name, $normalizedRequirements);
 
-        return ProjectModel::query()->create([
+        return PrototypeModel::query()->create([
             'name'                   => $name,
             'requirements'           => $command->requirements,
             'formatted_requirements' => $normalizedRequirements,
@@ -36,7 +36,7 @@ readonly class CreateProjectHandler
             return $name;
         }
 
-        return ProjectNameGeneratorAgent::make()->prompt(
+        return PrototypeNameGeneratorAgent::make()->prompt(
             prompt: $requirements,
             model: 'gpt-4o-mini',
         );

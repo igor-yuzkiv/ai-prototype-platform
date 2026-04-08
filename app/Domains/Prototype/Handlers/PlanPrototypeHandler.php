@@ -5,7 +5,7 @@ namespace App\Domains\Prototype\Handlers;
 use App\Ai\Agents\PrototypePlannerAgent;
 use Illuminate\Http\Client\RequestException;
 
-class PlanProjectPrototypeHandler
+class PlanPrototypeHandler
 {
     public function __invoke(string $initialRequirements): string
     {
@@ -14,7 +14,7 @@ class PlanProjectPrototypeHandler
                 prompt: $initialRequirements,
                 model: 'gpt-5.4-mini',
             );
-        }catch(RequestException $e) {
+        } catch (RequestException $e) {
             dd($e->response->body());
         }
 

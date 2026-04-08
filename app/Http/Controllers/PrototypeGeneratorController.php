@@ -3,17 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Ai\Agents\HtmlPageGeneratorAgent;
-use App\Models\ProjectModel;
+use App\Models\PrototypeModel;
 
-class ProjectPrototypeController extends Controller
+class PrototypeGeneratorController extends Controller
 {
-    public function generate(ProjectModel $project)
+    public function generate(PrototypeModel $prototype)
     {
         $model = 'gpt-5.3-codex'; // gpt-5.3-codex
 
         return (new HtmlPageGeneratorAgent)
             ->stream(
-                prompt: $project->formatted_requirements,
+                prompt: $prototype->formatted_requirements,
                 model: $model
             );
     }

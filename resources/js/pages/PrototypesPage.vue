@@ -4,50 +4,50 @@ import Textarea from 'primevue/textarea'
 import { formatDistanceToNow } from 'date-fns'
 import { computed, ref } from 'vue'
 import { RouterLink } from 'vue-router'
-import { useCreateProjectMutation, useDeleteProjectMutation } from '@/mutation'
-import { useProjectsListQuery } from '@/query'
+import { useCreatePrototypeMutation, useDeletePrototypeMutation } from '@/mutation'
+import { usePrototypesListQuery } from '@/query'
 import { Icon } from '@iconify/vue'
 import { IconButton } from '@/components/button'
 import { useConfirm } from '@/composables'
-import { IProject } from '@/types/project.types'
+import { IPrototype } from '@/types/prototype.types'
 
 const confirm = useConfirm()
 const requirements = ref('')
-const createProjectMutation = useCreateProjectMutation(() => {
+const createPrototypeMutation = useCreatePrototypeMutation(() => {
     requirements.value = ''
 })
 
-const { data } = useProjectsListQuery()
-const projects = computed(() => data.value?.data ?? [])
-const recentProjects = computed(() => projects.value)
-const canCreateProject = computed(
+const { data } = usePrototypesListQuery()
+const prototypes = computed(() => data.value?.data ?? [])
+const recentPrototypes = computed(() => prototypes.value)
+const canCreatePrototype = computed(
     () =>
         requirements.value.trim().length > 0 &&
-        !createProjectMutation.isPending.value &&
+        !createPrototypeMutation.isPending.value &&
         !deleteMutation.isPending.value
 )
-const deleteMutation = useDeleteProjectMutation()
+const deleteMutation = useDeletePrototypeMutation()
 
 function formatDate(dateString: string): string {
     return `Updated ${formatDistanceToNow(new Date(dateString), { addSuffix: true })}`
 }
 
-function createProject() {
-    if (!requirements.value || createProjectMutation.isPending.value) {
+function createPrototype() {
+    if (!requirements.value || createPrototypeMutation.isPending.value) {
         return
     }
 
-    createProjectMutation.mutate({ requirements: requirements.value })
+    createPrototypeMutation.mutate({ requirements: requirements.value })
 }
 
-async function deleteProject(project: IProject) {
+async function deletePrototype(prototype: IPrototype) {
     const confirmed = await confirm.requireAsync({
-        message: `Delete "${project.name}"?`,
+        message: `Delete "${prototype.name}"?`,
         icon: 'pi pi-trash',
         acceptLabel: 'Delete',
         rejectLabel: 'Cancel',
     })
-    if (confirmed) deleteMutation.mutate(project.id)
+    if (confirmed) deleteMutation.mutate(prototype.id)
 }
 </script>
 
@@ -55,7 +55,7 @@ async function deleteProject(project: IProject) {
     <div class="p-2 container mx-auto flex h-full flex-col overflow-hidden">
         <h1 class="my-10 leading-tight font-semibold text-center text-[28px]">What would you like to build today?</h1>
 
-        <form class="mb-12 app-card" @submit.prevent="createProject">
+        <form class="mb-12 app-card" @submit.prevent="createPrototype">
             <Textarea
                 v-model.trim="requirements"
                 class="border-none bg-transparent shadow-none"
@@ -72,35 +72,35 @@ async function deleteProject(project: IProject) {
                     label="Generate Prototype"
                     icon="pi pi-sparkles"
                     size="small"
-                    :loading="createProjectMutation.isPending.value"
-                    :disabled="!canCreateProject"
+                    :loading="createPrototypeMutation.isPending.value"
+                    :disabled="!canCreatePrototype"
                 />
             </div>
         </form>
 
         <section class="flex flex-1 flex-col overflow-hidden">
-            <h2 class="mb-5 text-base font-semibold">Recent Projects</h2>
+            <h2 class="mb-5 text-base font-semibold">Recent Prototypes</h2>
 
             <div
-                v-if="recentProjects.length === 0"
+                v-if="recentPrototypes.length === 0"
                 class="app-card rounded-lg p-8 text-sm text-gray-500 border border-dashed text-center"
             >
-                No recent projects yet.
+                No recent prototypes yet.
             </div>
 
             <div v-else class="gap-5 sm:grid-cols-3 grid grid-cols-1 overflow-auto">
                 <div
-                    v-for="project in recentProjects"
-                    :key="project.id"
+                    v-for="prototype in recentPrototypes"
+                    :key="prototype.id"
                     class="app-card rounded-md p-5 shadow-sm hover:shadow-md group flex flex-col border"
                 >
                     <div class="mb-3 flex items-center justify-between">
-                        <RouterLink class="gap-2 flex items-center" :to="`/projects/${project.id}`">
+                        <RouterLink class="gap-2 flex items-center" :to="`/prototypes/${prototype.id}`">
                             <div class="h-8 w-8 rounded bg-primary-500 text-white flex items-center justify-center">
                                 <Icon icon="tdesign:app" />
                             </div>
 
-                            <h3 class="font-semibold">{{ project.name }}</h3>
+                            <h3 class="font-semibold">{{ prototype.name }}</h3>
                         </RouterLink>
 
                         <IconButton
@@ -108,18 +108,18 @@ async function deleteProject(project: IProject) {
                             icon="ant-design:delete-outlined"
                             severity="danger"
                             text
-                            :disabled="deleteMutation.isPending.value || createProjectMutation.isPending.value"
-                            @click.stop="deleteProject(project)"
+                            :disabled="deleteMutation.isPending.value || createPrototypeMutation.isPending.value"
+                            @click.stop="deletePrototype(prototype)"
                         />
                     </div>
 
                     <p class="mb-5 text-xs font-medium text-gray-500 line-clamp-3">
-                        {{ project.requirements }}
+                        {{ prototype.requirements }}
                     </p>
 
                     <div class="gap-1.5 text-xs font-medium text-gray-500 mt-auto flex items-center">
                         <Icon icon="mdi:clock-outline" />
-                        <span>{{ formatDate(project.updated_at) }}</span>
+                        <span>{{ formatDate(prototype.updated_at) }}</span>
                     </div>
                 </div>
             </div>

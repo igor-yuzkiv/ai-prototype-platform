@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Domains\Project\Commands;
+namespace App\Domains\Prototype\Commands;
 
-class CreateProjectCommand
+class CreatePrototypeCommand
 {
     public function __construct(
         public readonly string $requirements,

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useRouteParams } from '@vueuse/router'
-import { useProjectQuery } from '@/query'
+import { usePrototypeQuery } from '@/query'
 import { useThemeStore } from '@/store/use.theme.store'
 import { Icon } from '@iconify/vue'
 import Button from 'primevue/button'
@@ -15,9 +15,9 @@ import { useToast } from '@/composables'
 import { fetchEventSource, EventStreamContentType } from '@microsoft/fetch-event-source'
 import { ref, toValue } from 'vue'
 
-const projectId = useRouteParams<string>('id')
+const prototypeId = useRouteParams<string>('id')
 
-const { data: project } = useProjectQuery(projectId)
+const { data: prototype } = usePrototypeQuery(prototypeId)
 const appTheme = useThemeStore()
 const toast = useToast()
 
@@ -65,7 +65,7 @@ async function generate() {
     isGenerating.value = true
 
     try {
-        await fetchEventSource(httpClient.getUri({ url: `/projects/${toValue(projectId)}/prototype/generate` }), {
+        await fetchEventSource(httpClient.getUri({ url: `/prototypes/${toValue(prototypeId)}/prototype/generate` }), {
             method: 'POST',
             credentials: 'include',
             headers: {
@@ -107,7 +107,7 @@ async function generate() {
 </script>
 
 <template>
-    <div v-if="project" class="p-3 gap-2 flex h-full w-full flex-col overflow-hidden">
+    <div v-if="prototype" class="p-3 gap-2 flex h-full w-full flex-col overflow-hidden">
         <div class="flex items-center justify-between">
             <div class="gap-x-2 flex items-center">
                 <router-link
@@ -118,7 +118,7 @@ async function generate() {
                     <Icon icon="material-symbols:arrow-back-rounded" class="w-6 h-6 hidden group-hover:flex" />
                 </router-link>
 
-                <h3 class="text-xl font-semibold">{{ project.name }}</h3>
+                <h3 class="text-xl font-semibold">{{ prototype.name }}</h3>
             </div>
 
             <div class="gap-x-2 flex items-center">
@@ -147,7 +147,7 @@ async function generate() {
                         <TabPanel value="Requirements" class="gap-2 p-2 h-full w-full overflow-hidden">
                             <vue-monaco-editor
                                 language="markdown"
-                                :value="project?.requirements ?? ''"
+                                :value="prototype?.requirements ?? ''"
                                 :theme="appTheme.isDark ? 'vs-dark' : 'vs'"
                             />
                         </TabPanel>
@@ -155,7 +155,7 @@ async function generate() {
                         <TabPanel value="Formatted Requirements" class="gap-2 p-2 h-full w-full overflow-hidden">
                             <vue-monaco-editor
                                 language="markdown"
-                                :value="project?.formatted_requirements ?? ''"
+                                :value="prototype?.formatted_requirements ?? ''"
                                 :theme="appTheme.isDark ? 'vs-dark' : 'vs'"
                             />
                         </TabPanel>

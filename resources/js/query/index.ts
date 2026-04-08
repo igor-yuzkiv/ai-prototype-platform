@@ -1,2 +1,2 @@
-export { useProjectQuery } from './use.project.query'
-export { useProjectsListQuery } from './use.projects-list.query'
+export { usePrototypeQuery } from './use.prototype.query'
+export { usePrototypesListQuery } from './use.prototypes-list.query'

@@ -1,4 +1,4 @@
-export type IProject = {
+export type IPrototype = {
     id: string
     name: string
     requirements: string
@@ -8,12 +8,12 @@ export type IProject = {
     updated_at: string
 }
 
-export interface CreateProjectPayload {
+export interface CreatePrototypePayload {
     name?: string
     requirements: string
 }
 
-export interface UpdateProjectPayload {
+export interface UpdatePrototypePayload {
     name?: string
     requirements?: string
 }

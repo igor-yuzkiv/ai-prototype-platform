@@ -2,16 +2,16 @@
 
 namespace App\Http\Resources;
 
-use App\Domains\Prototype\Support\ProjectPrototypePathResolver;
-use App\Models\ProjectModel;
+use App\Domains\Prototype\Support\PrototypePathResolver;
+use App\Models\PrototypeModel;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-/** @mixin ProjectModel */ class ProjectResource extends JsonResource
+/** @mixin PrototypeModel */ class PrototypeResource extends JsonResource
 {
     public function toArray(Request $request): array
     {
-        $prototypeLocator = app(ProjectPrototypePathResolver::class);
+        $prototypeLocator = app(PrototypePathResolver::class);
 
         return [
             'id'                     => $this->id,

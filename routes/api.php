@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\ProjectController;
-use App\Http\Controllers\ProjectPrototypeController;
+use App\Http\Controllers\PrototypeController;
+use App\Http\Controllers\PrototypeGeneratorController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -9,6 +9,6 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::apiResource('projects', ProjectController::class);
+Route::apiResource('prototypes', PrototypeController::class);
 
-Route::post('projects/{project}/prototype/generate', [ProjectPrototypeController::class, 'generate']);
+Route::post('prototypes/{prototype}/prototype/generate', [PrototypeGeneratorController::class, 'generate']);
