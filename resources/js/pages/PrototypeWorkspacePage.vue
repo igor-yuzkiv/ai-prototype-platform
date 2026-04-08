@@ -4,9 +4,12 @@ import { usePrototypeQuery } from '@/query'
 import { Icon } from '@iconify/vue'
 import { LoadingOverlay } from '@/shared/components/loading'
 import { PrototypeWorkspaceFlow } from '@/components/prototype-workspace'
+import { PrototypePageDetailDialog, usePrototypePageDetailsDialog } from '@/components/prototype-page'
 
 const prototypeId = useRouteParams<string>('id')
 const { prototype, pages, isLoading: isLoadingPrototype } = usePrototypeQuery(prototypeId)
+
+const pageDialog = usePrototypePageDetailsDialog()
 </script>
 
 <template>
@@ -26,8 +29,10 @@ const { prototype, pages, isLoading: isLoadingPrototype } = usePrototypeQuery(pr
             </div>
         </div>
 
-        <div class="flex flex-1 flex-col p-2">
-            <PrototypeWorkspaceFlow :screens="pages" />
+        <div class="p-2 flex flex-1 flex-col">
+            <PrototypeWorkspaceFlow :pages="pages" @page:click="pageDialog.open" />
         </div>
     </div>
+
+    <PrototypePageDetailDialog v-model:visible="pageDialog.visible.value" :page="pageDialog.currentPage.value" />
 </template>

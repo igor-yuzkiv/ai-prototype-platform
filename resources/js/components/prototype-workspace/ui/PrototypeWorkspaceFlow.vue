@@ -1,22 +1,23 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import { VueFlow } from '@vue-flow/core'
 import type { Node, Edge, NodeMouseEvent } from '@vue-flow/core'
 import '@vue-flow/core/dist/style.css'
 import type { IPrototypePage } from '@/types/prototype.types'
 import PrototypeScreenNode from './PrototypeScreenNode.vue'
-import PrototypeScreenSidebar from './PrototypeScreenSidebar.vue'
 
 const props = defineProps<{
-    screens: IPrototypePage[]
+    pages: IPrototypePage[]
 }>()
 
-const selectedScreen = ref<IPrototypePage | null>(null)
+const emit = defineEmits<{
+    (event: 'page:click', value: IPrototypePage): void
+}>()
 
 const nodes = computed<Node[]>(() => {
     const countByDepth: Record<number, number> = {}
 
-    return props.screens.map((page) => {
+    return props.pages.map((page) => {
         const depth = page.deep_index ?? 0
         const rowIndex = countByDepth[depth] ?? 0
         countByDepth[depth] = rowIndex + 1
@@ -34,7 +35,7 @@ const nodes = computed<Node[]>(() => {
 })
 
 const edges = computed<Edge[]>(() => {
-    return props.screens
+    return props.pages
         .filter((page) => !!page.parent_page_id)
         .map((page) => ({
             id: `${page.parent_page_id}-${page.id}`,
@@ -45,7 +46,7 @@ const edges = computed<Edge[]>(() => {
 })
 
 function onNodeClick({ node }: NodeMouseEvent) {
-    selectedScreen.value = node.data as IPrototypePage
+    emit('page:click', node.data as IPrototypePage)
 }
 </script>
 
@@ -55,14 +56,12 @@ function onNodeClick({ node }: NodeMouseEvent) {
             :nodes="nodes"
             :edges="edges"
             fit-view-on-init
-            class="rounded-lg flex-1 border bg-surface-100 dark:bg-surface-900"
+            class="rounded-lg bg-surface-100 dark:bg-surface-900 flex-1 border"
             @node-click="onNodeClick"
         >
             <template #node-PrototypeScreen="{ id, data }">
                 <PrototypeScreenNode :id="id" :data="data" />
             </template>
         </VueFlow>
-
-        <PrototypeScreenSidebar v-if="selectedScreen" :screen="selectedScreen" @close="selectedScreen = null" />
     </div>
 </template>

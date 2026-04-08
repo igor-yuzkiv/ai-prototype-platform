@@ -20,7 +20,7 @@ withDefaults(
         <Icon :icon="icon" class="w-12 h-12" />
         <div class="gap-2 max-w-md mt-3 flex flex-col items-center">
             <h1 class="text-2xl font-bold">{{ title }}</h1>
-            <p>{{ message }}</p>
+            <p class="text-center">{{ message }}</p>
         </div>
     </div>
 </template>
