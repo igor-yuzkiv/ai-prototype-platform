@@ -2,12 +2,11 @@
 
 namespace App\Console\Commands;
 
-use App\Ai\Agents\GeneratePrototypeAgent;
 use App\Domains\Project\Commands\CreateProjectCommand;
 use App\Domains\Project\Handlers\CreateProjectHandler;
+use App\Domains\Prototype\Handlers\PlanProjectPrototypeHandler;
 use App\Models\ProjectModel;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Storage;
 
 class IgorTestCommand extends Command
 {
@@ -25,16 +24,21 @@ class IgorTestCommand extends Command
 
     private function test()
     {
-        $project = ProjectModel::firstOrFail();
+        $project = ProjectModel::findOrFail(4);
 
-        $model = 'gpt-3.5-turbo';
+        $project->formatted_requirements = app(PlanProjectPrototypeHandler::class)($project->requirements);
 
-        $protoHtml = (new GeneratePrototypeAgent)->prompt(
-            prompt: $project->formatted_requirements,
-            model: $model
-        );
+//        $project->save();
 
-        Storage::disk('local')->put("prototypes/{$project->id}-{$model}.html", (string) $protoHtml);
+
+//        $model = 'gpt-3.5-turbo';
+//
+//        $protoHtml = (new GeneratePrototypeAgent)->prompt(
+//            prompt: $project->formatted_requirements,
+//            model: $model
+//        );
+//
+//        Storage::disk('local')->put("prototypes/{$project->id}-{$model}.html", (string) $protoHtml);
     }
 
     private function createTestProject(): void

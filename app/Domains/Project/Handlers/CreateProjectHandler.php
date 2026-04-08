@@ -2,15 +2,13 @@
 
 namespace App\Domains\Project\Handlers;
 
+use App\Ai\Agents\RequirementsInterpreterAgent;
 use App\Domains\Project\Commands\CreateProjectCommand;
 use App\Models\ProjectModel;
 
 readonly class CreateProjectHandler
 {
-    public function __construct(
-        private GenerateProjectNameHandler $generateProjectNameHandler,
-        private NormalizeProjectRequirementsHandler $normalizeProjectRequirementsHandler,
-    ) {}
+    public function __construct(private GenerateProjectNameHandler $generateProjectNameHandler) {}
 
     public function __invoke(CreateProjectCommand $command): ProjectModel
     {
@@ -26,12 +24,10 @@ readonly class CreateProjectHandler
 
     private function normalizeRequirements(string $rawRequirements): string
     {
-        $requirements = trim($rawRequirements);
-        if (empty($requirements)) {
-            throw new \InvalidArgumentException('Project requirements cannot be empty.');
-        }
-
-        return ($this->normalizeProjectRequirementsHandler)($requirements);
+        return (new RequirementsInterpreterAgent)->prompt(
+            prompt: $rawRequirements,
+            model: 'gpt-4o-mini',
+        );
     }
 
     private function generateName(?string $name, string $requirements): string

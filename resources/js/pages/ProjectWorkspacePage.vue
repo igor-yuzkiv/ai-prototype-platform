@@ -139,11 +139,20 @@ async function generate() {
                     <Tabs value="Requirements" class="flex h-full w-full flex-col overflow-hidden">
                         <TabList class="bg-transparent">
                             <Tab value="Requirements">Requirements</Tab>
-                            <Tab value="Preview">Preview</Tab>
+                            <Tab value="Formatted Requirements">Formatted Requirements</Tab>
                             <Tab value="Code">Code</Tab>
+                            <Tab value="Preview">Preview</Tab>
                         </TabList>
 
                         <TabPanel value="Requirements" class="gap-2 p-2 h-full w-full overflow-hidden">
+                            <vue-monaco-editor
+                                language="markdown"
+                                :value="project?.requirements ?? ''"
+                                :theme="appTheme.isDark ? 'vs-dark' : 'vs'"
+                            />
+                        </TabPanel>
+
+                        <TabPanel value="Formatted Requirements" class="gap-2 p-2 h-full w-full overflow-hidden">
                             <vue-monaco-editor
                                 language="markdown"
                                 :value="project?.formatted_requirements ?? ''"
