@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Domains\Prototype\Commands\CreatePrototypeCommand;
-use App\Domains\Prototype\Commands\UpdatePrototypeCommand;
 use App\Domains\Prototype\Handlers\CreatePrototypeHandler;
 use App\Domains\Prototype\Handlers\DeletePrototypeHandler;
-use App\Domains\Prototype\Handlers\UpdatePrototypeHandler;
 use App\Http\Resources\PrototypeResource;
 use App\Models\PrototypeModel;
 use Illuminate\Http\JsonResponse;
@@ -36,7 +34,7 @@ class PrototypeController extends Controller
         ]);
 
         $prototype = $handler(new CreatePrototypeCommand(
-            requirements: $validated['requirements'],
+            initialRequirements: $validated['requirements'],
             name: $validated['name'] ?? null,
         ));
 
@@ -47,24 +45,6 @@ class PrototypeController extends Controller
 
     public function show(PrototypeModel $prototype): PrototypeResource
     {
-        return new PrototypeResource($prototype);
-    }
-
-    public function update(
-        Request $request,
-        PrototypeModel $prototype,
-        UpdatePrototypeHandler $handler,
-    ): PrototypeResource {
-        $validated = $request->validate([
-            'name'         => ['sometimes', 'string', 'max:255'],
-            'requirements' => ['sometimes', 'string'],
-        ]);
-
-        $prototype = $handler($prototype, new UpdatePrototypeCommand(
-            name: $validated['name'] ?? null,
-            requirements: $validated['requirements'] ?? null,
-        ));
-
         return new PrototypeResource($prototype);
     }
 

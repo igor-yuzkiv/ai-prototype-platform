@@ -9,6 +9,6 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::apiResource('prototypes', PrototypeController::class);
+Route::apiResource('prototypes', PrototypeController::class)->except(['update']);
 
 Route::post('prototypes/{prototype}/prototype/generate', [PrototypeGeneratorController::class, 'generate']);

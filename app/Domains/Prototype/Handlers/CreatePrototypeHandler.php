@@ -11,12 +11,12 @@ readonly class CreatePrototypeHandler
 {
     public function __invoke(CreatePrototypeCommand $command): PrototypeModel
     {
-        $normalizedRequirements = $this->normalizeRequirements($command->requirements);
+        $normalizedRequirements = $this->normalizeRequirements($command->initialRequirements);
         $name = $this->generateName($command->name, $normalizedRequirements);
 
         return PrototypeModel::query()->create([
             'name'                   => $name,
-            'requirements'           => $command->requirements,
+            'requirements'           => $command->initialRequirements,
             'formatted_requirements' => $normalizedRequirements,
         ]);
     }

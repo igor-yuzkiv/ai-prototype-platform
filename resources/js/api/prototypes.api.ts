@@ -1,6 +1,6 @@
 import { httpClient } from '@/api/http.client'
 import type { PaginationParams, PaginatedCollectionResponse, ResourceResponse } from '@/types/api.types'
-import type { CreatePrototypePayload, IPrototype, UpdatePrototypePayload } from '@/types/prototype.types'
+import type { CreatePrototypePayload, IPrototype } from '@/types/prototype.types'
 
 function unwrapResource<TResource>(response: ResourceResponse<TResource>): TResource {
     return response.data
@@ -23,12 +23,6 @@ export const prototypesApi = {
 
     async create(payload: CreatePrototypePayload): Promise<IPrototype> {
         const response = await httpClient.post<ResourceResponse<IPrototype>>('/prototypes', payload)
-
-        return unwrapResource(response.data)
-    },
-
-    async update(prototypeId: string, payload: UpdatePrototypePayload): Promise<IPrototype> {
-        const response = await httpClient.patch<ResourceResponse<IPrototype>>(`/prototypes/${prototypeId}`, payload)
 
         return unwrapResource(response.data)
     },

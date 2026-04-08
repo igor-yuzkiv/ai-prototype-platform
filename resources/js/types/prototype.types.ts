@@ -12,8 +12,3 @@ export interface CreatePrototypePayload {
     name?: string
     requirements: string
 }
-
-export interface UpdatePrototypePayload {
-    name?: string
-    requirements?: string
-}

@@ -8,10 +8,10 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('projects', function (Blueprint $table) {
-            $table->id();
+        Schema::create('prototypes', function (Blueprint $table) {
+            $table->ulid();
             $table->string('name');
-            $table->text('requirements');
+            $table->text('initial_requirements');
             $table->text('formatted_requirements')->nullable();
             $table->timestamps();
         });
@@ -19,6 +19,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('projects');
+        Schema::dropIfExists('prototypes');
     }
 };
