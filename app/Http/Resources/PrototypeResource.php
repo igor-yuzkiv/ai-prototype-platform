@@ -16,7 +16,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
         return [
             'id'                     => $this->id,
             'name'                   => $this->name,
-            'initial_requirements'   => $this->inital_requirements,
+            'initial_requirements'   => $this->initial_requirements,
             'formatted_requirements' => $this->formatted_requirements,
             'prototype_url'          => $prototypeLocator->url($this->resource),
             'created_at'             => $this->created_at,

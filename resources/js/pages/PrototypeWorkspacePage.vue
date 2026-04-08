@@ -147,7 +147,7 @@ async function generate() {
                         <TabPanel value="Requirements" class="gap-2 p-2 h-full w-full overflow-hidden">
                             <vue-monaco-editor
                                 language="markdown"
-                                :value="prototype?.initial_requirements ?? ''"
+                                :value="prototype.initial_requirements ?? ''"
                                 :theme="appTheme.isDark ? 'vs-dark' : 'vs'"
                             />
                         </TabPanel>
