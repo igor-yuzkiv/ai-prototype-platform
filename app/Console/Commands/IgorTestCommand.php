@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Handlers\GeneratePrototypePlan;
+use App\Handlers\GeneratePrototypePlanHandler;
 use App\Models\PrototypeModel;
 use Illuminate\Console\Command;
 
@@ -23,6 +23,6 @@ class IgorTestCommand extends Command
     private function test()
     {
         $prototype = PrototypeModel::find('01knph98metrnr3csgd2fne1tv')->load('pages');
-        app(GeneratePrototypePlan::class)($prototype);
+        app(GeneratePrototypePlanHandler::class)($prototype);
     }
 }

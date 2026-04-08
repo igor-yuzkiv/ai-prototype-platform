@@ -6,7 +6,7 @@ import { prototypesKeys } from '@/config'
 import { IPrototypePage } from '@/types/prototype.types'
 
 export function usePrototypeQuery(prototypeId: MaybeRefOrGetter<string>) {
-    const { data, isLoading } = useQuery({
+    const { data, isLoading, refetch } = useQuery({
         queryKey: computed(() => prototypesKeys.detail(toValue(prototypeId))),
         queryFn: () => prototypesApi.getById(toValue(prototypeId)),
         enabled: computed(() => !!toValue(prototypeId)),
@@ -18,5 +18,6 @@ export function usePrototypeQuery(prototypeId: MaybeRefOrGetter<string>) {
         prototype: data,
         pages,
         isLoading,
+        refetch,
     }
 }

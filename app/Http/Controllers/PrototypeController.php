@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Commands\CreatePrototypeCommand;
 use App\Handlers\CreatePrototypeHandler;
 use App\Handlers\DeletePrototypeHandler;
+use App\Handlers\GeneratePrototypePlanHandler;
 use App\Http\Resources\PrototypeResource;
 use App\Http\Resources\PrototypeSummaryResource;
 use App\Models\PrototypeModel;
@@ -56,5 +57,12 @@ class PrototypeController extends Controller
         $handler($prototype);
 
         return response()->json(status: 204);
+    }
+
+    public function generatePlan(PrototypeModel $prototype, GeneratePrototypePlanHandler $handler): PrototypeResource
+    {
+        $prototype = $handler($prototype);
+
+        return new PrototypeResource($prototype);
     }
 }

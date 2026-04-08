@@ -8,7 +8,7 @@ use App\DTO\PrototypePlanPageDto;
 use App\Models\PrototypeModel;
 use Illuminate\Support\Collection;
 
-class GeneratePrototypePlan
+class GeneratePrototypePlanHandler
 {
     public function __invoke(PrototypeModel $prototype): PrototypeModel
     {

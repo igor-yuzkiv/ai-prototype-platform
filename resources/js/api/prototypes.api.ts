@@ -30,4 +30,10 @@ export const prototypesApi = {
     async delete(prototypeId: string): Promise<void> {
         await httpClient.delete(`/prototypes/${prototypeId}`)
     },
+
+    async generatePlan(prototypeId: string): Promise<IPrototype> {
+        const response = await httpClient.post<ResourceResponse<IPrototype>>(`/prototypes/${prototypeId}/generate-plan`)
+
+        return unwrapResource(response.data)
+    },
 }
