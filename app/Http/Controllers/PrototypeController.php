@@ -6,6 +6,7 @@ use App\Commands\CreatePrototypeCommand;
 use App\Handlers\CreatePrototypeHandler;
 use App\Handlers\DeletePrototypeHandler;
 use App\Http\Resources\PrototypeResource;
+use App\Http\Resources\PrototypeSummaryResource;
 use App\Models\PrototypeModel;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -23,7 +24,7 @@ class PrototypeController extends Controller
             ->paginate($request->integer('per_page', 15))
             ->withQueryString();
 
-        return PrototypeResource::collection($prototypes);
+        return PrototypeSummaryResource::collection($prototypes);
     }
 
     public function store(Request $request, CreatePrototypeHandler $handler)

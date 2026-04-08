@@ -25,7 +25,7 @@ readonly class CreatePrototypeHandler
     {
         return (new RequirementsInterpreterAgent)->prompt(
             prompt: $rawRequirements,
-            model: 'gpt-4o-mini',
+            model: config('ai.models.fast'),
         );
     }
 
@@ -38,7 +38,7 @@ readonly class CreatePrototypeHandler
 
         return PrototypeNameGeneratorAgent::make()->prompt(
             prompt: $requirements,
-            model: 'gpt-4o-mini',
+            model: config('ai.models.fast'),
         );
     }
 }

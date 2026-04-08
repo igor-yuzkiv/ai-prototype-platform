@@ -4,15 +4,11 @@ namespace App\Ai\Agents;
 
 use Illuminate\Contracts\JsonSchema\JsonSchema;
 use Laravel\Ai\Contracts\Agent;
-use Laravel\Ai\Contracts\Conversational;
 use Laravel\Ai\Contracts\HasStructuredOutput;
-use Laravel\Ai\Contracts\HasTools;
-use Laravel\Ai\Contracts\Tool;
-use Laravel\Ai\Messages\Message;
 use Laravel\Ai\Promptable;
 use Stringable;
 
-class PrototypePlannerAgent implements Agent, Conversational, HasStructuredOutput, HasTools
+class PrototypePlannerAgent implements Agent, HasStructuredOutput
 {
     use Promptable;
 
@@ -55,13 +51,13 @@ PAGE COUNT STRATEGY:
 OUTPUT FORMAT:
 
 {
-  "projectOverview": "Short description of the prototype and its main goal.",
+  "project_overview": "Short description of the prototype and its main goal.",
 
-  "globalRules": "Full plain-text description of everything that applies to all pages: visual style, color scheme, typography, navigation element (position, links, behavior), and CDN dependencies to include in every page <head>. This string will be injected directly into every page generation request — make it complete and self-contained.",
+  "global_rules": "Full plain-text description of everything that applies to all pages: visual style, color scheme, typography, navigation element (position, links, behavior), and CDN dependencies to include in every page <head>. This string will be injected directly into every page generation request — make it complete and self-contained.",
 
   "pages": [
     {
-      "filename": "page-name.html",
+      "file_name": "page-name.html",
       "title": "Human-readable page title",
       "description": "Detailed description of this page: its purpose, what the user sees, what sections it contains, what interactions are possible, and any page-specific logic or data. This will be passed directly to a code generation agent, so be precise and complete."
     }
@@ -78,35 +74,14 @@ NOTES:
 INSTRUCTIONS;
     }
 
-    /**
-     * Get the list of messages comprising the conversation so far.
-     *
-     * @return Message[]
-     */
-    public function messages(): iterable
-    {
-        return [];
-    }
-
-    /**
-     * Get the tools available to the agent.
-     *
-     * @return Tool[]
-     */
-    public function tools(): iterable
-    {
-        return [];
-    }
-
     public function schema(JsonSchema $schema): array
     {
         return [
-            'projectOverview' => $schema->string()->required(),
-            'globalRules'     => $schema->string()->required(),
-            'pages'           => $schema->array()->items(
+            'project_overview' => $schema->string()->required(),
+            'global_rules'     => $schema->string()->required(),
+            'pages'            => $schema->array()->items(
                 $schema->object([
-                    'id'          => $schema->string()->required(),
-                    'filename'    => $schema->string()->required(),
+                    'file_name'   => $schema->string()->required(),
                     'title'       => $schema->string()->required(),
                     'description' => $schema->string()->required(),
                 ])->withoutAdditionalProperties()

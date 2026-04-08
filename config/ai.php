@@ -13,6 +13,12 @@ return [
     |
     */
 
+    'models' => [
+        'fast'  => env('AI_FAST_MODEL', 'gpt-4o-mini'),
+        'smart' => env('AI_SMART_MODEL', 'gpt-4o'),
+        'code'  => env('AI_CODE_MODEL', 'gpt-4o'),
+    ],
+
     'default'                   => 'openai',
     'default_for_images'        => 'gemini',
     'default_for_audio'         => 'openai',

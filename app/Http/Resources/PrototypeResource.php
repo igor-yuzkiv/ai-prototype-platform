@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use App\Models\PrototypeModel;
 use App\Support\PrototypePathResolver;
+use App\Http\Resources\PrototypePageResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -21,6 +22,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
             'project_overview'       => $this->project_overview,
             'global_rules'           => $this->global_rules,
             'prototype_url'          => $prototypeLocator->url($this->resource),
+            'pages'                  => PrototypePageResource::collection($this->whenLoaded('pages')),
             'created_at'             => $this->created_at,
             'updated_at'             => $this->updated_at,
         ];
