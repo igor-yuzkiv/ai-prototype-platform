@@ -1,52 +1,46 @@
 <script setup lang="ts">
 import Button from 'primevue/button'
 import Textarea from 'primevue/textarea'
-import { formatDistanceToNow } from 'date-fns'
 import { computed, ref } from 'vue'
-import { RouterLink } from 'vue-router'
 import { useCreatePrototypeMutation, useDeletePrototypeMutation } from '@/mutation'
 import { usePrototypesListQuery } from '@/query'
-import { Icon } from '@iconify/vue'
 import { IconButton } from '@/components/button'
 import { useConfirm } from '@/composables'
-import { IPrototype } from '@/types/prototype.types'
+import { IPrototypeSummary } from '@/types/prototype.types'
+import { PrototypeCard } from '@/components/prototype'
+import { NoDataMessage } from '@/components/typography'
 
 const confirm = useConfirm()
-const initialRequirements = ref('')
-const createPrototypeMutation = useCreatePrototypeMutation(() => {
-    initialRequirements.value = ''
-})
 
-const { data } = usePrototypesListQuery()
-const prototypes = computed(() => data.value?.data ?? [])
-const recentPrototypes = computed(() => prototypes.value)
+const { prototypes } = usePrototypesListQuery()
+
+const createPrototypeMutation = useCreatePrototypeMutation(() => (initialRequirements.value = ''))
+
+const initialRequirements = ref('')
+
 const canCreatePrototype = computed(
     () =>
         initialRequirements.value.trim().length > 0 &&
         !createPrototypeMutation.isPending.value &&
         !deleteMutation.isPending.value
 )
+
 const deleteMutation = useDeletePrototypeMutation()
 
-function formatDate(dateString: string): string {
-    return `Updated ${formatDistanceToNow(new Date(dateString), { addSuffix: true })}`
-}
-
 function createPrototype() {
-    if (!initialRequirements.value || createPrototypeMutation.isPending.value) {
-        return
+    if (canCreatePrototype.value) {
+        createPrototypeMutation.mutate({ initial_requirements: initialRequirements.value })
     }
-
-    createPrototypeMutation.mutate({ initial_requirements: initialRequirements.value })
 }
 
-async function deletePrototype(prototype: IPrototype) {
+async function deletePrototype(prototype: IPrototypeSummary) {
     const confirmed = await confirm.requireAsync({
         message: `Delete "${prototype.name}"?`,
         icon: 'pi pi-trash',
         acceptLabel: 'Delete',
         rejectLabel: 'Cancel',
     })
+
     if (confirmed) deleteMutation.mutate(prototype.id)
 }
 </script>
@@ -59,7 +53,7 @@ async function deletePrototype(prototype: IPrototype) {
             <Textarea
                 v-model.trim="initialRequirements"
                 class="border-none bg-transparent shadow-none"
-                rows="10"
+                rows="5"
                 placeholder="Describe your prototype idea... (e.g., A real estate dashboard with a map view and property list)"
                 fluid
                 style="resize: none"
@@ -81,29 +75,23 @@ async function deletePrototype(prototype: IPrototype) {
         <section class="flex flex-1 flex-col overflow-hidden">
             <h2 class="mb-5 text-base font-semibold">Recent Prototypes</h2>
 
-            <div
-                v-if="recentPrototypes.length === 0"
-                class="app-card rounded-lg p-8 text-sm text-gray-500 border border-dashed text-center"
-            >
-                No recent prototypes yet.
-            </div>
+            <NoDataMessage
+                v-if="prototypes.length === 0"
+                class="app-card p-2 flex-1 border border-dashed"
+                title="No Prototypes Yet"
+                message="Your recently generated prototypes will appear here."
+                icon="ant-design:experiment-outlined"
+            />
 
             <div v-else class="gap-5 sm:grid-cols-3 grid grid-cols-1 overflow-auto">
-                <RouterLink
-                    v-for="prototype in recentPrototypes"
+                <PrototypeCard
+                    v-for="prototype in prototypes"
                     :key="prototype.id"
-                    class="app-card rounded-md p-5 shadow-sm hover:shadow-md group flex flex-col border"
+                    :prototype="prototype"
+                    is="router-link"
                     :to="`/prototypes/${prototype.id}`"
                 >
-                    <div class="mb-3 flex items-center justify-between">
-                        <div class="gap-2 flex items-center">
-                            <div class="h-8 w-8 rounded bg-primary-500 text-white flex items-center justify-center">
-                                <Icon icon="tdesign:app" />
-                            </div>
-
-                            <h3 class="font-semibold">{{ prototype.name }}</h3>
-                        </div>
-
+                    <template #actions>
                         <IconButton
                             class="opacity-0 transition group-hover:opacity-100"
                             icon="ant-design:delete-outlined"
@@ -112,17 +100,8 @@ async function deletePrototype(prototype: IPrototype) {
                             :disabled="deleteMutation.isPending.value || createPrototypeMutation.isPending.value"
                             @click.prevent="deletePrototype(prototype)"
                         />
-                    </div>
-
-                    <p class="mb-5 text-xs font-medium text-gray-500 line-clamp-3">
-                        {{ prototype.project_overview ?? 'New prototype' }}
-                    </p>
-
-                    <div class="gap-1.5 text-xs font-medium text-gray-500 mt-auto flex items-center">
-                        <Icon icon="mdi:clock-outline" />
-                        <span>{{ formatDate(prototype.updated_at) }}</span>
-                    </div>
-                </RouterLink>
+                    </template>
+                </PrototypeCard>
             </div>
         </section>
     </div>

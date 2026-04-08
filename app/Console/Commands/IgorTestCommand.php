@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Handlers\CreatePrototypePlan;
+use App\Handlers\GeneratePrototypePlan;
 use App\Models\PrototypeModel;
 use Illuminate\Console\Command;
 
@@ -22,6 +22,6 @@ class IgorTestCommand extends Command
 
     private function test() {
         $prototype = PrototypeModel::firstOrFail();
-        app(CreatePrototypePlan::class)($prototype);
+        app(GeneratePrototypePlan::class)($prototype);
     }
 }

@@ -1,13 +1,13 @@
 import { httpClient } from '@/api/http.client'
 import type { PaginationParams, PaginatedCollectionResponse, ResourceResponse } from '@/types/api.types'
-import type { CreatePrototypePayload, IPrototype } from '@/types/prototype.types'
+import type { CreatePrototypePayload, IPrototype, IPrototypeSummary } from '@/types/prototype.types'
 
 function unwrapResource<TResource>(response: ResourceResponse<TResource>): TResource {
     return response.data
 }
 
 export const prototypesApi = {
-    async list(params?: PaginationParams): Promise<PaginatedCollectionResponse<IPrototype>> {
+    async list(params?: PaginationParams): Promise<PaginatedCollectionResponse<IPrototypeSummary>> {
         const response = await httpClient.get<PaginatedCollectionResponse<IPrototype>>('/prototypes', {
             params,
         })
