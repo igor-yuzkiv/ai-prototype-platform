@@ -14,6 +14,7 @@ class PrototypePageModel extends Model
 
     protected $fillable = [
         'prototype_id',
+        'parent_page_id',
         'file_name',
         'title',
         'description',
@@ -23,5 +24,15 @@ class PrototypePageModel extends Model
     public function prototype(): BelongsTo
     {
         return $this->belongsTo(PrototypeModel::class, 'prototype_id', 'id');
+    }
+
+    public function parentPage(): BelongsTo
+    {
+        return $this->belongsTo(self::class, 'parent_page_id', 'id');
+    }
+
+    public function childPages()
+    {
+        return $this->hasMany(self::class, 'parent_page_id', 'id');
     }
 }

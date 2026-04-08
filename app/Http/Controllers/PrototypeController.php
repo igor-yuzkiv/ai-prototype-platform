@@ -46,6 +46,8 @@ class PrototypeController extends Controller
 
     public function show(PrototypeModel $prototype): PrototypeResource
     {
+        $prototype->load('pages');
+
         return new PrototypeResource($prototype);
     }
 

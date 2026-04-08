@@ -57,6 +57,9 @@ OUTPUT FORMAT:
 
   "pages": [
     {
+      "ai_id": "unique-id-for-this-page",
+      "parent_ai_id": "unique-id-of-parent-page-or-null-for-root",
+      "deep_index": 0, // 0 for index.html, increment by 1 for each level of nesting
       "file_name": "page-name.html",
       "title": "Human-readable page title",
       "description": "Detailed description of this page: its purpose, what the user sees, what sections it contains, what interactions are possible, and any page-specific logic or data. This will be passed directly to a code generation agent, so be precise and complete."
@@ -81,9 +84,12 @@ INSTRUCTIONS;
             'global_rules'     => $schema->string()->required(),
             'pages'            => $schema->array()->items(
                 $schema->object([
-                    'file_name'   => $schema->string()->required(),
-                    'title'       => $schema->string()->required(),
-                    'description' => $schema->string()->required(),
+                    'ai_id'        => $schema->string()->required(),
+                    'parent_ai_id' => $schema->string()->nullable(),
+                    'deep_index'   => $schema->integer()->required(),
+                    'file_name'    => $schema->string()->required(),
+                    'title'        => $schema->string()->required(),
+                    'description'  => $schema->string()->required(),
                 ])->withoutAdditionalProperties()
             )->required(),
         ];
