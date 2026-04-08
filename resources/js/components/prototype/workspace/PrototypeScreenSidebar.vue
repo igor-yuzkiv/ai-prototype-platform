@@ -40,7 +40,7 @@ const instructions = ref('')
             <div class="gap-x-4 gap-y-4 grid grid-cols-2">
                 <div class="col-span-2">
                     <p class="mb-1 font-semibold tracking-wider text-surface-400 text-[10px] uppercase">DESCRIPTION</p>
-                    <p class="text-sm">{{ screen.description }}</p>
+                    <pre class="text-sm">{{ screen.description }}</pre>
                 </div>
 
                 <div>
