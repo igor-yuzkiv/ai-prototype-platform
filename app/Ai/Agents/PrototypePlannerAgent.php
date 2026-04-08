@@ -85,7 +85,7 @@ INSTRUCTIONS;
             'pages'            => $schema->array()->items(
                 $schema->object([
                     'ai_id'        => $schema->string()->required(),
-                    'parent_ai_id' => $schema->string()->nullable(),
+                    'parent_ai_id' => $schema->string()->required()->nullable(),
                     'deep_index'   => $schema->integer()->required(),
                     'file_name'    => $schema->string()->required(),
                     'title'        => $schema->string()->required(),

@@ -21,7 +21,7 @@ class IgorTestCommand extends Command
     }
 
     private function test() {
-        $prototype = PrototypeModel::find('01knpf0d8sv85ftxdarhap52ea');
+        $prototype = PrototypeModel::find('01knph98metrnr3csgd2fne1tv');
         app(GeneratePrototypePlan::class)($prototype);
     }
 }
