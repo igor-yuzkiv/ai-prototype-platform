@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers;
 
 use App\Domains\Project\Commands\CreateProjectCommand;
 use App\Domains\Project\Commands\UpdateProjectCommand;
 use App\Domains\Project\Handlers\CreateProjectHandler;
 use App\Domains\Project\Handlers\DeleteProjectHandler;
 use App\Domains\Project\Handlers\UpdateProjectHandler;
-use App\Http\Controllers\Controller;
 use App\Http\Resources\ProjectResource;
 use App\Models\ProjectModel;
 use Illuminate\Http\JsonResponse;
