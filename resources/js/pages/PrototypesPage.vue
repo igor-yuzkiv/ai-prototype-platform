@@ -4,12 +4,12 @@ import Textarea from 'primevue/textarea'
 import { computed, ref } from 'vue'
 import { useCreatePrototypeMutation, useDeletePrototypeMutation } from '@/mutation'
 import { usePrototypesListQuery } from '@/query'
-import { IconButton } from '@/components/button'
-import { useConfirm } from '@/composables'
+import { IconButton } from '@/shared/components/button'
+import { useConfirm } from '@/shared/composables'
 import { IPrototypeSummary } from '@/types/prototype.types'
-import { PrototypeCard } from '@/components/prototype'
-import { NoDataMessage } from '@/components/typography'
-import { LoadingOverlay } from '@/components/loading'
+import { PrototypeCard } from '@/components/prototype-card'
+import { NoDataMessage } from '@/shared/components/typography'
+import { LoadingOverlay } from '@/shared/components/loading'
 
 const confirm = useConfirm()
 
@@ -81,7 +81,7 @@ async function deletePrototype(prototype: IPrototypeSummary) {
 
             <NoDataMessage
                 v-if="prototypes.length === 0"
-                class="app-card p-2 flex-1 border border-dashed"
+                class="app-card-bordered p-2 flex-1"
                 title="No Prototypes Yet"
                 message="Your recently generated prototypes will appear here."
                 icon="ant-design:experiment-outlined"

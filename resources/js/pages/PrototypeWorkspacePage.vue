@@ -2,8 +2,8 @@
 import { useRouteParams } from '@vueuse/router'
 import { usePrototypeQuery } from '@/query'
 import { Icon } from '@iconify/vue'
-import { LoadingOverlay } from '@/components/loading'
-import { PrototypeWorkspaceFlow } from '@/components/prototype'
+import { LoadingOverlay } from '@/shared/components/loading'
+import { PrototypeWorkspaceFlow } from '@/components/prototype-workspace'
 
 const prototypeId = useRouteParams<string>('id')
 const { prototype, pages, isLoading: isLoadingPrototype } = usePrototypeQuery(prototypeId)
@@ -11,7 +11,7 @@ const { prototype, pages, isLoading: isLoadingPrototype } = usePrototypeQuery(pr
 
 <template>
     <LoadingOverlay v-if="isLoadingPrototype" />
-    <div v-if="prototype" class="gap-2 flex h-full w-full flex-col overflow-hidden">
+    <div v-if="prototype" class="flex h-full w-full flex-col overflow-hidden">
         <div class="p-2 flex items-center justify-between border-b">
             <div class="gap-x-2 flex items-center">
                 <router-link
@@ -26,7 +26,7 @@ const { prototype, pages, isLoading: isLoadingPrototype } = usePrototypeQuery(pr
             </div>
         </div>
 
-        <div class="p-2 flex flex-1 flex-col">
+        <div class="flex flex-1 flex-col p-2">
             <PrototypeWorkspaceFlow :screens="pages" />
         </div>
     </div>

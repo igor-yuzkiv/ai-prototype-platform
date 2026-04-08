@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/vue-query'
 import { prototypesApi } from '@/api/prototypes.api'
-import { useToast } from '@/composables'
+import { useToast } from '@/shared/composables'
 import { prototypesKeys } from '@/config'
 
 export function useDeletePrototypeMutation() {

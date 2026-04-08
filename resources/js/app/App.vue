@@ -2,10 +2,10 @@
 import Toast from 'primevue/toast'
 import { RouterView } from 'vue-router'
 import ConfirmDialog from 'primevue/confirmdialog'
-import { ToggleThemeButton } from '@/components/button'
-import { useThemeStore } from '@/store/use.theme.store'
+import { ToggleThemeButton } from '@/shared/components/button'
+import { useAppThemeStore } from '@/app/store/use.app-theme.store'
 
-const themeStore = useThemeStore()
+const themeStore = useAppThemeStore()
 
 themeStore.initialize()
 </script>

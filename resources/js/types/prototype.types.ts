@@ -8,6 +8,7 @@ export type IPrototypePage = {
     updated_at: string
     parent_page_id?: string | null
     deep_index?: number
+    icon?: string | null
 }
 
 export type IPrototypeSummary = {

@@ -1,5 +1,5 @@
 import { httpClient } from '@/api/http.client'
-import type { PaginationParams, PaginatedCollectionResponse, ResourceResponse } from '@/types/api.types'
+import type { PaginationParams, PaginatedCollectionResponse, ResourceResponse } from '@/shared/types/pagination.types'
 import type { CreatePrototypePayload, IPrototype, IPrototypeSummary } from '@/types/prototype.types'
 
 function unwrapResource<TResource>(response: ResourceResponse<TResource>): TResource {

@@ -20,6 +20,7 @@ return new class extends Migration
 
             $table->string('file_name');
             $table->string('title');
+            $table->string('icon')->nullable();
             $table->text('description');
             $table->longText('implementation')->nullable();
 

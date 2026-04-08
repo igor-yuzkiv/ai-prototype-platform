@@ -126,6 +126,7 @@ OUTPUT FORMAT:
       "deep_index": 0,
       "file_name": "page-name.html",
       "title": "Human-readable page title",
+      "icon: "iconify-icon-name (optional, for UI purposes)",
       "description": "Structured plain text using [Purpose], [Layout], [Sections], [Components], [Interactions], [Data]"
     }
   ]
@@ -159,6 +160,7 @@ INSTRUCTIONS;
                     'file_name'    => $schema->string()->required(),
                     'title'        => $schema->string()->required(),
                     'description'  => $schema->string()->required(),
+                    'icon'         => $schema->string()->required()->nullable(),
                 ])->withoutAdditionalProperties()
             )->required(),
         ];

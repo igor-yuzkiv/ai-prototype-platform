@@ -25,7 +25,7 @@ const nodes = computed<Node[]>(() => {
             id: page.id,
             type: 'PrototypeScreen',
             position: {
-                x: depth * 350,
+                x: depth * 500,
                 y: rowIndex * 200,
             },
             data: page,
@@ -40,6 +40,7 @@ const edges = computed<Edge[]>(() => {
             id: `${page.parent_page_id}-${page.id}`,
             source: page.parent_page_id as string,
             target: page.id,
+            animated: true,
         }))
 })
 
@@ -50,7 +51,13 @@ function onNodeClick({ node }: NodeMouseEvent) {
 
 <template>
     <div class="flex h-full w-full overflow-hidden">
-        <VueFlow :nodes="nodes" :edges="edges" fit-view-on-init class="app-card flex-1" @node-click="onNodeClick">
+        <VueFlow
+            :nodes="nodes"
+            :edges="edges"
+            fit-view-on-init
+            class="rounded-lg flex-1 border bg-surface-100 dark:bg-surface-900"
+            @node-click="onNodeClick"
+        >
             <template #node-PrototypeScreen="{ id, data }">
                 <PrototypeScreenNode :id="id" :data="data" />
             </template>

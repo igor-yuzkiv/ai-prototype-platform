@@ -20,6 +20,7 @@ class PrototypePageModel extends Model
         'description',
         'deep_index',
         'implementation',
+        'icon',
     ];
 
     public function prototype(): BelongsTo

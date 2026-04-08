@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/vue-query'
 import { useRouter } from 'vue-router'
 import { prototypesApi } from '@/api/prototypes.api'
-import { useToast } from '@/composables'
+import { useToast } from '@/shared/composables'
 import type { CreatePrototypePayload } from '@/types/prototype.types'
 
 export function useCreatePrototypeMutation(onSuccess?: () => void) {
