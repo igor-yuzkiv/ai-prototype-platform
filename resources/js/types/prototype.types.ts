@@ -1,7 +1,7 @@
 export type IPrototype = {
     id: string
     name: string
-    requirements: string
+    initial_requirements: string
     formatted_requirements: string | null
     prototype_url: string
     created_at: string

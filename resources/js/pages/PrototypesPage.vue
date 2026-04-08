@@ -114,7 +114,7 @@ async function deletePrototype(prototype: IPrototype) {
                     </div>
 
                     <p class="mb-5 text-xs font-medium text-gray-500 line-clamp-3">
-                        {{ prototype.requirements }}
+                        {{ prototype.initial_requirements }}
                     </p>
 
                     <div class="gap-1.5 text-xs font-medium text-gray-500 mt-auto flex items-center">
