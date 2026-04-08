@@ -5,7 +5,7 @@ defineProps<{
 </script>
 
 <template>
-    <div class="border-l-[3px] border-orange-500 pl-2">
+    <div class="border-orange-500 pl-2 border-l-[3px]">
         <slot>
             <h2 class="font-semibold">{{ title }}</h2>
         </slot>

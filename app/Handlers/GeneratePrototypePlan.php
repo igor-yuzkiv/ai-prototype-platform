@@ -44,16 +44,29 @@ class GeneratePrototypePlan
      */
     private function savePages(PrototypeModel $prototype, Collection $pages): void
     {
+        $modelsByAiId = [];
+
         foreach ($pages as $page) {
-            $prototype->pages()->updateOrCreate(
+            $model = $prototype->pages()->updateOrCreate(
                 ['file_name' => $page->fileName],
                 [
-                    'file_name'   => $page->fileName,
                     'title'       => $page->title,
                     'description' => $page->description,
+                    'deep_index'  => $page->deepIndex,
                 ]
             );
+            $modelsByAiId[$page->aiId] = $model;
         }
 
+        foreach ($pages as $page) {
+            if ($page->parentAiId === null) {
+                continue;
+            }
+            $parent = $modelsByAiId[$page->parentAiId] ?? null;
+            if ($parent === null) {
+                continue;
+            }
+            $modelsByAiId[$page->aiId]->update(['parent_page_id' => $parent->id]);
+        }
     }
 }

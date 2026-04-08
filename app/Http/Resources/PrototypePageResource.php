@@ -13,6 +13,8 @@ class PrototypePageResource extends JsonResource
     {
         return [
             'id'             => $this->id,
+            'parent_page_id' => $this->parent_page_id,
+            'deep_index'     => $this->deep_index,
             'file_name'      => $this->file_name,
             'title'          => $this->title,
             'description'    => $this->description,

@@ -16,9 +16,9 @@ withDefaults(
 </script>
 
 <template>
-    <div class="flex flex-col items-center justify-center text-gray-400">
+    <div class="text-gray-400 flex flex-col items-center justify-center">
         <Icon :icon="icon" class="w-12 h-12" />
-        <div class="flex flex-col items-center gap-2 max-w-md mt-3">
+        <div class="gap-2 max-w-md mt-3 flex flex-col items-center">
             <h1 class="text-2xl font-bold">{{ title }}</h1>
             <p>{{ message }}</p>
         </div>

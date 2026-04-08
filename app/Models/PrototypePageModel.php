@@ -18,6 +18,7 @@ class PrototypePageModel extends Model
         'file_name',
         'title',
         'description',
+        'deep_index',
         'implementation',
     ];
 

@@ -6,6 +6,7 @@ export default [
     {
         ignores: [
             '**/dist/**',
+            '_tmp/**',
             'bootstrap/cache/**',
             'docker/pg-data/**',
             'public/build/**',

@@ -8,8 +8,8 @@ defineProps<{
 </script>
 
 <template>
-    <div class="flex flex-col gap-1">
-        <div class="text-gray-600 uppercase dark:text-gray-400">
+    <div class="gap-1 flex flex-col">
+        <div class="text-gray-600 dark:text-gray-400 uppercase">
             <slot name="label">{{ label }}</slot>
         </div>
         <slot name="value">

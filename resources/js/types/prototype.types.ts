@@ -6,6 +6,8 @@ export type IPrototypePage = {
     implementation: string | null
     created_at: string
     updated_at: string
+    parent_page_id?: string | null
+    deep_index?: number
 }
 
 export type IPrototypeSummary = {

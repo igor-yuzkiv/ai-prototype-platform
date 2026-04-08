@@ -3,16 +3,10 @@ import { useRouteParams } from '@vueuse/router'
 import { usePrototypeQuery } from '@/query'
 import { Icon } from '@iconify/vue'
 import { LoadingOverlay } from '@/components/loading'
-import type { Edge, Node } from '@vue-flow/core'
-import { VueFlow } from '@vue-flow/core'
-import { ref } from 'vue'
-
+import ProtptypeWorkspaceFlow from '@/components/prototype/workspace/ProtptypeWorkspaceFlow.vue'
 
 const prototypeId = useRouteParams<string>('id')
-const { prototype, isLoading: isLoadingPrototype } = usePrototypeQuery(prototypeId)
-
-const nodes = ref<Node[]>([])
-const edges = ref<Edge[]>([])
+const { prototype, pages, isLoading: isLoadingPrototype } = usePrototypeQuery(prototypeId)
 </script>
 
 <template>
@@ -32,11 +26,8 @@ const edges = ref<Edge[]>([])
             </div>
         </div>
 
-        <div class="flex flex-col flex-1">
-            <pre>
-                {{prototype}}
-            </pre>
-<!--            <VueFlow :nodes="nodes" :edges="edges" fit-view-on-init> </VueFlow>-->
+        <div class="flex flex-1 flex-col">
+            <ProtptypeWorkspaceFlow :screens="pages" />
         </div>
     </div>
 </template>
