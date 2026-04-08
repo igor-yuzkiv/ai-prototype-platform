@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domains\Prototype\Support;
+namespace App\Support;
 
 use App\Models\PrototypeModel;
 

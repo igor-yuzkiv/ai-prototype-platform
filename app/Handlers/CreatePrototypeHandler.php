@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Domains\Prototype\Handlers;
+namespace App\Handlers;
 
 use App\Ai\Agents\PrototypeNameGeneratorAgent;
 use App\Ai\Agents\RequirementsInterpreterAgent;
-use App\Domains\Prototype\Commands\CreatePrototypeCommand;
+use App\Commands\CreatePrototypeCommand;
 use App\Models\PrototypeModel;
 
 readonly class CreatePrototypeHandler

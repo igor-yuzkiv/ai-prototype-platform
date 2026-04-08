@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Domains\Prototype\Commands\CreatePrototypeCommand;
-use App\Domains\Prototype\Handlers\CreatePrototypeHandler;
-use App\Domains\Prototype\Handlers\DeletePrototypeHandler;
+use App\Commands\CreatePrototypeCommand;
+use App\Handlers\CreatePrototypeHandler;
+use App\Handlers\DeletePrototypeHandler;
 use App\Http\Resources\PrototypeResource;
 use App\Models\PrototypeModel;
 use Illuminate\Http\JsonResponse;
