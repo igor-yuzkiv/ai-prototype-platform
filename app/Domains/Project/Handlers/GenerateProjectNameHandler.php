@@ -2,13 +2,13 @@
 
 namespace App\Domains\Project\Handlers;
 
-use App\Ai\Agents\NamingAgent;
+use App\Ai\Agents\ProjectNameGeneratorAgent;
 
 class GenerateProjectNameHandler
 {
     public function __invoke(string $requirements): string
     {
-        $response = NamingAgent::make()->prompt(
+        $response = ProjectNameGeneratorAgent::make()->prompt(
             prompt: $requirements,
             model: 'gpt-4o-mini',
         );
