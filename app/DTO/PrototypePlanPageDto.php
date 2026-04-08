@@ -12,8 +12,7 @@ class PrototypePlanPageDto implements Arrayable
         public string $title,
         public string $description,
         public ?string $parentAiId = null,
-        public int $deepIndex = 0,
-        public ?string $icon = null
+        public int $deepIndex = 0
     ) {}
 
     public static function makeFromArray(array $data): self
@@ -24,8 +23,7 @@ class PrototypePlanPageDto implements Arrayable
             title: $data['title'] ?? '',
             description: $data['description'] ?? '',
             parentAiId: $data['parent_ai_id'] ?? null,
-            deepIndex: $data['deep_index'] ?? 0,
-            icon: $data['icon'] ?? null
+            deepIndex: $data['deep_index'] ?? 0
         );
     }
 
@@ -37,8 +35,7 @@ class PrototypePlanPageDto implements Arrayable
             'deep_index'   => $this->deepIndex,
             'file_name'    => $this->fileName,
             'title'        => $this->title,
-            'description'  => $this->description,
-            'icon'         => $this->icon,
+            'description'  => $this->description
         ];
     }
 }
