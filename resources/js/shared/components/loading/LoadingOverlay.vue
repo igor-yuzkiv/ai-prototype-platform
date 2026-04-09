@@ -75,21 +75,9 @@ withDefaults(
 .cap,
 .handle-top,
 .jaw-top,
+.jaw-bot,
 .handle-bot {
-    stroke: #6366f1;
-}
-.jaw-bot {
-    stroke: #a855f7;
-}
-
-:global(.dark) .cap,
-:global(.dark) .handle-top,
-:global(.dark) .jaw-top,
-:global(.dark) .handle-bot {
-    stroke: #818cf8;
-}
-:global(.dark) .jaw-bot {
-    stroke: #c084fc;
+    stroke: white;
 }
 
 /* ─── Cap  (arc length ≈ π × 6 ≈ 19) ─────────────────── */
