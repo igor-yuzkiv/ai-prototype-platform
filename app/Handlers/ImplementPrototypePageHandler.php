@@ -4,6 +4,7 @@ namespace App\Handlers;
 
 use App\Ai\Agents\PrototypePageImplementationAgent;
 use App\Models\PrototypePageModel;
+use Laravel\Ai\Responses\StreamableAgentResponse;
 
 class ImplementPrototypePageHandler
 {
@@ -11,14 +12,22 @@ class ImplementPrototypePageHandler
     {
 
         $prompt = $this->builderPrompt($page);
-        $response = (new PrototypePageImplementationAgent)
-            ->prompt(
+        $implementation = '';
+        $stream = (new PrototypePageImplementationAgent)
+            ->stream(
                 prompt: $prompt,
                 provider: 'anthropic',
                 model: 'claude-sonnet-4-6',
             );
 
-        $page->implementation = (string) $response;
+        foreach ($stream as $event) {
+            logger($event);
+            if (isset($event->delta)) {
+                $implementation .= $event->delta;
+            }
+        }
+
+        $page->implementation = $implementation;
         $page->save();
 
         return $page;
