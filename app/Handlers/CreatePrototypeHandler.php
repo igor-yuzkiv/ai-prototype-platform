@@ -27,7 +27,8 @@ readonly class CreatePrototypeHandler
     {
         return (new RequirementsInterpreterAgent)->prompt(
             prompt: $rawRequirements,
-            model: config('ai.models.fast'),
+            provider: config('ai.models.fast.provider'),
+            model: config('ai.models.fast.model'),
         );
     }
 
@@ -40,7 +41,8 @@ readonly class CreatePrototypeHandler
 
         return PrototypeNameGeneratorAgent::make()->prompt(
             prompt: $requirements,
-            model: config('ai.models.fast'),
+            provider: config('ai.models.fast.provider'),
+            model: config('ai.models.fast.model'),
         );
     }
 }

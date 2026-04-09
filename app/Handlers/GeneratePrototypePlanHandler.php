@@ -35,7 +35,8 @@ class GeneratePrototypePlanHandler
     {
         $response = (new PrototypePlannerAgent)->prompt(
             prompt: $prototype->formatted_requirements,
-            model: config('ai.models.smart'),
+            provider: config('ai.models.plan.provider'),
+            model: config('ai.models.plan.model'),
         );
 
         return PrototypePlanDto::makeFromAgentResponse($response);

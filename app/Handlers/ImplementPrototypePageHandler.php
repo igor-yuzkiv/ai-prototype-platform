@@ -16,8 +16,8 @@ class ImplementPrototypePageHandler
         $stream = (new PrototypePageImplementationAgent)
             ->stream(
                 prompt: $prompt,
-                provider: 'anthropic',
-                model: 'claude-sonnet-4-6',
+                provider: config('ai.models.code.provider'),
+                model: config('ai.models.code.model'),
             );
 
         foreach ($stream as $event) {
