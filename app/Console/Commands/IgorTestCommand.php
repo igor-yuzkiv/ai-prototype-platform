@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Events\PrototypeStatusChangedEvent;
+use App\Modules\Plan\Handlers\GeneratePrototypePlanHandler;
 use App\Modules\Prototype\Models\PrototypeModel;
 use Illuminate\Console\Command;
 
@@ -22,16 +22,13 @@ class IgorTestCommand extends Command
 
     private function test()
     {
-        $pro = PrototypeModel::firstOrFail();
-        broadcast(new PrototypeStatusChangedEvent($pro));
-
-        //        $prototype = PrototypeModel::find('01knph3xf63d2xwp5xcz62p2ys')->load('pages');
+        $pro = PrototypeModel::find('01knscxzs5zr5tkh3sm3p72005');
         //
         //        //        app(PublishPrototypeHandler::class)($prototype);
         //        //        dd();
         //
-        // //                app(GeneratePrototypePlanHandler::class)($prototype);
-        // //                dd();
+        app(GeneratePrototypePlanHandler::class)($pro);
+        dd();
         //
         //        foreach ($prototype->pages as $page) {
         //            app(ImplementPrototypePageHandler::class)($page);

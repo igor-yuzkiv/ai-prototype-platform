@@ -3,6 +3,7 @@
 namespace App\Modules\Plan\Handlers;
 
 use App\Ai\Agents\PrototypePlannerAgent;
+use App\Events\PrototypeStatusChangedEvent;
 use App\Modules\Plan\DTO\PrototypePlanDto;
 use App\Modules\Plan\DTO\PrototypePlanPageDto;
 use App\Modules\Prototype\Enums\PrototypeStatus;
@@ -27,6 +28,8 @@ class GeneratePrototypePlanHandler
         $this->savePages($prototype, $planDto->pages);
 
         $prototype->refresh();
+
+        PrototypeStatusChangedEvent::broadcast($prototype);
 
         return $prototype;
     }

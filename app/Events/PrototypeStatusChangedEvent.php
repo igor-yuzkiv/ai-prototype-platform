@@ -3,14 +3,12 @@
 namespace App\Events;
 
 use App\Broadcasting\BaseClientEvent;
-use App\Modules\Prototype\Enums\PrototypeStatus;
 use App\Modules\Prototype\Models\PrototypeModel;
 
 class PrototypeStatusChangedEvent extends BaseClientEvent
 {
     public function __construct(
-        private readonly PrototypeModel $prototype,
-        private readonly ?PrototypeStatus $origin = null,
+        private readonly PrototypeModel $prototype
     ) {}
 
     public function getEventName(): string
@@ -21,19 +19,17 @@ class PrototypeStatusChangedEvent extends BaseClientEvent
     protected function getMessage(): string
     {
         return sprintf(
-            'Prototype %s status changed from %s to %s',
+            'Prototype %s status changed to %s',
             $this->prototype->name,
-            $this->origin?->value ?? 'empty',
-            $this->prototype?->status->value ?? 'empty',
+            $this->prototype->status?->value ?? 'empty'
         );
     }
 
     protected function getEventData(): array
     {
         return [
-            'id'      => $this->prototype->id,
-            'origin'  => $this->origin?->value,
-            'current' => $this->prototype?->status->value,
+            'id'     => $this->prototype->id,
+            'status' => $this->prototype?->status->value,
         ];
     }
 }

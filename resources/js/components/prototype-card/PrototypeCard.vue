@@ -43,7 +43,7 @@ const updatedAt = computed<string>(() => {
                 <span>{{ prototype.status ?? 'new' }}</span>
             </div>
             <div class="gap-1.5 mt-auto flex items-center">
-                <Icon icon="mdi:clock-outline" />
+                <Icon icon="mdi-light:clock" />
                 <span>{{ updatedAt }}</span>
             </div>
         </div>
