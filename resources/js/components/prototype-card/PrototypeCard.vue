@@ -20,7 +20,7 @@ const updatedAt = computed<string>(() => {
 </script>
 
 <template>
-    <component :is="is" class="app-card rounded-md p-5 shadow-sm hover:shadow-md group flex flex-col border">
+    <component :is="is" class="rounded-lg p-5 group bg-white dark:bg-primary hover:shadow-sm flex flex-col">
         <div class="mb-3 flex items-center justify-between">
             <div class="gap-2 flex items-center">
                 <div class="h-8 w-8 rounded bg-primary-500 text-white flex items-center justify-center">

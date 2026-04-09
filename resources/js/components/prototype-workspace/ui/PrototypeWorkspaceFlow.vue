@@ -51,14 +51,8 @@ function onNodeClick({ node }: NodeMouseEvent) {
 </script>
 
 <template>
-    <div class="flex h-full w-full overflow-hidden">
-        <VueFlow
-            :nodes="nodes"
-            :edges="edges"
-            fit-view-on-init
-            class="rounded-lg bg-surface-100 dark:bg-surface-900 flex-1 border"
-            @node-click="onNodeClick"
-        >
+    <div class="dotted-background flex h-full w-full overflow-hidden">
+        <VueFlow :nodes="nodes" :edges="edges" fit-view-on-init class="rounded-lg flex-1" @node-click="onNodeClick">
             <template #node-PrototypeScreen="{ id, data }">
                 <PrototypeScreenNode :id="id" :data="data" />
             </template>

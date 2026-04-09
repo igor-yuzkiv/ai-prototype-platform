@@ -18,7 +18,7 @@ const appTheme = useAppThemeStore()
 <template>
     <Dialog
         v-model:visible="visible"
-        class="bg-primary h-[95vh] w-[98%] border-none"
+        class="dark:bg-primary h-[95vh] w-[98%] border-none"
         modal
         :header="page?.title ?? 'Page Details'"
     >

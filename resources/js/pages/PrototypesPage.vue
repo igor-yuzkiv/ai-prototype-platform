@@ -50,63 +50,67 @@ async function deletePrototype(prototype: IPrototypeSummary) {
 
 <template>
     <LoadingOverlay v-if="isLoading" message="Loading" />
-    <div class="p-2 container mx-auto flex h-full flex-col overflow-hidden">
-        <h1 class="my-10 leading-tight font-semibold text-center text-[28px]">What would you like to build today?</h1>
+    <div class="dotted-background flex h-full w-full overflow-hidden">
+        <div class="p-2 container mx-auto flex h-full flex-col overflow-hidden">
+            <h1 class="my-10 leading-tight font-semibold text-center text-[28px]">
+                What would you like to build today?
+            </h1>
 
-        <form class="mb-12 app-card" @submit.prevent="createPrototype">
-            <Textarea
-                v-model.trim="initialRequirements"
-                class="border-none bg-transparent shadow-none"
-                rows="5"
-                placeholder="Describe your prototype idea... (e.g., A real estate dashboard with a map view and property list)"
-                fluid
-                style="resize: none"
-            />
-
-            <div class="p-1 flex items-center justify-end">
-                <Button
-                    text
-                    type="submit"
-                    label="Let`s cook!"
-                    icon="pi pi-sparkles"
-                    size="small"
-                    :loading="createPrototypeMutation.isPending.value"
-                    :disabled="!canCreatePrototype"
+            <form class="mb-12 fff shadow-md bg-white dark:bg-primary rounded-lg" @submit.prevent="createPrototype">
+                <Textarea
+                    v-model.trim="initialRequirements"
+                    class="border-none bg-transparent shadow-none"
+                    rows="5"
+                    placeholder="Describe your prototype idea... (e.g., A real estate dashboard with a map view and property list)"
+                    fluid
+                    style="resize: none"
                 />
-            </div>
-        </form>
 
-        <section class="flex flex-1 flex-col overflow-hidden">
-            <h2 class="mb-5 text-base font-semibold">Recent Prototypes</h2>
+                <div class="p-1 flex items-center justify-end">
+                    <Button
+                        text
+                        type="submit"
+                        label="Let`s cook!"
+                        icon="pi pi-sparkles"
+                        size="small"
+                        :loading="createPrototypeMutation.isPending.value"
+                        :disabled="!canCreatePrototype"
+                    />
+                </div>
+            </form>
 
-            <NoDataMessage
-                v-if="prototypes.length === 0"
-                class="app-card-bordered p-2 flex-1"
-                title="No Prototypes Yet"
-                message="Your recently generated prototypes will appear here."
-                icon="ant-design:experiment-outlined"
-            />
+            <section class="flex flex-1 flex-col overflow-hidden">
+                <h2 class="mb-5 text-base font-semibold">Recent Prototypes</h2>
 
-            <div v-else class="gap-5 sm:grid-cols-3 grid grid-cols-1 overflow-auto">
-                <PrototypeCard
-                    v-for="prototype in prototypes"
-                    :key="prototype.id"
-                    :prototype="prototype"
-                    is="router-link"
-                    :to="`/prototypes/${prototype.id}`"
-                >
-                    <template #actions>
-                        <IconButton
-                            class="opacity-0 transition group-hover:opacity-100"
-                            icon="ant-design:delete-outlined"
-                            severity="danger"
-                            text
-                            :disabled="deleteMutation.isPending.value || createPrototypeMutation.isPending.value"
-                            @click.prevent="deletePrototype(prototype)"
-                        />
-                    </template>
-                </PrototypeCard>
-            </div>
-        </section>
+                <NoDataMessage
+                    v-if="prototypes.length === 0"
+                    class="p-2 flex-1"
+                    title="No Prototypes Yet"
+                    message="Your recently generated prototypes will appear here."
+                    icon="ant-design:experiment-outlined"
+                />
+
+                <div v-else class="gap-5 sm:grid-cols-3 grid grid-cols-1 overflow-auto">
+                    <PrototypeCard
+                        v-for="prototype in prototypes"
+                        :key="prototype.id"
+                        :prototype="prototype"
+                        is="router-link"
+                        :to="`/prototypes/${prototype.id}`"
+                    >
+                        <template #actions>
+                            <IconButton
+                                class="opacity-0 transition group-hover:opacity-100"
+                                icon="ant-design:delete-outlined"
+                                severity="danger"
+                                text
+                                :disabled="deleteMutation.isPending.value || createPrototypeMutation.isPending.value"
+                                @click.prevent="deletePrototype(prototype)"
+                            />
+                        </template>
+                    </PrototypeCard>
+                </div>
+            </section>
+        </div>
     </div>
 </template>

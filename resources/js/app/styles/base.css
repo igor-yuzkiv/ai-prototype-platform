@@ -39,28 +39,6 @@
     background: transparent;
 }
 
-.app-list-item-active {
-    @apply bg-blue-700 text-white;
-
-    .app-secondary-text {
-        @apply text-gray-300;
-    }
-}
-
-.app-secondary-text {
-    @apply text-gray-400;
-}
-
-.app-card {
-    @apply bg-primary rounded-lg border;
-    border-color: var(--theme-border);
-}
-
-.app-card-bordered {
-    @apply bg-primary rounded-lg border border-dashed;
-    border-color: var(--theme-border);
-}
-
 
 .app-thin-scrollbar::-webkit-scrollbar {
     width: 3px !important;

@@ -16,7 +16,7 @@ themeStore.initialize()
             <RouterView />
         </main>
 
-        <div class="flex w-full items-center justify-end border-t">
+        <div class="flex w-full items-center justify-end">
             <ToggleThemeButton :is-dark="themeStore.isDark" @click="themeStore.toggle()" />
         </div>
     </div>
