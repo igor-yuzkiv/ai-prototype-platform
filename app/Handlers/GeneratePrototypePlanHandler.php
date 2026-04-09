@@ -5,6 +5,7 @@ namespace App\Handlers;
 use App\Ai\Agents\PrototypePlannerAgent;
 use App\DTO\PrototypePlanDto;
 use App\DTO\PrototypePlanPageDto;
+use App\Enums\PrototypeStatus;
 use App\Models\PrototypeModel;
 use Illuminate\Support\Collection;
 
@@ -20,6 +21,7 @@ class GeneratePrototypePlanHandler
 
         $prototype->project_overview = $planDto->projectOverview;
         $prototype->global_rules = $planDto->globalRules;
+        $prototype->status = PrototypeStatus::Planned;
         $prototype->save();
 
         $this->savePages($prototype, $planDto->pages);

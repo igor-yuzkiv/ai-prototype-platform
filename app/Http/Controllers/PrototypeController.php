@@ -6,6 +6,7 @@ use App\Commands\CreatePrototypeCommand;
 use App\Handlers\CreatePrototypeHandler;
 use App\Handlers\DeletePrototypeHandler;
 use App\Handlers\GeneratePrototypePlanHandler;
+use App\Handlers\PublishPrototypeHandler;
 use App\Http\Resources\PrototypeResource;
 use App\Http\Resources\PrototypeSummaryResource;
 use App\Models\PrototypeModel;
@@ -62,6 +63,15 @@ class PrototypeController extends Controller
     public function generatePlan(PrototypeModel $prototype, GeneratePrototypePlanHandler $handler): PrototypeResource
     {
         $prototype = $handler($prototype);
+
+        return new PrototypeResource($prototype);
+    }
+
+    public function publish(PrototypeModel $prototype, PublishPrototypeHandler $handler): PrototypeResource
+    {
+        $prototype->load('pages');
+        $handler($prototype);
+        $prototype->refresh();
 
         return new PrototypeResource($prototype);
     }

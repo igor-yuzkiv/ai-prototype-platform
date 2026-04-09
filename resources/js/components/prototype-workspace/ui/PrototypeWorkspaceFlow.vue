@@ -26,8 +26,8 @@ const nodes = computed<Node[]>(() => {
             id: page.id,
             type: 'PrototypeScreen',
             position: {
-                x: depth * 500,
-                y: rowIndex * 200,
+                x: depth * 1400,
+                y: rowIndex * 1000,
             },
             data: page,
         }

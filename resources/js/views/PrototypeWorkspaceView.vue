@@ -5,16 +5,27 @@ import { Icon } from '@iconify/vue'
 import { LoadingOverlay } from '@/shared/components/loading'
 import { PrototypeWorkspaceFlow } from '@/components/prototype-workspace'
 import { PrototypePageDetailDialog, usePrototypePageDetailsDialog } from '@/components/prototype-page'
-import { MdPreview } from 'md-editor-v3'
-import { useAppThemeStore } from '@/app/store/use.app-theme.store'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import Splitter from 'primevue/splitter'
 import SplitterPanel from 'primevue/splitterpanel'
+import { prototypesApi } from '@/api/prototypes.api'
+import Button from 'primevue/button'
 
 const prototypeId = useRouteParams<string>('id')
-const { prototype, pages, isLoading: isLoadingPrototype } = usePrototypeQuery(prototypeId)
-const appTheme = useAppThemeStore()
+const { prototype, pages, isLoading: isLoadingPrototype, refetch } = usePrototypeQuery(prototypeId)
 const pageDialog = usePrototypePageDetailsDialog()
+
+const isPublishing = ref(false)
+
+async function publish() {
+    isPublishing.value = true
+    try {
+        await prototypesApi.publish(prototypeId.value)
+        await refetch()
+    } finally {
+        isPublishing.value = false
+    }
+}
 
 const textView = computed(() => {
     const parts = []
@@ -58,6 +69,23 @@ const textView = computed(() => {
 
                 <h3 class="font-semibold">{{ prototype.name }}</h3>
             </div>
+
+            <div class="gap-x-2 flex items-center">
+                <a
+                    v-if="prototype.prototype_url && prototype.status === 'published'"
+                    :href="prototype.prototype_url"
+                    target="_blank"
+                    class="gap-x-1 text-sm text-primary-500 flex items-center hover:underline"
+                >
+                    <Icon icon="material-symbols:open-in-new" class="w-4 h-4" />
+                    Open
+                </a>
+
+                <Button :disabled="isPublishing" @click="publish">
+                    <Icon icon="material-symbols:publish" class="w-4 h-4" />
+                    {{ isPublishing ? 'Publishing…' : 'Publish' }}
+                </Button>
+            </div>
         </div>
 
         <Splitter
@@ -70,14 +98,7 @@ const textView = computed(() => {
                 style="min-width: 10rem; max-width: 50rem"
             >
                 <div class="bg-white dark:bg-primary rounded-lg p-2 flex h-full w-full flex-col overflow-auto">
-                    <MdPreview
-                        :modelValue="textView"
-                        :theme="appTheme.isDark ? 'dark' : 'light'"
-                        language="en-US"
-                        :codeFoldable="false"
-                        previewTheme="github"
-                        codeTheme="github"
-                    />
+                    <pre>{{ textView }}</pre>
                 </div>
             </SplitterPanel>
             <SplitterPanel class="flex h-full w-full flex-col overflow-hidden">

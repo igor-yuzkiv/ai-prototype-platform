@@ -36,4 +36,10 @@ export const prototypesApi = {
 
         return unwrapResource(response.data)
     },
+
+    async publish(prototypeId: string): Promise<IPrototype> {
+        const response = await httpClient.post<ResourceResponse<IPrototype>>(`/prototypes/${prototypeId}/publish`)
+
+        return unwrapResource(response.data)
+    },
 }

@@ -51,7 +51,12 @@ const appTheme = useAppThemeStore()
                         class="h-full w-full"
                     />
 
-                    <iframe v-else :srcdoc="page.implementation" class="rounded h-full w-full border-none" />
+                    <iframe
+                        v-else
+                        :srcdoc="page.implementation"
+                        class="rounded h-full w-full border-none"
+                        sandbox="allow-scripts"
+                    />
                 </TabPanel>
                 <TabPanel value="code" class="gap-2 p-2 h-full w-full overflow-hidden">
                     <NoDataMessage

@@ -33,13 +33,19 @@ const updatedAt = computed<string>(() => {
             <slot name="actions" :prototype="prototype" />
         </div>
 
-        <p class="mb-5 text-xs font-medium text-gray-500 line-clamp-3">
+        <div class="mb-5 text-xs font-medium text-gray-500 line-clamp-3 h-full">
             {{ prototype.project_overview ?? 'New prototype' }}
-        </p>
+        </div>
 
-        <div class="gap-1.5 text-xs font-medium text-gray-500 mt-auto flex items-center">
-            <Icon icon="mdi:clock-outline" />
-            <span>{{ updatedAt }}</span>
+        <div class="text-xs font-medium text-gray-500 flex items-center justify-between">
+            <div class="gap-1.5 mt-auto flex items-center">
+                <Icon icon="hugeicons:status" />
+                <span>{{ prototype.status ?? 'new' }}</span>
+            </div>
+            <div class="gap-1.5 mt-auto flex items-center">
+                <Icon icon="mdi:clock-outline" />
+                <span>{{ updatedAt }}</span>
+            </div>
         </div>
     </component>
 </template>

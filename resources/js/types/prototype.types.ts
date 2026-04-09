@@ -11,9 +11,13 @@ export type IPrototypePage = {
     icon?: string | null
 }
 
+export type PrototypeStatus = 'new' | 'planned' | 'implemented' | 'published'
+
 export type IPrototypeSummary = {
     id: string
     name: string
+    status: PrototypeStatus | null
+    prototype_url: string | null
     project_overview: string | null
     created_at: string
     updated_at: string
@@ -23,7 +27,6 @@ export type IPrototype = IPrototypeSummary & {
     initial_requirements: string
     formatted_requirements: string | null
     global_rules: string | null
-    prototype_url: string
     pages: IPrototypePage[]
 }
 

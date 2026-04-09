@@ -5,6 +5,7 @@ namespace App\Handlers;
 use App\Ai\Agents\PrototypeNameGeneratorAgent;
 use App\Ai\Agents\RequirementsInterpreterAgent;
 use App\Commands\CreatePrototypeCommand;
+use App\Enums\PrototypeStatus;
 use App\Models\PrototypeModel;
 
 readonly class CreatePrototypeHandler
@@ -16,6 +17,7 @@ readonly class CreatePrototypeHandler
 
         return PrototypeModel::query()->create([
             'name'                   => $name,
+            'status'                 => PrototypeStatus::New,
             'initial_requirements'   => $command->initialRequirements,
             'formatted_requirements' => $normalizedRequirements,
         ]);

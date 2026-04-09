@@ -5,11 +5,11 @@ const router = createRouter({
     routes: [
         {
             path: '/',
-            component: () => import('@/pages/PrototypesPage.vue'),
+            component: () => import('@/views/PrototypesView.vue'),
         },
         {
             path: '/prototypes/:id',
-            component: () => import('@/pages/PrototypeWorkspacePage.vue'),
+            component: () => import('@/views/PrototypeWorkspaceView.vue'),
         },
     ],
 })
