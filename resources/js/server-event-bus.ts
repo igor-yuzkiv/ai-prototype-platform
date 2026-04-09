@@ -7,12 +7,13 @@ export interface ServerEvent<TData = unknown> {
 
 type ServerEventMap = Record<string, ServerEvent>
 type Unsubscribe = () => void
-type WildcardHandler = (payload: ServerEvent, eventName: string) => void
+
+type EventHandler<TData = unknown> = (eventName: string, payload: ServerEvent<TData>) => void
 
 class ServerEventBus {
     private channel: ReturnType<typeof window.Echo.channel> | null = null
     private emitter = mitt<ServerEventMap>()
-    private wildcardHandlers = new Map<string, Set<WildcardHandler>>()
+    private wildcardHandlers = new Map<string, Set<EventHandler>>()
 
     mount() {
         if (!window.Echo || !window.Pusher) {
@@ -51,10 +52,7 @@ class ServerEventBus {
         this.wildcardHandlers.clear()
     }
 
-    on<TData = unknown>(
-        eventName: string,
-        handler: (payload: ServerEvent<TData>, eventName: string) => void
-    ): Unsubscribe {
+    on<TData = unknown>(eventName: string, handler: EventHandler<TData>): Unsubscribe {
         if (eventName.endsWith('*') && eventName.length > 1) {
             const prefix = eventName.slice(0, -1)
             let set = this.wildcardHandlers.get(prefix)
@@ -62,22 +60,22 @@ class ServerEventBus {
                 set = new Set()
                 this.wildcardHandlers.set(prefix, set)
             }
-            set.add(handler as WildcardHandler)
+            set.add(handler as EventHandler)
             return () => this.off(eventName, handler)
         }
 
-        this.emitter.on(eventName, handler as (payload: ServerEvent) => void)
+        this.emitter.on(eventName, handler as () => void)
         return () => this.off(eventName, handler)
     }
 
-    off<TData = unknown>(eventName: string, handler: (payload: ServerEvent<TData>, eventName: string) => void): void {
+    off<TData = unknown>(eventName: string, handler: EventHandler<TData>): void {
         if (eventName.endsWith('*') && eventName.length > 1) {
             const prefix = eventName.slice(0, -1)
-            this.wildcardHandlers.get(prefix)?.delete(handler as WildcardHandler)
+            this.wildcardHandlers.get(prefix)?.delete(handler as EventHandler)
             return
         }
 
-        this.emitter.off(eventName, handler as (payload: ServerEvent) => void)
+        this.emitter.off(eventName, handler as () => void)
     }
 
     private handleServerEvent(eventName: string, payload: ServerEvent) {
@@ -85,7 +83,7 @@ class ServerEventBus {
 
         for (const [prefix, handlers] of this.wildcardHandlers.entries()) {
             if (eventName.startsWith(prefix)) {
-                handlers.forEach((h) => h(payload, eventName))
+                handlers.forEach((h) => h(eventName, payload))
             }
         }
     }

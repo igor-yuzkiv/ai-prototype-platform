@@ -21,9 +21,10 @@ class PrototypeStatusChangedEvent extends BaseClientEvent
     protected function getMessage(): string
     {
         return sprintf(
-            'Prototype status changed from %s to %s',
-            $this->origin?->value ?? 'unknown',
-            $this->prototype?->status->value ?? 'unknown'
+            'Prototype %s status changed from %s to %s',
+            $this->prototype->name,
+            $this->origin?->value ?? 'empty',
+            $this->prototype?->status->value ?? 'empty',
         );
     }
 
