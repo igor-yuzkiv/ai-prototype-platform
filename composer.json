@@ -13,6 +13,7 @@
         "laravel/ai": "0.x-dev",
         "laravel/framework": "^13.0",
         "laravel/horizon": "^5.45",
+        "laravel/reverb": "^1.10",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^3.0"
     },

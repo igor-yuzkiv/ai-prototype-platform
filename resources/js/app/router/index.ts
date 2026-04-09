@@ -10,7 +10,7 @@ const router = createRouter({
         {
             path: '/prototypes/:id',
             component: () => import('@/views/PrototypeWorkspaceView.vue'),
-        },
+        }
     ],
 })
 

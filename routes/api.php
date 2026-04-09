@@ -25,3 +25,11 @@ Route::group(
 );
 
 // Route::post('prototypes/{prototype}/prototype/generate', [PrototypeGeneratorController::class, 'generate']);
+
+// Route::post('/test-broadcast', function (Request $request) {
+//    logger()->info($request->all());
+//    $message = $request->string('message', 'Hello from Reverb!')->toString();
+//    broadcast(new TestBroadcastEvent($message));
+//
+//    return response()->json(['message' => $message]);
+// });

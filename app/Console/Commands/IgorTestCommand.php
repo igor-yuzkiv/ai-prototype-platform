@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Events\TestBroadcastEvent;
 use App\Handlers\ImplementPrototypePageHandler;
 use App\Handlers\GeneratePrototypePlanHandler;
 use App\Models\PrototypeModel;
@@ -11,7 +12,7 @@ class IgorTestCommand extends Command
 {
     protected $signature = 'igor:test {--action=}';
 
-    protected $description = 'Command description';
+protected $description = 'Command description';
 
     public function handle(): void
     {
@@ -23,18 +24,20 @@ class IgorTestCommand extends Command
 
     private function test()
     {
-        $prototype = PrototypeModel::find('01knph3xf63d2xwp5xcz62p2ys')->load('pages');
+        broadcast(new TestBroadcastEvent('ASD'));
 
-        //        app(PublishPrototypeHandler::class)($prototype);
-        //        dd();
-
-//                app(GeneratePrototypePlanHandler::class)($prototype);
-//                dd();
-
-        foreach ($prototype->pages as $page) {
-            app(ImplementPrototypePageHandler::class)($page);
-            dump($page->file_name);
-            sleep(1);
-        }
+//        $prototype = PrototypeModel::find('01knph3xf63d2xwp5xcz62p2ys')->load('pages');
+//
+//        //        app(PublishPrototypeHandler::class)($prototype);
+//        //        dd();
+//
+////                app(GeneratePrototypePlanHandler::class)($prototype);
+////                dd();
+//
+//        foreach ($prototype->pages as $page) {
+//            app(ImplementPrototypePageHandler::class)($page);
+//            dump($page->file_name);
+//            sleep(1);
+//        }
     }
 }
