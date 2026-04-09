@@ -1,5 +1,6 @@
 import Echo from 'laravel-echo'
 import Pusher from 'pusher-js'
+import { serverEventBus } from '@/server-event-bus'
 
 declare global {
     interface Window {
@@ -21,4 +22,6 @@ export default function () {
         forceTLS: (import.meta.env.VITE_REVERB_SCHEME ?? 'https') === 'https',
         enabledTransports: ['ws', 'wss'],
     })
+
+    serverEventBus.mount()
 }

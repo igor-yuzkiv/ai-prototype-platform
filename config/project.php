@@ -10,4 +10,7 @@ return [
         'base_path' => env('TEMPLATES_BASE_PATH'),
         'base_url'  => env('TEMPLATES_BASE_URL'),
     ],
+    'client_broadcast' => [
+        'channel_name' => env('CLIENT_BROADCAST_CHANNEL', 'client-channel'),
+    ],
 ];

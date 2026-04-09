@@ -8,4 +8,5 @@ interface ImportMetaEnv {
     readonly VITE_REVERB_WS_PORT?: number
     readonly VITE_REVERB_WSS_PORT?: number
     readonly VITE_REVERB_SCHEME?: string
+    readonly VITE_CLIENT_BROADCAST_CHANNEL: string
 }

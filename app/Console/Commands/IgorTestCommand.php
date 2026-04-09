@@ -2,14 +2,15 @@
 
 namespace App\Console\Commands;
 
-use App\Events\TestBroadcastEvent;
+use App\Events\PrototypeStatusChangedEvent;
+use App\Modules\Prototype\Models\PrototypeModel;
 use Illuminate\Console\Command;
 
 class IgorTestCommand extends Command
 {
     protected $signature = 'igor:test {--action=}';
 
-protected $description = 'Command description';
+    protected $description = 'Command description';
 
     public function handle(): void
     {
@@ -21,20 +22,21 @@ protected $description = 'Command description';
 
     private function test()
     {
-        broadcast(new TestBroadcastEvent('ASD'));
+        $pro = PrototypeModel::firstOrFail();
+        broadcast(new PrototypeStatusChangedEvent($pro));
 
-//        $prototype = PrototypeModel::find('01knph3xf63d2xwp5xcz62p2ys')->load('pages');
-//
-//        //        app(PublishPrototypeHandler::class)($prototype);
-//        //        dd();
-//
-////                app(GeneratePrototypePlanHandler::class)($prototype);
-////                dd();
-//
-//        foreach ($prototype->pages as $page) {
-//            app(ImplementPrototypePageHandler::class)($page);
-//            dump($page->file_name);
-//            sleep(1);
-//        }
+        //        $prototype = PrototypeModel::find('01knph3xf63d2xwp5xcz62p2ys')->load('pages');
+        //
+        //        //        app(PublishPrototypeHandler::class)($prototype);
+        //        //        dd();
+        //
+        // //                app(GeneratePrototypePlanHandler::class)($prototype);
+        // //                dd();
+        //
+        //        foreach ($prototype->pages as $page) {
+        //            app(ImplementPrototypePageHandler::class)($page);
+        //            dump($page->file_name);
+        //            sleep(1);
+        //        }
     }
 }
