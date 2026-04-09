@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Handlers\GeneratePrototypePlanHandler;
+use App\Handlers\GeneratePrototypePageHandler;
 use App\Models\PrototypeModel;
 use Illuminate\Console\Command;
 
@@ -22,7 +22,17 @@ class IgorTestCommand extends Command
 
     private function test()
     {
-        $prototype = PrototypeModel::find('01knph3xf63d2xwp5xcz62p2ys')->load('pages');
-        app(GeneratePrototypePlanHandler::class)($prototype);
+        $prototype = PrototypeModel::find('01knpjmmq9nv71e2zjmg620am9')->load('pages');
+
+        //        app(GeneratePrototypePlanHandler::class)($prototype);
+        //        dd();
+
+        foreach ($prototype->pages as $page) {
+            if ($page->implementation) {
+                continue;
+            }
+            app(GeneratePrototypePageHandler::class)($page);
+            dd(1);
+        }
     }
 }

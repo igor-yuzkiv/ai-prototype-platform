@@ -16,7 +16,7 @@ return [
     'models' => [
         'fast'  => env('AI_FAST_MODEL', 'gpt-4o-mini'),
         'smart' => env('AI_SMART_MODEL', 'gpt-4o'),
-        'code'  => env('AI_CODE_MODEL', 'gpt-4o'),
+        'code'  => env('AI_CODE_MODEL', 'gpt-5.3-codex'),
     ],
 
     'default'                   => 'openai',

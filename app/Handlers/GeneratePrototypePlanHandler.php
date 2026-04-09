@@ -44,7 +44,7 @@ class GeneratePrototypePlanHandler
      */
     private function savePages(PrototypeModel $prototype, Collection $pages): void
     {
-        // TODO: ?delete?
+        $prototype->pages()->delete();
 
         $modelsByAiId = [];
 
