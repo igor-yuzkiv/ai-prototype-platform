@@ -23,7 +23,7 @@ class IgorTestCommand extends Command
 
     private function test()
     {
-        $prototype = PrototypeModel::find('01knryk4h4hswxtc1n6gt6wts0')->load('pages');
+        $prototype = PrototypeModel::find('01knph3xf63d2xwp5xcz62p2ys')->load('pages');
 
         //        app(PublishPrototypeHandler::class)($prototype);
         //        dd();
