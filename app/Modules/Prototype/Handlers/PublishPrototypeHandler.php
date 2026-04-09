@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Handlers;
+namespace App\Modules\Prototype\Handlers;
 
-use App\Enums\PrototypeStatus;
-use App\Models\PrototypeModel;
-use App\Models\PrototypePageModel;
-use App\Support\PrototypePathResolver;
+use App\Modules\Page\Models\PrototypePageModel;
+use App\Modules\Prototype\Enums\PrototypeStatus;
+use App\Modules\Prototype\Models\PrototypeModel;
+use App\Modules\Prototype\Support\PrototypePathResolver;
 use Illuminate\Support\Facades\File;
 
 readonly class PublishPrototypeHandler

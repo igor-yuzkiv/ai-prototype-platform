@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DTO;
+namespace App\Modules\Plan\DTO;
 
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;

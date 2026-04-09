@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Commands\CreatePrototypeCommand;
-use App\Handlers\CreatePrototypeHandler;
-use App\Handlers\DeletePrototypeHandler;
-use App\Handlers\GeneratePrototypePlanHandler;
-use App\Handlers\PublishPrototypeHandler;
 use App\Http\Resources\PrototypeResource;
 use App\Http\Resources\PrototypeSummaryResource;
-use App\Models\PrototypeModel;
+use App\Modules\Plan\Handlers\GeneratePrototypePlanHandler;
+use App\Modules\Prototype\Commands\CreatePrototypeCommand;
+use App\Modules\Prototype\Handlers\CreatePrototypeHandler;
+use App\Modules\Prototype\Handlers\DeletePrototypeHandler;
+use App\Modules\Prototype\Handlers\PublishPrototypeHandler;
+use App\Modules\Prototype\Models\PrototypeModel;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 

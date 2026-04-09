@@ -2,9 +2,9 @@
 
 namespace App\Http\Resources;
 
-use App\Enums\PrototypeStatus;
-use App\Models\PrototypeModel;
-use App\Support\PrototypePathResolver;
+use App\Modules\Prototype\Enums\PrototypeStatus;
+use App\Modules\Prototype\Models\PrototypeModel;
+use App\Modules\Prototype\Support\PrototypePathResolver;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 

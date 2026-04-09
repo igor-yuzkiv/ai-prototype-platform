@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Handlers;
+namespace App\Modules\Prototype\Handlers;
 
-use App\Models\PrototypeModel;
-use App\Support\PrototypePathResolver;
+use App\Modules\Prototype\Models\PrototypeModel;
+use App\Modules\Prototype\Support\PrototypePathResolver;
 use Illuminate\Support\Facades\File;
 
 readonly class DeletePrototypeHandler

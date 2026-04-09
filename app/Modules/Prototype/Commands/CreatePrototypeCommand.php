@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Commands;
+namespace App\Modules\Prototype\Commands;
 
 readonly class CreatePrototypeCommand
 {

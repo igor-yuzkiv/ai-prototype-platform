@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Handlers;
+namespace App\Modules\Page\Handlers;
 
 use App\Ai\Agents\PrototypePageImplementationAgent;
-use App\Models\PrototypePageModel;
+use App\Modules\Page\Models\PrototypePageModel;
 
 class ImplementPageHandler
 {

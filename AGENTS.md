@@ -24,6 +24,19 @@ Additional abstractions may be used only when justified:
 
 For APIs, default to Eloquent API Resources with versioning — unless existing routes don't follow this convention, in which case follow the existing pattern.
 
+## Project Structure
+
+```
+app/
+├── Http/         # Controllers, Resources
+├── Console/      # Artisan commands
+├── Providers/    # Service providers
+├── Ai/           # AI agents (app/Ai/Agents/)
+└── Modules/      # Business logic by domain (Page, Plan, Prototype, User)
+```
+
+This is **not DDD** — modules are a pragmatic grouping, not strict layers. Each module contains what it needs: Commands, Handlers, Models, Enums, DTOs, Support classes.
+
 ## Command / Handler Approach
 
 This project follows a lightweight Command / Handler style.
@@ -34,7 +47,7 @@ This project follows a lightweight Command / Handler style.
 - Avoid ceremony — keep handlers focused and practical
 - Commands should be simple data carriers
 - Handlers should contain the actual application logic
-- Domain handlers should expose `__invoke(...)` instead of `handle(...)` and be called as invokable objects
+- Handlers should expose `__invoke(...)` instead of `handle(...)` and be called as invokable objects
 - Keep Laravel framework entrypoints such as job and console command `handle(...)` methods unchanged
 
 ## Code Formatting

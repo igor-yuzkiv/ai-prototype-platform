@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Handlers;
+namespace App\Modules\Prototype\Handlers;
 
 use App\Ai\Agents\PrototypeNameGeneratorAgent;
 use App\Ai\Agents\RequirementsInterpreterAgent;
-use App\Commands\CreatePrototypeCommand;
-use App\Enums\PrototypeStatus;
-use App\Models\PrototypeModel;
+use App\Modules\Prototype\Commands\CreatePrototypeCommand;
+use App\Modules\Prototype\Enums\PrototypeStatus;
+use App\Modules\Prototype\Models\PrototypeModel;
 
 readonly class CreatePrototypeHandler
 {

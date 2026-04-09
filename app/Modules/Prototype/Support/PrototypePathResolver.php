@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Support;
+namespace App\Modules\Prototype\Support;
 
-use App\Models\PrototypeModel;
+use App\Modules\Prototype\Models\PrototypeModel;
 
 class PrototypePathResolver
 {

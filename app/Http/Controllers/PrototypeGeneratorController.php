@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Ai\Agents\PrototypePageImplementationAgent;
-use App\Models\PrototypeModel;
+use App\Modules\Prototype\Models\PrototypeModel;
 
 class PrototypeGeneratorController extends Controller
 {

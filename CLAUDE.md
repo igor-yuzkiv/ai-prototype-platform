@@ -57,16 +57,34 @@ php artisan pail             # Stream logs
 Frontend (Axios @ resources/js/api/) → /routes/api.php → Controllers → Command/Handler → Models → DB
 ```
 
+### Backend Structure
+
+```
+app/
+├── Http/                        # Controllers, Resources (Laravel standard)
+├── Console/                     # Artisan commands (Laravel standard)
+├── Providers/                   # Service providers (Laravel standard)
+├── Ai/                          # AI agents (app/Ai/Agents/)
+└── Modules/                     # Business logic grouped by domain
+    ├── Page/                    # Handlers, Models
+    ├── Plan/                    # DTO, Handlers
+    ├── Prototype/               # Commands, Enums, Handlers, Models, Support
+    └── User/                    # Models
+```
+
+This is **not DDD** — it's a pragmatic module grouping. No strict layer rules, just logical separation.
+
 ### Backend Conventions
 
 Write operations use the **Command/Handler pattern**:
-- Commands are simple data carriers (e.g., `CreateProjectCommand`)
-- Handlers contain application logic and dispatch jobs (e.g., `CreateProjectHandler`)
+- Commands are simple data carriers (e.g., `CreatePrototypeCommand`)
+- Handlers contain application logic (e.g., `CreatePrototypeHandler`)
+- Handlers expose `__invoke(...)` and are called as invokable objects
 - Async work goes in Jobs (`app/Jobs/`)
 
 Read operations use controllers directly with Eloquent. API responses use Eloquent API Resources.
 
-Domain code lives in `app/Domains/{Domain}/` with Commands, Handlers, and Queries. Models stay in `app/Models/`.
+Models live inside their respective module: `app/Modules/{Module}/Models/`.
 
 ### Frontend Conventions
 

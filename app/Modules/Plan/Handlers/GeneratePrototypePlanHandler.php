@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Handlers;
+namespace App\Modules\Plan\Handlers;
 
 use App\Ai\Agents\PrototypePlannerAgent;
-use App\DTO\PrototypePlanDto;
-use App\DTO\PrototypePlanPageDto;
-use App\Enums\PrototypeStatus;
-use App\Models\PrototypeModel;
+use App\Modules\Plan\DTO\PrototypePlanDto;
+use App\Modules\Plan\DTO\PrototypePlanPageDto;
+use App\Modules\Prototype\Enums\PrototypeStatus;
+use App\Modules\Prototype\Models\PrototypeModel;
 use Illuminate\Support\Collection;
 
 class GeneratePrototypePlanHandler
