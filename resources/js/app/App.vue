@@ -23,7 +23,7 @@ onBeforeUnmount(() => serverEventBus.unmount())
 </script>
 
 <template>
-    <div class="bg-secondary flex h-screen w-full flex-col overflow-hidden">
+    <div class="app-background flex h-screen w-full flex-col overflow-hidden">
         <main class="relative h-full flex-1 flex-col overflow-hidden">
             <RouterView />
         </main>

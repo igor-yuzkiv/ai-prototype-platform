@@ -17,7 +17,7 @@ defineProps<{
     <div
         class="rounded-lg gap-1 shadow-md bg-white dark:bg-shark-900 flex h-[883px] w-[1280px] flex-col overflow-hidden border border-dashed"
     >
-        <div class="gap-x-2 bg-primary rounded-t-lg px-2 py-1 flex items-center">
+        <div class="gap-x-2 bg-gray-200 dark:bg-shark-700 rounded-t-lg px-2 py-1 flex items-center">
             <Icon :icon="data?.icon ?? 'icon-park-twotone:web-page'" class="text-primary-500" />
             <div class="flex flex-col">
                 <h3 class="font-bold">{{ data.title }}</h3>

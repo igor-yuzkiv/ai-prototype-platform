@@ -50,7 +50,7 @@ async function deletePrototype(prototype: IPrototypeSummary) {
 
 <template>
     <LoadingOverlay v-if="isLoading" message="Loading" />
-    <div class="dotted-background flex h-full w-full overflow-hidden">
+    <div class="flex h-full w-full overflow-hidden">
         <div class="p-2 container mx-auto flex h-full flex-col overflow-hidden">
             <h1 class="my-10 leading-tight font-semibold text-center text-[28px]">
                 What would you like to build today?

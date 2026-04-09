@@ -37,3 +37,21 @@
     width: 3px !important;
     height: 3px !important;
 }
+
+:root {
+    .app-background {
+        background: linear-gradient(
+            to top right,
+            #F8FDFF 45%,
+            #FFFFFF 60%,
+            #FFFFFF 100%
+        );
+    }
+}
+
+.dark,
+[data-theme='dark'] {
+    .app-background {
+        background: var(--app-color-secondary);
+    }
+}
