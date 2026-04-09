@@ -15,10 +15,10 @@ defineProps<{
     <Handle type="target" :position="Position.Left" />
 
     <div
-        class="rounded-lg gap-1 shadow-md bg-white dark:bg-shark-900 flex h-[883px] w-[1280px] flex-col overflow-hidden border border-dashed"
+        class="rounded-lg gap-1 shadow-md bg-white dark:bg-shark-900 border-primary-600 flex h-[883px] w-[1280px] flex-col overflow-hidden border-3"
     >
-        <div class="gap-x-2 bg-gray-200 dark:bg-shark-700 rounded-t-lg px-2 py-1 flex items-center">
-            <Icon :icon="data?.icon ?? 'icon-park-twotone:web-page'" class="text-primary-500" />
+        <div class="gap-x-4 rounded-t-lg px-2 py-1 flex items-center border-b">
+            <Icon icon="wordpress:page" class="w-7 h-7 text-primary-500" />
             <div class="flex flex-col">
                 <h3 class="font-bold">{{ data.title }}</h3>
                 <span class="text-xs text-gray-400">{{ data.file_name }}</span>
@@ -34,7 +34,7 @@ defineProps<{
 
             <div class="inset-0 absolute" />
         </div>
-        <div v-else class="flex h-full w-full flex-col overflow-auto p-2">
+        <div v-else class="p-2 flex h-full w-full flex-col overflow-auto">
             <pre>{{ data.description }}</pre>
         </div>
     </div>
