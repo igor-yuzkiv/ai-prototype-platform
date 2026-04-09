@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Events\TestBroadcastEvent;
-use App\Handlers\ImplementPrototypePageHandler;
+use App\Handlers\ImplementPageHandler;
 use App\Handlers\GeneratePrototypePlanHandler;
 use App\Models\PrototypeModel;
 use Illuminate\Console\Command;

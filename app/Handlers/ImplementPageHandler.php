@@ -4,9 +4,8 @@ namespace App\Handlers;
 
 use App\Ai\Agents\PrototypePageImplementationAgent;
 use App\Models\PrototypePageModel;
-use Laravel\Ai\Responses\StreamableAgentResponse;
 
-class ImplementPrototypePageHandler
+class ImplementPageHandler
 {
     public function __invoke(PrototypePageModel $page): PrototypePageModel
     {

@@ -6,7 +6,7 @@ use App\Models\PrototypeModel;
 use App\Support\PrototypePathResolver;
 use Illuminate\Support\Facades\File;
 
-class DeletePrototypeHandler
+readonly class DeletePrototypeHandler
 {
     public function __construct(private PrototypePathResolver $locator) {}
 

@@ -8,7 +8,7 @@ use App\Models\PrototypePageModel;
 use App\Support\PrototypePathResolver;
 use Illuminate\Support\Facades\File;
 
-class PublishPrototypeHandler
+readonly class PublishPrototypeHandler
 {
     public function __construct(private PrototypePathResolver $locator) {}
 
