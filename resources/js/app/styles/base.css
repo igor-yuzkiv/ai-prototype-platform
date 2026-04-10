@@ -1,3 +1,9 @@
+@import 'https://cdn.jsdelivr.net/npm/@vue-flow/core@1.48.2/dist/style.css';
+@import 'https://cdn.jsdelivr.net/npm/@vue-flow/core@1.48.2/dist/theme-default.css';
+@import 'https://cdn.jsdelivr.net/npm/@vue-flow/controls@latest/dist/style.css';
+@import 'https://cdn.jsdelivr.net/npm/@vue-flow/minimap@latest/dist/style.css';
+@import 'https://cdn.jsdelivr.net/npm/@vue-flow/node-resizer@latest/dist/style.css';
+
 @import 'tailwindcss';
 @import 'tailwindcss-primeui';
 @import './variables.css';
@@ -38,20 +44,7 @@
     height: 3px !important;
 }
 
-:root {
-    .app-background {
-        background: linear-gradient(
-            to top right,
-            #F8FDFF 45%,
-            #FFFFFF 60%,
-            #FFFFFF 100%
-        );
-    }
-}
-
-.dark,
-[data-theme='dark'] {
-    .app-background {
-        background: var(--app-color-secondary);
-    }
+.vue-flow__minimap {
+    transform: scale(75%);
+    transform-origin: bottom right;
 }

@@ -3,10 +3,12 @@ import { computed } from 'vue'
 import { VueFlow } from '@vue-flow/core'
 import type { Node, Edge, NodeMouseEvent } from '@vue-flow/core'
 import '@vue-flow/core/dist/style.css'
-import type { IPrototypePage } from '@/types/prototype.types'
+import type { IPrototype, IPrototypePage } from '@/types/prototype.types'
 import PrototypeScreenNode from './PrototypeScreenNode.vue'
+import TextBlockNode from './TextBlockNode.vue'
 
 const props = defineProps<{
+    prototype: IPrototype
     pages: IPrototypePage[]
 }>()
 
@@ -14,7 +16,39 @@ const emit = defineEmits<{
     (event: 'page:click', value: IPrototypePage): void
 }>()
 
-const nodes = computed<Node[]>(() => {
+const textNodes = computed<Node[]>(() => {
+    const nodes: Node[] = [
+        {
+            id: 'text-initial-requirements',
+            type: 'TextScreen',
+            position: { x: -800, y: 0 },
+            width: 400,
+            height: 400,
+            data: {
+                title: 'Initial Requirements',
+                content: props.prototype.initial_requirements,
+            },
+        },
+    ]
+
+    if (props.prototype.formatted_requirements) {
+        nodes.push({
+            id: 'text-formatted-requirements',
+            type: 'TextScreen',
+            position: { x: -800, y: 500 },
+            width: 400,
+            height: 400,
+            data: {
+                title: 'Formatted Requirements',
+                content: props.prototype.formatted_requirements,
+            },
+        })
+    }
+
+    return nodes
+})
+
+const pageNodes = computed<Node[]>(() => {
     const countByDepth: Record<number, number> = {}
 
     return props.pages.map((page) => {
@@ -25,6 +59,8 @@ const nodes = computed<Node[]>(() => {
         return {
             id: page.id,
             type: 'PrototypeScreen',
+            width: 1280,
+            height: 883,
             position: {
                 x: depth * 1400,
                 y: rowIndex * 1000,
@@ -33,6 +69,8 @@ const nodes = computed<Node[]>(() => {
         }
     })
 })
+
+const nodes = computed<Node[]>(() => [...textNodes.value, ...pageNodes.value])
 
 const edges = computed<Edge[]>(() => {
     return props.pages
@@ -46,15 +84,20 @@ const edges = computed<Edge[]>(() => {
 })
 
 function onNodeClick({ node }: NodeMouseEvent) {
-    emit('page:click', node.data as IPrototypePage)
+    if (node.type === 'PrototypeScreen') {
+        emit('page:click', node.data as IPrototypePage)
+    }
 }
 </script>
 
 <template>
-    <div class="dotted-background flex h-full w-full overflow-hidden">
+    <div class="flex h-full w-full overflow-hidden">
         <VueFlow :nodes="nodes" :edges="edges" fit-view-on-init class="rounded-lg flex-1" @node-click="onNodeClick">
             <template #node-PrototypeScreen="{ id, data }">
                 <PrototypeScreenNode :id="id" :data="data" />
+            </template>
+            <template #node-TextScreen="{ id, data }">
+                <TextBlockNode :id="id" :data="data" />
             </template>
         </VueFlow>
     </div>

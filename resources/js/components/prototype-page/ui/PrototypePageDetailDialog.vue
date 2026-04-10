@@ -18,8 +18,10 @@ const appTheme = useAppThemeStore()
 <template>
     <Dialog
         v-model:visible="visible"
-        class="dark:bg-primary h-[95vh] w-[98%] border-none"
+        class="dark:bg-primary w-full h-full lg:w-[80%] lg:h-[90vh] xl:w-[70%]"
         modal
+        maximizable
+        :draggable="false"
         :header="page?.title ?? 'Page Details'"
     >
         <div v-if="page" class="flex h-full w-full flex-col overflow-hidden">

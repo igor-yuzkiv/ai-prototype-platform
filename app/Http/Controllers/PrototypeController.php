@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Ai\Agents\RequirementsInterpreterAgent;
 use App\Http\Resources\PrototypeResource;
 use App\Http\Resources\PrototypeSummaryResource;
 use App\Modules\Plan\Handlers\GeneratePrototypePlanHandler;
 use App\Modules\Prototype\Commands\CreatePrototypeCommand;
-use App\Modules\Prototype\Commands\NormalizePrototypeRequirementsCommand;
 use App\Modules\Prototype\Handlers\CreatePrototypeHandler;
 use App\Modules\Prototype\Handlers\DeletePrototypeHandler;
-use App\Modules\Prototype\Handlers\NormalizePrototypeRequirementsHandler;
 use App\Modules\Prototype\Handlers\PublishPrototypeHandler;
 use App\Modules\Prototype\Models\PrototypeModel;
 use Illuminate\Http\JsonResponse;
@@ -51,17 +50,17 @@ class PrototypeController extends Controller
             ->setStatusCode(201);
     }
 
-    public function normalizeRequirements(
-        Request $request,
-        NormalizePrototypeRequirementsHandler $handler
-    ): StreamableAgentResponse {
+    public function normalizeRequirements(Request $request): StreamableAgentResponse
+    {
         $validated = $request->validate([
             'initial_requirements' => ['required', 'string'],
         ]);
 
-        return $handler(new NormalizePrototypeRequirementsCommand(
-            rawRequirements: $validated['initial_requirements'],
-        ));
+        return (new RequirementsInterpreterAgent)->stream(
+            prompt: $validated['initial_requirements'],
+            provider: config('ai.models.fast.provider'),
+            model: config('ai.models.fast.model'),
+        );
     }
 
     public function show(PrototypeModel $prototype): PrototypeResource

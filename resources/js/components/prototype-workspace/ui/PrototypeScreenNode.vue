@@ -2,6 +2,7 @@
 import { Handle, Position } from '@vue-flow/core'
 import type { IPrototypePage } from '@/types/prototype.types'
 import { Icon } from '@iconify/vue'
+import { NodeResizer } from '@vue-flow/node-resizer'
 
 defineProps<{
     id: string
@@ -12,10 +13,12 @@ defineProps<{
 </script>
 
 <template>
+    <NodeResizer :min-width="100" :min-height="100" />
+    
     <Handle type="target" :position="Position.Left" />
 
     <div
-        class="rounded-lg gap-1 shadow-md bg-white dark:bg-shark-900 border-primary-600 flex h-[883px] w-[1280px] flex-col overflow-hidden border-3"
+        class="rounded-lg gap-1 shadow-md bg-white dark:bg-shark-900 border-primary-600 flex w-full h-full flex-col overflow-hidden border-3"
     >
         <div class="gap-x-4 rounded-t-lg px-2 py-1 flex items-center border-b">
             <Icon icon="wordpress:page" class="w-7 h-7 text-primary-500" />

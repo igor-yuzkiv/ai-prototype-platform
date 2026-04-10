@@ -2,7 +2,10 @@
 
 namespace App\Console\Commands;
 
+use App\Events\PrototypeStatusChangedEvent;
+use App\Modules\Page\Handlers\ImplementPageHandler;
 use App\Modules\Plan\Handlers\GeneratePrototypePlanHandler;
+use App\Modules\Prototype\Enums\PrototypeStatus;
 use App\Modules\Prototype\Models\PrototypeModel;
 use Illuminate\Console\Command;
 
@@ -20,20 +23,30 @@ class IgorTestCommand extends Command
         }
     }
 
-    private function test()
+    private function test() {}
+
+    private function implementPrototype(): void
     {
-        $pro = PrototypeModel::find('01knscxzs5zr5tkh3sm3p72005');
-        //
-        //        //        app(PublishPrototypeHandler::class)($prototype);
-        //        //        dd();
-        //
-        app(GeneratePrototypePlanHandler::class)($pro);
-        dd();
-        //
-        //        foreach ($prototype->pages as $page) {
-        //            app(ImplementPrototypePageHandler::class)($page);
-        //            dump($page->file_name);
-        //            sleep(1);
-        //        }
+        $prototype = PrototypeModel::find('01knv9wh6daa63akv29wgndcj4');
+
+        foreach ($prototype->pages as $page) {
+            if ($page->implementation) {
+                continue;
+            }
+
+            dump($page->file_name);
+            app(ImplementPageHandler::class)($page);
+            sleep(1);
+        }
+
+        $prototype->status = PrototypeStatus::Implemented;
+        $prototype->save();
+        PrototypeStatusChangedEvent::broadcast($prototype);
+    }
+
+    private function generatePrototypePlan(): void
+    {
+        $prototype = PrototypeModel::find('01knv9wh6daa63akv29wgndcj4');
+        app(GeneratePrototypePlanHandler::class)($prototype);
     }
 }
