@@ -3,7 +3,7 @@ import { Handle, Position } from '@vue-flow/core'
 import type { IPrototypePage } from '@/types/prototype.types'
 import { Icon } from '@iconify/vue'
 import { NodeResizer } from '@vue-flow/node-resizer'
-import PulsingBlocksAnimation from './PulsingBlocksAnimation.vue'
+import { PulsingBlocksAnimation } from '@/shared/components/loading'
 
 defineProps<{
     id: string

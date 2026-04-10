@@ -16,11 +16,11 @@ onUnmounted(() => clearInterval(timer))
 <template>
     <div class="layout-animation" :class="`step-${step}`">
         <div class="col col-left">
-            <div class="block block-a" />
-            <div class="block block-b" />
+            <div class="block-a block" />
+            <div class="block-b block" />
         </div>
         <div class="col col-right">
-            <div class="block block-c" />
+            <div class="block-c block" />
         </div>
     </div>
 </template>
@@ -43,8 +43,12 @@ onUnmounted(() => clearInterval(timer))
     transition: flex 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.col-left  { flex: 1; }
-.col-right { flex: 1; }
+.col-left {
+    flex: 1;
+}
+.col-right {
+    flex: 1;
+}
 
 .block {
     border-radius: 8px;
@@ -58,23 +62,53 @@ onUnmounted(() => clearInterval(timer))
 }
 
 /* Step 0 — block-a active */
-.step-0 .col-left  { flex: 1.4; }
-.step-0 .col-right { flex: 0.8; }
-.step-0 .block-a   { flex: 2; }
-.step-0 .block-b   { flex: 1; }
-.step-0 .block-c   { flex: 1; }
+.step-0 .col-left {
+    flex: 1.4;
+}
+.step-0 .col-right {
+    flex: 0.8;
+}
+.step-0 .block-a {
+    flex: 2;
+}
+.step-0 .block-b {
+    flex: 1;
+}
+.step-0 .block-c {
+    flex: 1;
+}
 
 /* Step 1 — block-b active */
-.step-1 .col-left  { flex: 1.4; }
-.step-1 .col-right { flex: 0.8; }
-.step-1 .block-a   { flex: 1; }
-.step-1 .block-b   { flex: 2; }
-.step-1 .block-c   { flex: 1; }
+.step-1 .col-left {
+    flex: 1.4;
+}
+.step-1 .col-right {
+    flex: 0.8;
+}
+.step-1 .block-a {
+    flex: 1;
+}
+.step-1 .block-b {
+    flex: 2;
+}
+.step-1 .block-c {
+    flex: 1;
+}
 
 /* Step 2 — block-c active */
-.step-2 .col-left  { flex: 0.8; }
-.step-2 .col-right { flex: 1.4; }
-.step-2 .block-a   { flex: 1; }
-.step-2 .block-b   { flex: 1; }
-.step-2 .block-c   { flex: 1; }
+.step-2 .col-left {
+    flex: 0.8;
+}
+.step-2 .col-right {
+    flex: 1.4;
+}
+.step-2 .block-a {
+    flex: 1;
+}
+.step-2 .block-b {
+    flex: 1;
+}
+.step-2 .block-c {
+    flex: 1;
+}
 </style>

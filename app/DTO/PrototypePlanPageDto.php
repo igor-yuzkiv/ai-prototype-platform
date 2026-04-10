@@ -35,7 +35,7 @@ class PrototypePlanPageDto implements Arrayable
             'deep_index'   => $this->deepIndex,
             'file_name'    => $this->fileName,
             'title'        => $this->title,
-            'description'  => $this->description
+            'description'  => $this->description,
         ];
     }
 }
