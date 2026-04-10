@@ -33,4 +33,9 @@ export type IPrototype = IPrototypeSummary & {
 export interface CreatePrototypePayload {
     name?: string
     initial_requirements: string
+    formatted_requirements: string
+}
+
+export interface NormalizePrototypeRequirementsPayload {
+    initial_requirements: string
 }

@@ -1,18 +1,19 @@
 import { useMutation } from '@tanstack/vue-query'
-import { useRouter } from 'vue-router'
+import { useQueryClient } from '@tanstack/vue-query'
 import { prototypesApi } from '@/api/prototypes.api'
+import { prototypesKeys } from '@/config'
 import { useToast } from '@/shared/composables'
-import type { CreatePrototypePayload } from '@/types/prototype.types'
+import type { CreatePrototypePayload, IPrototype } from '@/types/prototype.types'
 
-export function useCreatePrototypeMutation(onSuccess?: () => void) {
-    const router = useRouter()
+export function useCreatePrototypeMutation(onSuccess?: (prototype: IPrototype) => void) {
+    const queryClient = useQueryClient()
     const toast = useToast()
 
     return useMutation({
         mutationFn: (payload: CreatePrototypePayload) => prototypesApi.create(payload),
         onSuccess: (prototype) => {
-            onSuccess?.()
-            router.push(`/prototypes/${prototype.id}`)
+            queryClient.invalidateQueries({ queryKey: prototypesKeys.list() })
+            onSuccess?.(prototype)
             toast.success({ detail: 'Prototype created successfully' })
         },
         onError: () => {

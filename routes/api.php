@@ -17,6 +17,7 @@ Route::group(
     function () {
         Route::get('', 'index')->name('index');
         Route::post('', 'store')->name('store');
+        Route::post('normalize-requirements', 'normalizeRequirements')->name('normalize-requirements');
         Route::get('{prototype}', 'show')->name('show');
         Route::delete('{prototype}', 'destroy')->name('destroy');
         Route::post('{prototype}/generate-plan', 'generatePlan')->name('generate-plan');

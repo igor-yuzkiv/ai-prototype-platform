@@ -1,6 +1,19 @@
 import { httpClient } from '@/api/http.client'
 import type { PaginationParams, PaginatedCollectionResponse, ResourceResponse } from '@/shared/types/pagination.types'
-import type { CreatePrototypePayload, IPrototype, IPrototypeSummary } from '@/types/prototype.types'
+import { EventStreamContentType, fetchEventSource } from '@microsoft/fetch-event-source'
+import type {
+    CreatePrototypePayload,
+    IPrototype,
+    IPrototypeSummary,
+    NormalizePrototypeRequirementsPayload,
+} from '@/types/prototype.types'
+
+type StreamEventPayload = {
+    type?: string
+    delta?: string
+    message?: string
+    errorText?: string
+}
 
 function unwrapResource<TResource>(response: ResourceResponse<TResource>): TResource {
     return response.data
@@ -25,6 +38,56 @@ export const prototypesApi = {
         const response = await httpClient.post<ResourceResponse<IPrototype>>('/prototypes', payload)
 
         return unwrapResource(response.data)
+    },
+
+    async normalizeRequirements(
+        payload: NormalizePrototypeRequirementsPayload,
+        onChunk: (chunk: string) => void,
+        signal?: AbortSignal
+    ): Promise<void> {
+        await fetchEventSource(httpClient.getUri({ url: '/prototypes/normalize-requirements' }), {
+            method: 'POST',
+            body: JSON.stringify(payload),
+            signal,
+            credentials: 'include',
+            openWhenHidden: true,
+            headers: {
+                Accept: EventStreamContentType,
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+            },
+            async onopen(response) {
+                if (response.ok) {
+                    return
+                }
+
+                throw new Error(`Request failed with status ${response.status}.`)
+            },
+            onmessage(message) {
+                if (message.data === '[DONE]') {
+                    return
+                }
+
+                let payload: StreamEventPayload
+
+                try {
+                    payload = JSON.parse(message.data) as StreamEventPayload
+                } catch {
+                    return
+                }
+
+                if (payload.type === 'error') {
+                    throw new Error(payload.errorText ?? payload.message ?? 'Failed to normalize requirements.')
+                }
+
+                if ((payload.type === 'text_delta' || payload.type === 'text-delta') && payload.delta) {
+                    onChunk(payload.delta)
+                }
+            },
+            onerror(error) {
+                throw error
+            },
+        })
     },
 
     async delete(prototypeId: string): Promise<void> {

@@ -6,12 +6,15 @@ use App\Http\Resources\PrototypeResource;
 use App\Http\Resources\PrototypeSummaryResource;
 use App\Modules\Plan\Handlers\GeneratePrototypePlanHandler;
 use App\Modules\Prototype\Commands\CreatePrototypeCommand;
+use App\Modules\Prototype\Commands\NormalizePrototypeRequirementsCommand;
 use App\Modules\Prototype\Handlers\CreatePrototypeHandler;
 use App\Modules\Prototype\Handlers\DeletePrototypeHandler;
+use App\Modules\Prototype\Handlers\NormalizePrototypeRequirementsHandler;
 use App\Modules\Prototype\Handlers\PublishPrototypeHandler;
 use App\Modules\Prototype\Models\PrototypeModel;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Laravel\Ai\Responses\StreamableAgentResponse;
 
 class PrototypeController extends Controller
 {
@@ -32,18 +35,33 @@ class PrototypeController extends Controller
     public function store(Request $request, CreatePrototypeHandler $handler)
     {
         $validated = $request->validate([
-            'name'                 => ['sometimes', 'nullable', 'string', 'max:255'],
-            'initial_requirements' => ['required', 'string'],
+            'name'                   => ['sometimes', 'nullable', 'string', 'max:255'],
+            'initial_requirements'   => ['required', 'string'],
+            'formatted_requirements' => ['required', 'string'],
         ]);
 
         $prototype = $handler(new CreatePrototypeCommand(
             initialRequirements: $validated['initial_requirements'],
+            formattedRequirements: $validated['formatted_requirements'],
             name: $validated['name'] ?? null,
         ));
 
         return (new PrototypeResource($prototype))
             ->response()
             ->setStatusCode(201);
+    }
+
+    public function normalizeRequirements(
+        Request $request,
+        NormalizePrototypeRequirementsHandler $handler
+    ): StreamableAgentResponse {
+        $validated = $request->validate([
+            'initial_requirements' => ['required', 'string'],
+        ]);
+
+        return $handler(new NormalizePrototypeRequirementsCommand(
+            rawRequirements: $validated['initial_requirements'],
+        ));
     }
 
     public function show(PrototypeModel $prototype): PrototypeResource

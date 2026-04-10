@@ -2,29 +2,34 @@
 import Button from 'primevue/button'
 import Textarea from 'primevue/textarea'
 import { computed, ref } from 'vue'
-import { useCreatePrototypeMutation, useDeletePrototypeMutation } from '@/mutation'
+import { CreatePrototypeDialog, useCreatePrototypeDialog } from '@/components/create-prototype-dialog'
+import { PrototypeCard } from '@/components/prototype-card'
+import { useDeletePrototypeMutation } from '@/mutation'
 import { usePrototypesListQuery } from '@/query'
 import { IconButton } from '@/shared/components/button'
 import { useConfirm } from '@/shared/composables'
-import { IPrototypeSummary } from '@/types/prototype.types'
-import { PrototypeCard } from '@/components/prototype-card'
-import { NoDataMessage } from '@/shared/components/typography'
 import { LoadingOverlay } from '@/shared/components/loading'
+import { NoDataMessage } from '@/shared/components/typography'
+import type { IPrototypeSummary } from '@/types/prototype.types'
 
 const confirm = useConfirm()
 
 const { prototypes, isLoading: isLoadingPrototypes } = usePrototypesListQuery()
 
-const createPrototypeMutation = useCreatePrototypeMutation(() => (initialRequirements.value = ''))
+const createPrototypeDialog = useCreatePrototypeDialog({
+    onCreated: () => {
+        initialRequirements.value = ''
+    },
+})
 
 const initialRequirements = ref('')
 
-const isLoading = computed(() => isLoadingPrototypes.value || createPrototypeMutation.isPending.value)
+const isLoading = computed(() => isLoadingPrototypes.value)
 
 const canCreatePrototype = computed(
     () =>
         initialRequirements.value.trim().length > 0 &&
-        !createPrototypeMutation.isPending.value &&
+        !createPrototypeDialog.isBusy.value &&
         !deleteMutation.isPending.value
 )
 
@@ -32,7 +37,7 @@ const deleteMutation = useDeletePrototypeMutation()
 
 function createPrototype() {
     if (canCreatePrototype.value) {
-        createPrototypeMutation.mutate({ initial_requirements: initialRequirements.value })
+        void createPrototypeDialog.open(initialRequirements.value)
     }
 }
 
@@ -73,7 +78,7 @@ async function deletePrototype(prototype: IPrototypeSummary) {
                         label="Let`s cook!"
                         icon="pi pi-sparkles"
                         size="small"
-                        :loading="createPrototypeMutation.isPending.value"
+                        :loading="createPrototypeDialog.isNormalizing.value"
                         :disabled="!canCreatePrototype"
                     />
                 </div>
@@ -104,7 +109,7 @@ async function deletePrototype(prototype: IPrototypeSummary) {
                                 icon="ant-design:delete-outlined"
                                 severity="danger"
                                 text
-                                :disabled="deleteMutation.isPending.value || createPrototypeMutation.isPending.value"
+                                :disabled="deleteMutation.isPending.value || createPrototypeDialog.isBusy.value"
                                 @click.prevent="deletePrototype(prototype)"
                             />
                         </template>
@@ -113,4 +118,14 @@ async function deletePrototype(prototype: IPrototypeSummary) {
             </section>
         </div>
     </div>
+
+    <CreatePrototypeDialog
+        v-model:visible="createPrototypeDialog.visible.value"
+        v-model:requirements="createPrototypeDialog.normalizedRequirements.value"
+        :is-normalizing="createPrototypeDialog.isNormalizing.value"
+        :is-generating="createPrototypeDialog.isGenerating.value"
+        :can-generate="createPrototypeDialog.canGenerate.value"
+        @close="createPrototypeDialog.close()"
+        @generate="createPrototypeDialog.generate()"
+    />
 </template>

@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { Primitive } from '@zoho-studio/utils'
+type DisplayFieldValue = string | number | boolean | null | undefined
 
 defineProps<{
     label?: string
-    value?: Primitive
+    value?: DisplayFieldValue
 }>()
 </script>
 
