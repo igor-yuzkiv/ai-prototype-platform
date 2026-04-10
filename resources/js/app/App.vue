@@ -9,21 +9,22 @@ import { useToast } from '@/shared/composables'
 import { onBeforeUnmount } from 'vue'
 
 const themeStore = useAppThemeStore()
+
 const toast = useToast()
-
-serverEventBus.mount()
-themeStore.initialize()
-
 
 serverEventBus.on('*', (_, payload) => {
     toast.info({ summary: 'Server Event', detail: payload.message })
 })
 
+serverEventBus.mount()
+
+themeStore.initialize()
+
 onBeforeUnmount(() => serverEventBus.unmount())
 </script>
 
 <template>
-    <div class="bg-secondary dotted-background flex h-screen w-full flex-col overflow-hidden">
+    <div class="app-background flex h-screen w-full flex-col overflow-hidden">
         <main class="relative h-full flex-1 flex-col overflow-hidden">
             <RouterView />
         </main>

@@ -57,23 +57,26 @@ async function deletePrototype(prototype: IPrototypeSummary) {
     <LoadingOverlay v-if="isLoading" message="Loading" />
     <div class="flex h-full w-full overflow-hidden">
         <div class="p-2 container mx-auto flex h-full flex-col overflow-hidden">
-            <h1 class="my-10 leading-tight font-semibold text-center text-[28px]">
-                What would you like to build today?
+            <h1 class="my-15 leading-tight font-semibold text-5xl text-center">
+                Turn ideas into working <br />
+                prototypes in seconds
             </h1>
 
-            <form class="mb-12 fff shadow-md bg-white dark:bg-primary rounded-lg" @submit.prevent="createPrototype">
+            <form
+                class="mb-12 border-primary-700 shadow-md bg-white dark:bg-black-pearl-950 rounded-lg border-3"
+                @submit.prevent="createPrototype"
+            >
                 <Textarea
                     v-model.trim="initialRequirements"
-                    class="border-none bg-transparent shadow-none"
-                    rows="5"
+                    class="p-6 text-lg border-none bg-transparent shadow-none"
+                    rows="6"
                     placeholder="Describe your prototype idea... (e.g., A real estate dashboard with a map view and property list)"
                     fluid
                     style="resize: none"
                 />
 
-                <div class="p-1 flex items-center justify-end">
+                <div class="py-2 px-4 bg-gray-100 dark:bg-ebony-950 rounded-b-lg flex items-center justify-end">
                     <Button
-                        text
                         type="submit"
                         label="Let`s cook!"
                         icon="pi pi-sparkles"
@@ -107,7 +110,7 @@ async function deletePrototype(prototype: IPrototypeSummary) {
                             <IconButton
                                 class="opacity-0 transition group-hover:opacity-100"
                                 icon="ant-design:delete-outlined"
-                                severity="danger"
+                                severity="secondary"
                                 text
                                 :disabled="deleteMutation.isPending.value || createPrototypeDialog.isBusy.value"
                                 @click.prevent="deletePrototype(prototype)"

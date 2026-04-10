@@ -18,7 +18,7 @@ const appTheme = useAppThemeStore()
 <template>
     <Dialog
         v-model:visible="visible"
-        class="dark:bg-primary w-full h-full lg:w-[80%] lg:h-[90vh] xl:w-[70%]"
+        class="dark:bg-primary lg:w-[80%] lg:h-[90vh] xl:w-[70%] h-full w-full"
         modal
         maximizable
         :draggable="false"

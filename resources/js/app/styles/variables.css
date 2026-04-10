@@ -1,6 +1,6 @@
 :root {
-    --app-color-primary: #FAFAFA;
-    --app-color-secondary: #F9FAFB;
+    --app-color-primary: #fafafa;
+    --app-color-secondary: #f9fafb;
     --theme-border: #e1e1e1;
 
     --dotted-background-dots: #d1d1d1;
@@ -33,8 +33,8 @@
 
 .dark,
 [data-theme='dark'] {
-    --app-color-primary: #232323;
-    --app-color-secondary: #2B2B2B;
+    --app-color-primary: #0F1724;
+    --app-color-secondary: #111827;
     --theme-border: #515151;
 
     --dotted-background-dots: #3c3f41;
@@ -65,9 +65,28 @@
     --color-shark-800: #232323;
     --color-shark-900: #1a1a1a;
     --color-shark-950: #0a0a0a;
-}
 
-.dotted-background {
-    background-image: radial-gradient(var(--dotted-background-dots) 1px, transparent 0);
-    background-size: 20px 20px; /* Spacing between dots */
+    --color-ebony-50: #f3f5fc;
+    --color-ebony-100: #e6eaf8;
+    --color-ebony-200: #c7d3f0;
+    --color-ebony-300: #96aee3;
+    --color-ebony-400: #5e84d2;
+    --color-ebony-500: #3965be;
+    --color-ebony-600: #294ca0;
+    --color-ebony-700: #223d82;
+    --color-ebony-800: #20366c;
+    --color-ebony-900: #1f2f5b;
+    --color-ebony-950: #0b1020;
+
+    --color-black-pearl-50: #f4f7fb;
+    --color-black-pearl-100: #e7edf7;
+    --color-black-pearl-200: #cad9ed;
+    --color-black-pearl-300: #9cbadd;
+    --color-black-pearl-400: #6795c9;
+    --color-black-pearl-500: #4378b4;
+    --color-black-pearl-600: #325f97;
+    --color-black-pearl-700: #294c7b;
+    --color-black-pearl-800: #264266;
+    --color-black-pearl-900: #243956;
+    --color-black-pearl-950: #0f1724;
 }

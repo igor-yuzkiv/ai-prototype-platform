@@ -24,7 +24,7 @@ const appTheme = useAppThemeStore()
         :draggable="false"
         :closable="!isGenerating"
         header="Prototype Requirements"
-        class="dark:bg-primary w-full h-full lg:w-[80%] lg:h-[90vh] xl:w-[70%]"
+        class="dark:bg-primary lg:w-[80%] lg:h-[90vh] xl:w-[70%] h-full w-full"
     >
         <div class="flex h-full flex-col overflow-hidden">
             <div class="relative flex-1 overflow-hidden">
@@ -45,8 +45,6 @@ const appTheme = useAppThemeStore()
 
                 <LoadingIndicator v-if="isNormalizing" position="absolute right-6 top-6" />
             </div>
-
-
         </div>
 
         <template #footer>

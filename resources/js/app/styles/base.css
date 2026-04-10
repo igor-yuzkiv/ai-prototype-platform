@@ -13,6 +13,14 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+@layer base {
+    html {
+        font-family: "Inter", sans-serif;
+        font-optical-sizing: auto;
+        font-style: normal;
+    }
+}
+
 @layer components {
     .border,
     .border-r,
@@ -26,8 +34,8 @@
 }
 
 *::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
+    width: 8px;
+    height: 8px;
 }
 
 *::-webkit-scrollbar-thumb {
@@ -38,13 +46,39 @@
     background: transparent;
 }
 
-
-.app-thin-scrollbar::-webkit-scrollbar {
-    width: 3px !important;
-    height: 3px !important;
-}
-
 .vue-flow__minimap {
     transform: scale(75%);
     transform-origin: bottom right;
+}
+
+.app-background {
+    background-image: radial-gradient(circle at top, rgba(59, 130, 246, 0.12), transparent 34%),
+    radial-gradient(circle at 18% 30%, rgba(125, 211, 252, 0.12), transparent 28%),
+    radial-gradient(circle at 82% 72%, rgba(251, 191, 36, 0.1), transparent 30%),
+    linear-gradient(180deg, #ffffff 0%, #f9fbff 52%, #f6f7fb 100%);
+
+    /*background: #F6F7F8;*/
+}
+
+.dotted-background {
+    background-image: radial-gradient(var(--dotted-background-dots) 1px, transparent 0);
+    background-size: 20px 20px; /* Spacing between dots */
+}
+
+
+.dark,
+[data-theme='dark'] {
+    .app-background {
+        background-image: radial-gradient(circle at top, rgba(59, 130, 246, 0.12), transparent 34%),
+        radial-gradient(circle at 18% 30%, rgba(125, 211, 252, 0.12), transparent 28%),
+        radial-gradient(circle at 82% 72%, rgba(251, 191, 36, 0.1), transparent 30%),
+        linear-gradient(180deg, #232323 0%, #212121 52%, #1f1f1f 100%);
+
+        /*background: #0B1020;*/
+    }
+
+    .dotted-background {
+        background-image: radial-gradient(var(--dotted-background-dots) 1px, transparent 0);
+        background-size: 20px 20px; /* Spacing between dots */
+    }
 }

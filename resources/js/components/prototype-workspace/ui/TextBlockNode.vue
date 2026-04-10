@@ -16,9 +16,9 @@ defineProps<{
 
     <Handle type="source" :position="Position.Right" />
     <div
-        class="rounded-lg shadow-md bg-white dark:bg-shark-900 border-gray-300 dark:border-shark-700 flex w-full h-full flex-col overflow-hidden border-2"
+        class="rounded-lg gap-1 shadow-md bg-white dark:bg-shark-900 border-primary-600 flex h-full w-full flex-col overflow-hidden border-3"
     >
-        <div class="px-3 py-2 border-b bg-gray-50 dark:bg-shark-800">
+        <div class="px-3 py-2 bg-gray-50 dark:bg-shark-800 border-b">
             <h3 class="font-bold text-sm text-gray-700 dark:text-gray-300">{{ data.title }}</h3>
         </div>
 

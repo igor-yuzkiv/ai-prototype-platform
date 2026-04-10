@@ -27,8 +27,8 @@ async function publish() {
 </script>
 
 <template>
-    <LoadingOverlay v-if="!prototype || prototype.status === 'new'" message="Planning"/>
-    <div v-if="prototype" class="p-2 gap-2 relative flex h-full w-full flex-col overflow-hidden">
+    <LoadingOverlay v-if="!prototype" message="Planning"/>
+    <div v-if="prototype" class="p-2 gap-2 relative flex h-full w-full flex-col overflow-hidden dotted-background">
         <PrototypeWorkspaceFlow class="flex-1" :prototype="prototype" :pages="pages" @page:click="pageDialog.open" />
 
         <div
@@ -37,7 +37,7 @@ async function publish() {
             <div class="gap-x-2 flex items-center">
                 <router-link
                     to="/"
-                    class="p-1 rounded bg-primary-500 text-white group flex items-center justify-center"
+                    class="p-2 rounded bg-primary-700 text-white group flex items-center justify-center"
                 >
                     <Icon icon="tdesign:app" class="w-6 h-6 group-hover:hidden" />
                     <Icon icon="material-symbols:arrow-back-rounded" class="w-6 h-6 hidden group-hover:flex" />

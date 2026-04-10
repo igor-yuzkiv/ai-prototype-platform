@@ -14,11 +14,11 @@ defineProps<{
 
 <template>
     <NodeResizer :min-width="100" :min-height="100" />
-    
+
     <Handle type="target" :position="Position.Left" />
 
     <div
-        class="rounded-lg gap-1 shadow-md bg-white dark:bg-shark-900 border-primary-600 flex w-full h-full flex-col overflow-hidden border-3"
+        class="rounded-lg gap-1 shadow-md bg-white dark:bg-shark-900 border-primary-600 flex h-full w-full flex-col overflow-hidden border-3"
     >
         <div class="gap-x-4 rounded-t-lg px-2 py-1 flex items-center border-b">
             <Icon icon="wordpress:page" class="w-7 h-7 text-primary-500" />
