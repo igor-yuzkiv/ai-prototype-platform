@@ -62,7 +62,7 @@ serverEventBus.on<PrototypeStatusChangedEventPayload>(`project.${prototypeId.val
 </script>
 
 <template>
-    <LoadingOverlay message="Planning" />
+    <LoadingOverlay v-if="loadingState" :message="loadingState" />
 
     <div v-if="prototype" class="p-2 gap-2 dotted-background relative flex h-full w-full flex-col overflow-hidden">
         <PrototypeWorkspaceFlow class="flex-1" :prototype="prototype" :pages="pages" @page:click="pageDialog.open" />

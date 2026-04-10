@@ -65,7 +65,6 @@ const textNodes = computed<Node[]>(() => {
 const pageNodes = computed<Node[]>(() => {
     if (props.pages.length === 0) return []
 
-    const pageMap = new Map(props.pages.map((p) => [p.id, p]))
     const childrenMap = new Map<string | null, string[]>()
 
     props.pages.forEach((page) => {
