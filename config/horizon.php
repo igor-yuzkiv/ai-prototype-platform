@@ -202,12 +202,13 @@ return [
             'queue'               => ['default'],
             'balance'             => 'auto',
             'autoScalingStrategy' => 'time',
-            'maxProcesses'        => 1,
+            'maxProcesses'        => 3,
+            'minProcesses'        => 1,
             'maxTime'             => 0,
             'maxJobs'             => 0,
-            'memory'              => 128,
+            'memory'              => 512,
             'tries'               => 1,
-            'timeout'             => 60,
+            'timeout'             => 80000,
             'nice'                => 0,
         ],
     ],
@@ -215,7 +216,7 @@ return [
     'environments' => [
         'production' => [
             'supervisor-1' => [
-                'maxProcesses'    => 10,
+                'maxProcesses'    => 3,
                 'balanceMaxShift' => 1,
                 'balanceCooldown' => 3,
             ],

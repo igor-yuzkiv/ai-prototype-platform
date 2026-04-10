@@ -9,9 +9,9 @@ import { computed, ref } from 'vue'
 import { prototypesApi } from '@/api/prototypes.api'
 import { IconButton } from '@/shared/components/button'
 import { serverEventBus } from '@/server-event-bus'
-import { PrototypeStatusChangedEventPayload } from '@/types/prototype.types'
 import { useClipboard } from '@vueuse/core'
 import { useToast } from '@/shared/composables'
+import Button from 'primevue/button'
 
 const prototypeId = useRouteParams<string>('id')
 const { isPending, data: prototype, pages, refetch } = usePrototypeQuery(prototypeId)
@@ -53,11 +53,22 @@ async function handlePublishPrototype() {
     }
 }
 
-serverEventBus.on<PrototypeStatusChangedEventPayload>(`project.${prototypeId.value}.status.changed`, (payload) => {
-    console.log('Received prototype status changed event:', { payload })
-    if (payload.data.status === 'planned') {
-        refetch()
-    }
+async function handleStartPrototypeImplementation() {
+    prototypesApi
+        .implementPlan(prototypeId.value)
+        .then(() => {
+            toast.success({ summary: 'Success', detail: 'Prototype implementation started!' })
+            refetch()
+        })
+        .catch((error) => {
+            toast.error({ summary: 'Error', detail: 'Failed to start implementation. Please try again.' })
+            console.error(error)
+        })
+}
+
+serverEventBus.on(`project.${prototypeId.value}.*`, (_, payload) => {
+    console.log('Received prototype event:', { payload })
+    refetch()
 })
 </script>
 
@@ -83,6 +94,13 @@ serverEventBus.on<PrototypeStatusChangedEventPayload>(`project.${prototypeId.val
             </div>
 
             <div class="gap-x-2 flex items-center">
+                <Button
+                    text
+                    label="Implement"
+                    v-if="prototype?.status === 'planned'"
+                    @click="handleStartPrototypeImplementation"
+                />
+
                 <IconButton
                     v-if="prototype.prototype_url"
                     icon="majesticons:open"
@@ -104,5 +122,9 @@ serverEventBus.on<PrototypeStatusChangedEventPayload>(`project.${prototypeId.val
         </div>
     </div>
 
-    <PrototypePageDetailDialog v-model:visible="pageDialog.visible.value" :page="pageDialog.currentPage.value" />
+    <PrototypePageDetailDialog
+        v-model:visible="pageDialog.visible.value"
+        v-model:implementation="pageDialog.implementation.value"
+        :page="pageDialog.currentPage.value"
+    />
 </template>

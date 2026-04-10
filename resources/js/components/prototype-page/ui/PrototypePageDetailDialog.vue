@@ -11,6 +11,7 @@ import { DisplayField, NoDataMessage } from '@/shared/components/typography'
 
 defineProps<{ page: Maybe<IPrototypePage> }>()
 const visible = defineModel<boolean>('visible')
+const implementation = defineModel<string>('implementation')
 
 const appTheme = useAppThemeStore()
 </script>
@@ -34,7 +35,8 @@ const appTheme = useAppThemeStore()
 
                 <TabPanel value="overview" class="gap-2 p-2 h-full w-full overflow-hidden">
                     <div class="gap-4 p-3 md:grid-cols-2 grid">
-                        <DisplayField label="title" :value="page.title" />
+                        <DisplayField label="id" :value="page.id" />
+                        <DisplayField label="prototype_id" :value="page.prototype_id" />
                         <DisplayField label="file_name" :value="page.file_name" />
                         <DisplayField label="deep_index" :value="page.deep_index" />
                     </div>
@@ -47,7 +49,7 @@ const appTheme = useAppThemeStore()
                 </TabPanel>
                 <TabPanel value="preview" class="gap-2 p-2 h-full w-full overflow-hidden">
                     <NoDataMessage
-                        v-if="!page.implementation"
+                        v-if="!implementation"
                         title="No implementation yet"
                         message="This page does not have an implementation yet, so preview is not available."
                         class="h-full w-full"
@@ -55,14 +57,14 @@ const appTheme = useAppThemeStore()
 
                     <iframe
                         v-else
-                        :srcdoc="page.implementation"
+                        :srcdoc="implementation"
                         class="rounded h-full w-full border-none"
                         sandbox="allow-scripts"
                     />
                 </TabPanel>
                 <TabPanel value="code" class="gap-2 p-2 h-full w-full overflow-hidden">
                     <NoDataMessage
-                        v-if="!page.implementation"
+                        v-if="!implementation"
                         title="No implementation yet"
                         message="No implementation code available for this page."
                         class="h-full w-full"
@@ -71,7 +73,7 @@ const appTheme = useAppThemeStore()
                     <vue-monaco-editor
                         v-else
                         language="html"
-                        :value="page.implementation"
+                        :value="implementation"
                         :theme="appTheme.isDark ? 'vs-dark' : 'vs'"
                     />
                 </TabPanel>

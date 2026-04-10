@@ -2,6 +2,7 @@ import { Maybe } from '@/shared/types/result.types'
 
 export type IPrototypePage = {
     id: string
+    prototype_id: string
     file_name: string
     title: string
     description: string
@@ -13,7 +14,7 @@ export type IPrototypePage = {
     icon?: string | null
 }
 
-export type PrototypeStatus = 'new' | 'planned' | 'implemented'
+export type PrototypeStatus = 'new' | 'planned' | 'implementing' | 'implemented'
 
 export type IPrototypeSummary = {
     id: string

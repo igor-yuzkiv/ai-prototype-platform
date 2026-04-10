@@ -21,5 +21,6 @@ Route::group(
         Route::get('{prototype}', 'show')->name('show');
         Route::delete('{prototype}', 'destroy')->name('destroy');
         Route::post('{prototype}/publish', 'publish')->name('publish');
+        Route::post('{prototype}/implement-plan', 'implementPlan')->name('implement-plan');
     }
 );

@@ -3,13 +3,13 @@
 namespace App\Modules\Page\Handlers;
 
 use App\Ai\Agents\PrototypePageImplementationAgent;
+use App\Events\PrototypePageImplementedEvent;
 use App\Modules\Page\Models\PrototypePageModel;
 
 class ImplementPageHandler
 {
     public function __invoke(PrototypePageModel $page): PrototypePageModel
     {
-
         $prompt = $this->builderPrompt($page);
         $implementation = '';
         $stream = (new PrototypePageImplementationAgent)
@@ -20,7 +20,6 @@ class ImplementPageHandler
             );
 
         foreach ($stream as $event) {
-            logger($event);
             if (isset($event->delta)) {
                 $implementation .= $event->delta;
             }
@@ -28,6 +27,8 @@ class ImplementPageHandler
 
         $page->implementation = $implementation;
         $page->save();
+
+        PrototypePageImplementedEvent::broadcast($page);
 
         return $page;
     }

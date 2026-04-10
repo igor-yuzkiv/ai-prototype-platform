@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Ai\Agents\RequirementsInterpreterAgent;
 use App\Http\Resources\PrototypeResource;
 use App\Http\Resources\PrototypeSummaryResource;
+use App\Modules\Plan\Handlers\ImplementPrototypePlanHandler;
 use App\Modules\Plan\Jobs\GeneratePrototypePlanJob;
 use App\Modules\Prototype\Commands\CreatePrototypeCommand;
+use App\Modules\Prototype\Enums\PrototypeStatus;
 use App\Modules\Prototype\Handlers\CreatePrototypeHandler;
 use App\Modules\Prototype\Handlers\DeletePrototypeHandler;
 use App\Modules\Prototype\Handlers\PublishPrototypeHandler;
@@ -86,5 +88,26 @@ class PrototypeController extends Controller
         $prototype->refresh();
 
         return new PrototypeResource($prototype);
+    }
+
+    public function implementPlan(PrototypeModel $prototype, ImplementPrototypePlanHandler $handler): JsonResponse
+    {
+        if ($prototype->status === PrototypeStatus::Implementing || $prototype->status === PrototypeStatus::Implemented) {
+            return response()->json([
+                'message' => 'Prototype is already being implemented or has been implemented.',
+            ], 400);
+        }
+
+        if (!$prototype->pages()->exists()) {
+            return response()->json([
+                'message' => 'Prototype must have at least one page to be implemented.',
+            ], 400);
+        }
+
+        $handler($prototype);
+
+        return response()->json([
+            'message' => 'Prototype implementation started',
+        ]);
     }
 }

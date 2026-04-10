@@ -99,4 +99,10 @@ export const prototypesApi = {
 
         return unwrapResource(response.data)
     },
+
+    async implementPlan(prototypeId: string): Promise<{ message: string }> {
+        const response = await httpClient.post<{ message: string }>(`/prototypes/${prototypeId}/implement-plan`)
+
+        return response.data
+    },
 }

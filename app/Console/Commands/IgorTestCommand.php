@@ -2,10 +2,10 @@
 
 namespace App\Console\Commands;
 
-use App\Events\PrototypeStatusChangedEvent;
 use App\Modules\Page\Handlers\ImplementPageHandler;
+use App\Modules\Page\Models\PrototypePageModel;
 use App\Modules\Plan\Handlers\GeneratePrototypePlanHandler;
-use App\Modules\Prototype\Enums\PrototypeStatus;
+use App\Modules\Plan\Handlers\ImplementPrototypePlanHandler;
 use App\Modules\Prototype\Models\PrototypeModel;
 use Illuminate\Console\Command;
 
@@ -23,30 +23,35 @@ class IgorTestCommand extends Command
         }
     }
 
-    private function test() {
-        $prototype = PrototypeModel::find('01knvpe7f0ay5q0e86gy7n963h');
+    private function test()
+    {
+        $prototype = PrototypeModel::find('01knvqga0q8zg72hak0rab58dt');
 
-        PrototypeStatusChangedEvent::dispatch($prototype);
+        app(ImplementPrototypePlanHandler::class)($prototype);
 
     }
 
     private function implementPrototype(): void
     {
-        $prototype = PrototypeModel::find('01knv9wh6daa63akv29wgndcj4');
+        $prototype = PrototypeModel::find('01knvqga0q8zg72hak0rab58dt');
+        $pageId = '01knvqgvnznzejx0m5drx6kwk8';
 
-        foreach ($prototype->pages as $page) {
-            if ($page->implementation) {
-                continue;
-            }
+        $page = PrototypePageModel::findOrFail($pageId);
+        app(ImplementPageHandler::class)($page);
 
-            dump($page->file_name);
-            app(ImplementPageHandler::class)($page);
-            sleep(1);
-        }
-
-        $prototype->status = PrototypeStatus::Implemented;
-        $prototype->save();
-        PrototypeStatusChangedEvent::broadcast($prototype);
+        //        foreach ($prototype->pages as $page) {
+        //            if ($page->implementation) {
+        //                continue;
+        //            }
+        //
+        //            dump($page->file_name);
+        //            app(ImplementPageHandler::class)($page);
+        //            sleep(1);
+        //        }
+        //
+        //        $prototype->status = PrototypeStatus::Implemented;
+        //        $prototype->save();
+        //        PrototypeStatusChangedEvent::broadcast($prototype);
     }
 
     private function generatePrototypePlan(): void
