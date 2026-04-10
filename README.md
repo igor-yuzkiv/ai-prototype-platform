@@ -1,3 +1,6 @@
+
+![preview.png](preview.png)
+
 # AI Prototype Platform
 
 A web application that turns natural language requirements into interactive HTML/CSS prototypes using AI. Describe what you want to build, and the platform generates a structured plan and implements each page automatically.

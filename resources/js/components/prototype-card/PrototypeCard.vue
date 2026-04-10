@@ -20,31 +20,41 @@ const updatedAt = computed<string>(() => {
 </script>
 
 <template>
-    <component :is="is" class="rounded-lg p-5 group bg-white dark:bg-black-pearl-950 hover:shadow-lg flex flex-col">
-        <div class="mb-3 flex items-center justify-between">
-            <div class="gap-2 flex items-center">
-                <div class="h-8 w-8 rounded bg-primary-700 text-white flex items-center justify-center">
+    <component
+        :is="is"
+        class="rounded-lg p-5 group bg-white dark:bg-black-pearl-950 hover:shadow-lg gap-4 flex flex-col border"
+    >
+        <div class="gap-x-1 flex items-center justify-between truncate">
+            <div class="gap-x-1 flex items-center truncate">
+                <div class="p-1 rounded bg-primary-700 text-white flex items-center justify-center">
                     <Icon icon="tdesign:app" />
                 </div>
 
-                <h3 class="font-semibold">{{ prototype.name }}</h3>
+                <h3 class="font-medium truncate">
+                    {{ prototype.name }}
+                </h3>
             </div>
+            <div class="gap-x-1 text-sm flex items-center">
+                <div class="rounded-lg dark:bg-black-pearl-800 px-2 py-0.5 border capitalize">
+                    {{ prototype.status }}
+                </div>
 
-            <slot name="actions" :prototype="prototype" />
+                <Icon v-if="prototype.is_published" icon="material-symbols:public" v-tooltip="{ value: 'Shared' }" />
+            </div>
         </div>
 
-        <div class="mb-5 text-xs font-medium text-gray-500 line-clamp-3 h-full">
+        <div class="mb-5 text-xs text-gray-500 line-clamp-4 flex-1">
             {{ prototype.project_overview ?? 'New prototype' }}
         </div>
 
-        <div class="text-xs font-medium text-gray-500 flex items-center justify-between">
-            <div class="gap-1.5 mt-auto flex items-center">
-                <Icon icon="hugeicons:status" />
-                <span>{{ prototype.status ?? 'new' }}</span>
-            </div>
-            <div class="gap-1.5 mt-auto flex items-center">
+        <div class="text-xs text-gray-500 flex items-center justify-between">
+            <div class="gap-1 mt-auto flex items-center">
                 <Icon icon="mdi-light:clock" />
                 <span>{{ updatedAt }}</span>
+            </div>
+
+            <div class="gap-x-1 flex items-center">
+                <slot name="actions" :prototype="prototype" />
             </div>
         </div>
     </component>

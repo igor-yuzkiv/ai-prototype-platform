@@ -13,12 +13,13 @@ export type IPrototypePage = {
     icon?: string | null
 }
 
-export type PrototypeStatus = 'new' | 'planned' | 'implemented' | 'published'
+export type PrototypeStatus = 'new' | 'planned' | 'implemented'
 
 export type IPrototypeSummary = {
     id: string
     name: string
     status: PrototypeStatus | null
+    is_published: boolean
     prototype_url: string | null
     project_overview: string | null
     created_at: string

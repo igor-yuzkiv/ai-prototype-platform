@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources;
 
-use App\Modules\Prototype\Enums\PrototypeStatus;
 use App\Modules\Prototype\Models\PrototypeModel;
 use App\Modules\Prototype\Support\PrototypePathResolver;
 use Illuminate\Http\Request;
@@ -18,7 +17,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
             'id'                     => $this->id,
             'name'                   => $this->name,
             'status'                 => $this->status?->value,
-            'prototype_url'          => $this->status === PrototypeStatus::Published ? $prototypeLocator->url($this->resource) : null,
+            'is_published'           => $this->is_published,
+            'prototype_url'          => $this->is_published ? $prototypeLocator->url($this->resource) : null,
             'initial_requirements'   => $this->initial_requirements,
             'formatted_requirements' => $this->formatted_requirements,
             'project_overview'       => $this->project_overview,

@@ -10,11 +10,15 @@ import { prototypesApi } from '@/api/prototypes.api'
 import { IconButton } from '@/shared/components/button'
 import { serverEventBus } from '@/server-event-bus'
 import { PrototypeStatusChangedEventPayload } from '@/types/prototype.types'
+import { useClipboard } from '@vueuse/core'
+import { useToast } from '@/shared/composables'
 
 const prototypeId = useRouteParams<string>('id')
 const { isPending, data: prototype, pages, refetch } = usePrototypeQuery(prototypeId)
 const pageDialog = usePrototypePageDetailsDialog()
 const isPublishing = ref(false)
+const toast = useToast()
+const { copy } = useClipboard()
 
 const loadingState = computed<string | null>(() => {
     if (!prototype.value || isPending.value) {
@@ -34,6 +38,16 @@ async function handlePublishPrototype() {
     try {
         await prototypesApi.publish(prototypeId.value)
         await refetch()
+        if (!prototype.value || !prototype.value.prototype_url) {
+            toast.error({ summary: 'Error', detail: 'Failed to publish prototype. Please try again.' })
+            return
+        }
+
+        copy(prototype.value.prototype_url).catch(console.error)
+        toast.success({ summary: 'Success', detail: 'Prototype published and URL copied to clipboard!' })
+    } catch (error) {
+        toast.error({ summary: 'Error', detail: 'Failed to publish prototype. Please try again.' })
+        console.error(error)
     } finally {
         isPublishing.value = false
     }
@@ -48,7 +62,7 @@ serverEventBus.on<PrototypeStatusChangedEventPayload>(`project.${prototypeId.val
 </script>
 
 <template>
-    <LoadingOverlay v-if="loadingState" :message="loadingState" />
+    <LoadingOverlay message="Planning" />
 
     <div v-if="prototype" class="p-2 gap-2 dotted-background relative flex h-full w-full flex-col overflow-hidden">
         <PrototypeWorkspaceFlow class="flex-1" :prototype="prototype" :pages="pages" @page:click="pageDialog.open" />
@@ -75,6 +89,7 @@ serverEventBus.on<PrototypeStatusChangedEventPayload>(`project.${prototypeId.val
                     v-tooltip="{ value: 'Open Prototype' }"
                     text
                     as="a"
+                    target="_blank"
                     :href="prototype.prototype_url"
                 />
 

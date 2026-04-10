@@ -3,7 +3,6 @@
 namespace App\Modules\Prototype\Handlers;
 
 use App\Modules\Page\Models\PrototypePageModel;
-use App\Modules\Prototype\Enums\PrototypeStatus;
 use App\Modules\Prototype\Models\PrototypeModel;
 use App\Modules\Prototype\Support\PrototypePathResolver;
 use Illuminate\Support\Facades\File;
@@ -30,7 +29,7 @@ readonly class PublishPrototypeHandler
             File::put($path.DIRECTORY_SEPARATOR.$page->file_name, (string) $page->implementation);
         });
 
-        $prototype->status = PrototypeStatus::Published;
+        $prototype->is_published = true;
         $prototype->save();
     }
 }

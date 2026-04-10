@@ -57,10 +57,17 @@ async function deletePrototype(prototype: IPrototypeSummary) {
     <LoadingOverlay v-if="isLoading" message="Loading" />
     <div class="flex h-full w-full overflow-hidden">
         <div class="p-2 container mx-auto flex h-full flex-col overflow-hidden">
-            <h1 class="my-15 leading-tight font-semibold text-5xl text-center">
-                Turn ideas into working <br />
-                prototypes in seconds
-            </h1>
+            <div class="my-15 leading-tight flex flex-col items-center text-center">
+                <h1 class="font-semibold text-5xl">
+                    Turn ideas <br />
+                    into working prototypes in seconds
+                </h1>
+                <p class="mt-10 text-xl text-gray-500">
+                    Describe your application flow, page layout, or dashboard. <br />
+                    Our AI will instantly generate production-ready UI mockups you can <br />
+                    refine and export.
+                </p>
+            </div>
 
             <form
                 class="mb-12 border-primary-700 shadow-md bg-white dark:bg-black-pearl-950 rounded-lg border-3"
@@ -69,7 +76,7 @@ async function deletePrototype(prototype: IPrototypeSummary) {
                 <Textarea
                     v-model.trim="initialRequirements"
                     class="p-6 text-lg border-none bg-transparent shadow-none"
-                    rows="6"
+                    rows="4"
                     placeholder="Describe your prototype idea... (e.g., A real estate dashboard with a map view and property list)"
                     fluid
                     style="resize: none"
@@ -98,7 +105,7 @@ async function deletePrototype(prototype: IPrototypeSummary) {
                     icon="ant-design:experiment-outlined"
                 />
 
-                <div v-else class="gap-5 sm:grid-cols-3 grid grid-cols-1 overflow-auto">
+                <div v-else class="gap-5 lg:grid-cols-3 grid grid-cols-1 overflow-auto">
                     <PrototypeCard
                         v-for="prototype in prototypes"
                         :key="prototype.id"

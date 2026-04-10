@@ -17,6 +17,7 @@ class PrototypeModel extends Model
     protected $fillable = [
         'name',
         'status',
+        'is_published',
         'initial_requirements',
         'formatted_requirements',
         'project_overview',
@@ -24,7 +25,8 @@ class PrototypeModel extends Model
     ];
 
     protected $casts = [
-        'status' => PrototypeStatus::class,
+        'status'       => PrototypeStatus::class,
+        'is_published' => 'boolean',
     ];
 
     public function pages(): HasMany
