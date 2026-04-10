@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Prototype\Enums;
+namespace App\Enums;
 
 enum PrototypeStatus: string
 {

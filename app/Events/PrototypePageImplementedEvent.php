@@ -3,7 +3,7 @@
 namespace App\Events;
 
 use App\Broadcasting\BaseClientEvent;
-use App\Modules\Page\Models\PrototypePageModel;
+use App\Models\PrototypePageModel;
 
 class PrototypePageImplementedEvent extends BaseClientEvent
 {

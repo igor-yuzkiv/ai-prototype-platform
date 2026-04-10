@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Modules\Prototype\Commands;
+namespace App\DTO;
 
-readonly class CreatePrototypeCommand
+readonly class CreatePrototypeDto
 {
     public function __construct(
         public string $initialRequirements,

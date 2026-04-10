@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Modules\Plan\Handlers;
+namespace App\Handlers;
 
 use App\Ai\Agents\PrototypePlannerAgent;
+use App\DTO\PrototypePlanDto;
+use App\DTO\PrototypePlanPageDto;
+use App\Enums\PrototypeStatus;
 use App\Events\PrototypeStatusChangedEvent;
-use App\Modules\Plan\DTO\PrototypePlanDto;
-use App\Modules\Plan\DTO\PrototypePlanPageDto;
-use App\Modules\Prototype\Enums\PrototypeStatus;
-use App\Modules\Prototype\Models\PrototypeModel;
+use App\Models\PrototypeModel;
 use Illuminate\Support\Collection;
 
-class GeneratePrototypePlanHandler
+class GeneratePlanHandler
 {
     public function __invoke(PrototypeModel $prototype): PrototypeModel
     {

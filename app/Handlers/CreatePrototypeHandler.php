@@ -1,23 +1,23 @@
 <?php
 
-namespace App\Modules\Prototype\Handlers;
+namespace App\Handlers;
 
 use App\Ai\Agents\PrototypeNameGeneratorAgent;
-use App\Modules\Prototype\Commands\CreatePrototypeCommand;
-use App\Modules\Prototype\Enums\PrototypeStatus;
-use App\Modules\Prototype\Models\PrototypeModel;
+use App\DTO\CreatePrototypeDto;
+use App\Enums\PrototypeStatus;
+use App\Models\PrototypeModel;
 
 readonly class CreatePrototypeHandler
 {
-    public function __invoke(CreatePrototypeCommand $command): PrototypeModel
+    public function __invoke(CreatePrototypeDto $dto): PrototypeModel
     {
-        $name = $this->generateName($command->name, $command->formattedRequirements);
+        $name = $this->generateName($dto->name, $dto->formattedRequirements);
 
         return PrototypeModel::query()->create([
             'name'                   => $name,
             'status'                 => PrototypeStatus::New,
-            'initial_requirements'   => $command->initialRequirements,
-            'formatted_requirements' => $command->formattedRequirements,
+            'initial_requirements'   => $dto->initialRequirements,
+            'formatted_requirements' => $dto->formattedRequirements,
         ]);
     }
 

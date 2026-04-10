@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Modules\Prototype\Models;
+namespace App\Models;
 
-use App\Modules\Page\Models\PrototypePageModel;
-use App\Modules\Prototype\Enums\PrototypeStatus;
+use App\Enums\PrototypeStatus;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;

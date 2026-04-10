@@ -3,7 +3,7 @@
 namespace App\Events;
 
 use App\Broadcasting\BaseClientEvent;
-use App\Modules\Prototype\Models\PrototypeModel;
+use App\Models\PrototypeModel;
 
 class PrototypeStatusChangedEvent extends BaseClientEvent
 {

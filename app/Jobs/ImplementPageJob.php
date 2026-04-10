@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Modules\Page\Jobs;
+namespace App\Jobs;
 
-use App\Modules\Page\Handlers\ImplementPageHandler;
-use App\Modules\Page\Models\PrototypePageModel;
+use App\Handlers\ImplementPageHandler;
+use App\Models\PrototypePageModel;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUniqueUntilProcessing;

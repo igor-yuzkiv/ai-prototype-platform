@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Modules\Prototype\Handlers;
+namespace App\Handlers;
 
-use App\Modules\Prototype\Models\PrototypeModel;
-use App\Modules\Prototype\Support\PrototypePathResolver;
+use App\Models\PrototypeModel;
+use App\Support\PrototypePathResolver;
 use Illuminate\Support\Facades\File;
 
 readonly class DeletePrototypeHandler
 {
-    public function __construct(private PrototypePathResolver $locator) {}
+    public function __construct(private PrototypePathResolver $pathResolver) {}
 
     public function __invoke(PrototypeModel $prototype): void
     {
-        $path = $this->locator->path($prototype);
+        $path = $this->pathResolver->path($prototype);
 
         if ($path !== null && is_dir($path)) {
             File::deleteDirectory($path);

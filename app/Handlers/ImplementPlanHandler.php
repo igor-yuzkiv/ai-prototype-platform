@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Modules\Plan\Handlers;
+namespace App\Handlers;
 
+use App\Enums\PrototypeStatus;
 use App\Events\PrototypeStatusChangedEvent;
-use App\Modules\Page\Jobs\ImplementPageJob;
-use App\Modules\Page\Models\PrototypePageModel;
-use App\Modules\Prototype\Enums\PrototypeStatus;
-use App\Modules\Prototype\Models\PrototypeModel;
+use App\Jobs\ImplementPageJob;
+use App\Models\PrototypeModel;
+use App\Models\PrototypePageModel;
 use Illuminate\Bus\Batch;
 use Illuminate\Support\Facades\Bus;
 
-class ImplementPrototypePlanHandler
+class ImplementPlanHandler
 {
     public function __invoke(PrototypeModel $prototype, bool $force = false): void
     {

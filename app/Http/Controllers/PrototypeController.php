@@ -3,16 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Ai\Agents\RequirementsInterpreterAgent;
+use App\DTO\CreatePrototypeDto;
+use App\Enums\PrototypeStatus;
+use App\Handlers\CreatePrototypeHandler;
+use App\Handlers\DeletePrototypeHandler;
+use App\Handlers\ImplementPlanHandler;
+use App\Handlers\PublishPrototypeHandler;
 use App\Http\Resources\PrototypeResource;
 use App\Http\Resources\PrototypeSummaryResource;
-use App\Modules\Plan\Handlers\ImplementPrototypePlanHandler;
-use App\Modules\Plan\Jobs\GeneratePrototypePlanJob;
-use App\Modules\Prototype\Commands\CreatePrototypeCommand;
-use App\Modules\Prototype\Enums\PrototypeStatus;
-use App\Modules\Prototype\Handlers\CreatePrototypeHandler;
-use App\Modules\Prototype\Handlers\DeletePrototypeHandler;
-use App\Modules\Prototype\Handlers\PublishPrototypeHandler;
-use App\Modules\Prototype\Models\PrototypeModel;
+use App\Jobs\GeneratePlanJob;
+use App\Models\PrototypeModel;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Laravel\Ai\Responses\StreamableAgentResponse;
@@ -41,13 +41,13 @@ class PrototypeController extends Controller
             'formatted_requirements' => ['required', 'string'],
         ]);
 
-        $prototype = $handler(new CreatePrototypeCommand(
+        $prototype = $handler(new CreatePrototypeDto(
             initialRequirements: $validated['initial_requirements'],
             formattedRequirements: $validated['formatted_requirements'],
             name: $validated['name'] ?? null,
         ));
 
-        GeneratePrototypePlanJob::dispatch($prototype);
+        GeneratePlanJob::dispatch($prototype);
 
         return (new PrototypeResource($prototype))
             ->response()
@@ -90,7 +90,7 @@ class PrototypeController extends Controller
         return new PrototypeResource($prototype);
     }
 
-    public function implementPlan(PrototypeModel $prototype, ImplementPrototypePlanHandler $handler): JsonResponse
+    public function implementPlan(PrototypeModel $prototype, ImplementPlanHandler $handler): JsonResponse
     {
         if ($prototype->status === PrototypeStatus::Implementing || $prototype->status === PrototypeStatus::Implemented) {
             return response()->json([

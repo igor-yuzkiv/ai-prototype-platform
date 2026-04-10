@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources;
 
-use App\Modules\Page\Models\PrototypePageModel;
+use App\Models\PrototypePageModel;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Modules\Plan\Jobs;
+namespace App\Jobs;
 
-use App\Modules\Plan\Handlers\GeneratePrototypePlanHandler;
-use App\Modules\Prototype\Models\PrototypeModel;
+use App\Handlers\GeneratePlanHandler;
+use App\Models\PrototypeModel;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Cache\Repository;
 use Illuminate\Contracts\Queue\ShouldBeUniqueUntilProcessing;
@@ -13,7 +13,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Cache;
 
-class GeneratePrototypePlanJob implements ShouldBeUniqueUntilProcessing, ShouldQueue
+class GeneratePlanJob implements ShouldBeUniqueUntilProcessing, ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -31,7 +31,7 @@ class GeneratePrototypePlanJob implements ShouldBeUniqueUntilProcessing, ShouldQ
         return Cache::driver('redis');
     }
 
-    public function handle(GeneratePrototypePlanHandler $handler): void
+    public function handle(GeneratePlanHandler $handler): void
     {
         $handler($this->prototype);
     }

@@ -2,11 +2,11 @@
 
 namespace App\Console\Commands;
 
-use App\Modules\Page\Handlers\ImplementPageHandler;
-use App\Modules\Page\Models\PrototypePageModel;
-use App\Modules\Plan\Handlers\GeneratePrototypePlanHandler;
-use App\Modules\Plan\Handlers\ImplementPrototypePlanHandler;
-use App\Modules\Prototype\Models\PrototypeModel;
+use App\Handlers\GeneratePlanHandler;
+use App\Handlers\ImplementPageHandler;
+use App\Handlers\ImplementPlanHandler;
+use App\Models\PrototypeModel;
+use App\Models\PrototypePageModel;
 use Illuminate\Console\Command;
 
 class IgorTestCommand extends Command
@@ -27,7 +27,7 @@ class IgorTestCommand extends Command
     {
         $prototype = PrototypeModel::find('01knvqga0q8zg72hak0rab58dt');
 
-        app(ImplementPrototypePlanHandler::class)($prototype);
+        app(ImplementPlanHandler::class)($prototype);
 
     }
 
@@ -57,6 +57,6 @@ class IgorTestCommand extends Command
     private function generatePrototypePlan(): void
     {
         $prototype = PrototypeModel::find('01knv9wh6daa63akv29wgndcj4');
-        app(GeneratePrototypePlanHandler::class)($prototype);
+        app(GeneratePlanHandler::class)($prototype);
     }
 }

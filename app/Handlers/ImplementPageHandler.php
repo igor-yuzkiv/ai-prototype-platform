@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Modules\Page\Handlers;
+namespace App\Handlers;
 
 use App\Ai\Agents\PrototypePageImplementationAgent;
 use App\Events\PrototypePageImplementedEvent;
-use App\Modules\Page\Models\PrototypePageModel;
+use App\Models\PrototypePageModel;
 
 class ImplementPageHandler
 {

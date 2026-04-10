@@ -2,8 +2,8 @@
 
 namespace App\Http\Resources;
 
-use App\Modules\Prototype\Models\PrototypeModel;
-use App\Modules\Prototype\Support\PrototypePathResolver;
+use App\Models\PrototypeModel;
+use App\Support\PrototypePathResolver;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
