@@ -10,7 +10,7 @@ import { prototypesApi } from '@/api/prototypes.api'
 import { IconButton } from '@/shared/components/button'
 
 const prototypeId = useRouteParams<string>('id')
-const { prototype, pages, isLoading: isLoadingPrototype, refetch } = usePrototypeQuery(prototypeId)
+const { prototype, pages, refetch } = usePrototypeQuery(prototypeId)
 const pageDialog = usePrototypePageDetailsDialog()
 const isPublishing = ref(false)
 
@@ -27,13 +27,14 @@ async function publish() {
 </script>
 
 <template>
-    <LoadingOverlay v-if="isLoadingPrototype" />
-    <div v-if="prototype" class="p-2 gap-2 flex h-full w-full flex-col overflow-hidden relative">
+    <LoadingOverlay v-if="!prototype || prototype.status === 'new'" message="Planning"/>
+    <div v-if="prototype" class="p-2 gap-2 relative flex h-full w-full flex-col overflow-hidden">
         <PrototypeWorkspaceFlow class="flex-1" :prototype="prototype" :pages="pages" @page:click="pageDialog.open" />
 
         <div
-            class="absolute absolute m-auto bottom-3 left-0 right-0 bg-primary w-[90%] md:w-1/3 rounded-lg shadow-md flex items-center justify-between p-2">
-            <div class="flex items-center gap-x-2">
+            class="bottom-3 left-0 right-0 bg-primary md:w-1/3 rounded-lg shadow-md p-2 absolute m-auto flex w-[90%] items-center justify-between"
+        >
+            <div class="gap-x-2 flex items-center">
                 <router-link
                     to="/"
                     class="p-1 rounded bg-primary-500 text-white group flex items-center justify-center"
@@ -45,17 +46,19 @@ async function publish() {
                 <h3 class="font-semibold">{{ prototype.name }}</h3>
             </div>
 
-            <div class="flex items-center gap-x-2">
+            <div class="gap-x-2 flex items-center">
                 <IconButton
                     v-if="prototype.prototype_url"
                     icon="majesticons:open"
-                    v-tooltip="{value: 'Open Prototype'}"
-                    text as="a" :href="prototype.prototype_url"
+                    v-tooltip="{ value: 'Open Prototype' }"
+                    text
+                    as="a"
+                    :href="prototype.prototype_url"
                 />
 
                 <IconButton
                     icon="mynaui:share-solid"
-                    v-tooltip="{value: 'Publish Prototype'}"
+                    v-tooltip="{ value: 'Publish Prototype' }"
                     text
                     :disabled="isPublishing"
                     @click="publish"

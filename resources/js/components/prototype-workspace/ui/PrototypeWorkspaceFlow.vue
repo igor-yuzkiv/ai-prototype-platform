@@ -6,6 +6,7 @@ import '@vue-flow/core/dist/style.css'
 import type { IPrototype, IPrototypePage } from '@/types/prototype.types'
 import PrototypeScreenNode from './PrototypeScreenNode.vue'
 import TextBlockNode from './TextBlockNode.vue'
+import { MiniMap } from '@vue-flow/minimap'
 
 const props = defineProps<{
     prototype: IPrototype
@@ -93,6 +94,8 @@ function onNodeClick({ node }: NodeMouseEvent) {
 <template>
     <div class="flex h-full w-full overflow-hidden">
         <VueFlow :nodes="nodes" :edges="edges" fit-view-on-init class="rounded-lg flex-1" @node-click="onNodeClick">
+            <MiniMap />
+
             <template #node-PrototypeScreen="{ id, data }">
                 <PrototypeScreenNode :id="id" :data="data" />
             </template>
