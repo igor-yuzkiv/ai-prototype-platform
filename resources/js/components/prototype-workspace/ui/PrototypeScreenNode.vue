@@ -18,9 +18,9 @@ defineProps<{
     <Handle type="target" :position="Position.Left" />
 
     <div
-        class="rounded-lg gap-1 shadow-md bg-white dark:bg-shark-900 border-primary-600 flex h-full w-full flex-col overflow-hidden border-3"
+        class="rounded-lg gap-1 shadow-md bg-white dark:bg-ebony-950 border-primary-700 flex h-full w-full flex-col overflow-hidden border-3"
     >
-        <div class="gap-x-4 rounded-t-lg px-2 py-1 flex items-center border-b">
+        <div class="gap-x-4 rounded-t-lg px-2 py-1 bg-ebony-50 dark:bg-black-pearl-950 flex items-center border-b">
             <Icon icon="wordpress:page" class="w-7 h-7 text-primary-500" />
             <div class="flex flex-col">
                 <h3 class="font-bold">{{ data.title }}</h3>
@@ -37,8 +37,8 @@ defineProps<{
 
             <div class="inset-0 absolute" />
         </div>
-        <div v-else class="p-2 flex h-full w-full flex-col overflow-auto">
-            <pre>{{ data.description }}</pre>
+        <div v-else class="p-3 overflow-auto">
+            <pre class="text-xs text-gray-600 dark:text-gray-400 whitespace-pre-wrap">{{ data.description }}</pre>
         </div>
     </div>
 

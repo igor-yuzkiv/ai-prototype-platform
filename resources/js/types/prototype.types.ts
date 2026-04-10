@@ -1,3 +1,5 @@
+import { Maybe } from '@/shared/types/result.types'
+
 export type IPrototypePage = {
     id: string
     file_name: string
@@ -38,4 +40,9 @@ export interface CreatePrototypePayload {
 
 export interface NormalizePrototypeRequirementsPayload {
     initial_requirements: string
+}
+
+export type PrototypeStatusChangedEventPayload = {
+    id: string
+    status: Maybe<PrototypeStatus>
 }

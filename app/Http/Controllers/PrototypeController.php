@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Ai\Agents\RequirementsInterpreterAgent;
 use App\Http\Resources\PrototypeResource;
 use App\Http\Resources\PrototypeSummaryResource;
-use App\Modules\Plan\Handlers\GeneratePrototypePlanHandler;
+use App\Modules\Plan\Jobs\GeneratePrototypePlanJob;
 use App\Modules\Prototype\Commands\CreatePrototypeCommand;
 use App\Modules\Prototype\Handlers\CreatePrototypeHandler;
 use App\Modules\Prototype\Handlers\DeletePrototypeHandler;
@@ -31,7 +31,7 @@ class PrototypeController extends Controller
         return PrototypeSummaryResource::collection($prototypes);
     }
 
-    public function store(Request $request, CreatePrototypeHandler $handler)
+    public function create(Request $request, CreatePrototypeHandler $handler)
     {
         $validated = $request->validate([
             'name'                   => ['sometimes', 'nullable', 'string', 'max:255'],
@@ -44,6 +44,8 @@ class PrototypeController extends Controller
             formattedRequirements: $validated['formatted_requirements'],
             name: $validated['name'] ?? null,
         ));
+
+        GeneratePrototypePlanJob::dispatch($prototype);
 
         return (new PrototypeResource($prototype))
             ->response()
@@ -75,13 +77,6 @@ class PrototypeController extends Controller
         $handler($prototype);
 
         return response()->json(status: 204);
-    }
-
-    public function generatePlan(PrototypeModel $prototype, GeneratePrototypePlanHandler $handler): PrototypeResource
-    {
-        $prototype = $handler($prototype);
-
-        return new PrototypeResource($prototype);
     }
 
     public function publish(PrototypeModel $prototype, PublishPrototypeHandler $handler): PrototypeResource

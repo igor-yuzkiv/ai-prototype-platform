@@ -5,16 +5,30 @@ import { Icon } from '@iconify/vue'
 import { LoadingOverlay } from '@/shared/components/loading'
 import { PrototypeWorkspaceFlow } from '@/components/prototype-workspace'
 import { PrototypePageDetailDialog, usePrototypePageDetailsDialog } from '@/components/prototype-page'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { prototypesApi } from '@/api/prototypes.api'
 import { IconButton } from '@/shared/components/button'
+import { serverEventBus } from '@/server-event-bus'
+import { PrototypeStatusChangedEventPayload } from '@/types/prototype.types'
 
 const prototypeId = useRouteParams<string>('id')
-const { prototype, pages, refetch } = usePrototypeQuery(prototypeId)
+const { isPending, data: prototype, pages, refetch } = usePrototypeQuery(prototypeId)
 const pageDialog = usePrototypePageDetailsDialog()
 const isPublishing = ref(false)
 
-async function publish() {
+const loadingState = computed<string | null>(() => {
+    if (!prototype.value || isPending.value) {
+        return 'Loading...'
+    }
+
+    if (prototype.value.status === 'new') {
+        return 'Planning..'
+    }
+
+    return null
+})
+
+async function handlePublishPrototype() {
     isPublishing.value = true
 
     try {
@@ -24,15 +38,23 @@ async function publish() {
         isPublishing.value = false
     }
 }
+
+serverEventBus.on<PrototypeStatusChangedEventPayload>(`project.${prototypeId.value}.status.changed`, (payload) => {
+    console.log('Received prototype status changed event:', { payload })
+    if (payload.data.status === 'planned') {
+        refetch()
+    }
+})
 </script>
 
 <template>
-    <LoadingOverlay v-if="!prototype" message="Planning"/>
-    <div v-if="prototype" class="p-2 gap-2 relative flex h-full w-full flex-col overflow-hidden dotted-background">
+    <LoadingOverlay v-if="loadingState" :message="loadingState" />
+
+    <div v-if="prototype" class="p-2 gap-2 dotted-background relative flex h-full w-full flex-col overflow-hidden">
         <PrototypeWorkspaceFlow class="flex-1" :prototype="prototype" :pages="pages" @page:click="pageDialog.open" />
 
         <div
-            class="bottom-3 left-0 right-0 bg-primary md:w-1/3 rounded-lg shadow-md p-2 absolute m-auto flex w-[90%] items-center justify-between"
+            class="top-3 left-0 right-0 bg-primary md:w-1/3 rounded-lg shadow-md p-2 absolute m-auto flex w-[90%] items-center justify-between"
         >
             <div class="gap-x-2 flex items-center">
                 <router-link
@@ -61,7 +83,7 @@ async function publish() {
                     v-tooltip="{ value: 'Publish Prototype' }"
                     text
                     :disabled="isPublishing"
-                    @click="publish"
+                    @click="handlePublishPrototype"
                 />
             </div>
         </div>

@@ -64,7 +64,7 @@ const pageNodes = computed<Node[]>(() => {
             height: 883,
             position: {
                 x: depth * 1400,
-                y: rowIndex * 1000,
+                y: rowIndex * 883,
             },
             data: page,
         }

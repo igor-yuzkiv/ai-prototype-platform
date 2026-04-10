@@ -23,7 +23,12 @@ class IgorTestCommand extends Command
         }
     }
 
-    private function test() {}
+    private function test() {
+        $prototype = PrototypeModel::find('01knvpe7f0ay5q0e86gy7n963h');
+
+        PrototypeStatusChangedEvent::dispatch($prototype);
+
+    }
 
     private function implementPrototype(): void
     {

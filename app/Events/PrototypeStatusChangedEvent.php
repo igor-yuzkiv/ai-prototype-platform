@@ -13,7 +13,7 @@ class PrototypeStatusChangedEvent extends BaseClientEvent
 
     public function getEventName(): string
     {
-        return 'project.status.changed';
+        return sprintf('project.%s.status.changed', $this->prototype->id);
     }
 
     protected function getMessage(): string

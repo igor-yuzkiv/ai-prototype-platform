@@ -13,6 +13,7 @@ const themeStore = useAppThemeStore()
 const toast = useToast()
 
 serverEventBus.on('*', (_, payload) => {
+    console.log('Received server event:', { payload: payload })
     toast.info({ summary: 'Server Event', detail: payload.message })
 })
 

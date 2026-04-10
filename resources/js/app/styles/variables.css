@@ -17,76 +17,52 @@
     --p-surface-800: #1f2937;
     --p-surface-900: #111827;
     --p-surface-950: #030712;
-
-    --p-orange-50: #fff6ed;
-    --p-orange-100: #ffecd5;
-    --p-orange-200: #ffd5a9;
-    --p-orange-300: #feb673;
-    --p-orange-400: #fd8d3a;
-    --p-orange-500: #fb6d14;
-    --p-orange-600: #ef520a;
-    --p-orange-700: #c43b0a;
-    --p-orange-800: #9b2f11;
-    --p-orange-900: #7d2a11;
-    --p-orange-950: #441206;
 }
 
 .dark,
 [data-theme='dark'] {
-    --app-color-primary: #0F1724;
-    --app-color-secondary: #111827;
-    --theme-border: #515151;
+    --app-color-primary: #11192d;
+    --app-color-secondary: #0f1728;
+    --theme-border: #22314b;
 
-    --dotted-background-dots: #3c3f41;
+    --dotted-background-dots: rgba(128, 160, 214, 0.14);
 
     /* PrimeVue tables */
-    --p-datatable-header-background: #212121;
-    --p-datatable-header-border-color: #515151;
-    --p-datatable-body-cell-border-color: #515151;
-    --p-datatable-header-cell-border-color: #515151;
-    --p-datatable-header-cell-background: #212121;
-    --p-datatable-row-background: #2d2d2d;
-    --p-datatable-row-striped-background: #212121;
-    --p-datatable-row-hover-background: #3c3f41;
+    --p-datatable-header-background: #11192d;
+    --p-datatable-header-border-color: #22314b;
+    --p-datatable-body-cell-border-color: #22314b;
+    --p-datatable-header-cell-border-color: #22314b;
+    --p-datatable-header-cell-background: #11192d;
+    --p-datatable-row-background: #10182a;
+    --p-datatable-row-striped-background: #0e1525;
+    --p-datatable-row-hover-background: #18243a;
 }
 
 @theme {
     --color-primary: var(--app-color-primary);
     --color-secondary: var(--app-color-secondary);
 
-    --color-shark-50: #fafafa;
-    --color-shark-100: #f5f5f5;
-    --color-shark-200: #e6e6e6;
-    --color-shark-300: #d6d6d6;
-    --color-shark-400: #a5a5a5;
-    --color-shark-500: #767676;
-    --color-shark-600: #575757;
-    --color-shark-700: #434343;
-    --color-shark-800: #232323;
-    --color-shark-900: #1a1a1a;
-    --color-shark-950: #0a0a0a;
-
-    --color-ebony-50: #f3f5fc;
-    --color-ebony-100: #e6eaf8;
-    --color-ebony-200: #c7d3f0;
-    --color-ebony-300: #96aee3;
-    --color-ebony-400: #5e84d2;
-    --color-ebony-500: #3965be;
-    --color-ebony-600: #294ca0;
-    --color-ebony-700: #223d82;
-    --color-ebony-800: #20366c;
-    --color-ebony-900: #1f2f5b;
+    --color-ebony-50: #f4f6fb;
+    --color-ebony-100: #e8edf8;
+    --color-ebony-200: #d2dcf0;
+    --color-ebony-300: #afc1e4;
+    --color-ebony-400: #819dd2;
+    --color-ebony-500: #5f7dbf;
+    --color-ebony-600: #4b64a0;
+    --color-ebony-700: #3c4f81;
+    --color-ebony-800: #2d3c63;
+    --color-ebony-900: #1d2a42;
     --color-ebony-950: #0b1020;
 
-    --color-black-pearl-50: #f4f7fb;
-    --color-black-pearl-100: #e7edf7;
-    --color-black-pearl-200: #cad9ed;
-    --color-black-pearl-300: #9cbadd;
-    --color-black-pearl-400: #6795c9;
-    --color-black-pearl-500: #4378b4;
-    --color-black-pearl-600: #325f97;
-    --color-black-pearl-700: #294c7b;
-    --color-black-pearl-800: #264266;
-    --color-black-pearl-900: #243956;
-    --color-black-pearl-950: #0f1724;
+    --color-black-pearl-50: #f3f7fb;
+    --color-black-pearl-100: #e6eef7;
+    --color-black-pearl-200: #c8d9ec;
+    --color-black-pearl-300: #a2bddc;
+    --color-black-pearl-400: #7398c6;
+    --color-black-pearl-500: #5378ad;
+    --color-black-pearl-600: #405f90;
+    --color-black-pearl-700: #31496f;
+    --color-black-pearl-800: #233551;
+    --color-black-pearl-900: #17253d;
+    --color-black-pearl-950: #11192d;
 }

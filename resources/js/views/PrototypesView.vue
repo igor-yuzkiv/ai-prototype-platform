@@ -75,7 +75,7 @@ async function deletePrototype(prototype: IPrototypeSummary) {
                     style="resize: none"
                 />
 
-                <div class="py-2 px-4 bg-gray-100 dark:bg-ebony-950 rounded-b-lg flex items-center justify-end">
+                <div class="py-2 px-4 bg-ebony-50 dark:bg-ebony-950 rounded-b-lg flex items-center justify-end">
                     <Button
                         type="submit"
                         label="Let`s cook!"

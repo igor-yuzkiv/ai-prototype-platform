@@ -8,12 +8,13 @@ export interface ServerEvent<TData = unknown> {
 type ServerEventMap = Record<string, ServerEvent>
 type Unsubscribe = () => void
 
-type EventHandler<TData = unknown> = (eventName: string, payload: ServerEvent<TData>) => void
+type SpecificEventHandler<TData = unknown> = (payload: ServerEvent<TData>) => void
+type WildcardEventHandler<TData = unknown> = (eventName: string, payload: ServerEvent<TData>) => void
 
 class ServerEventBus {
     private channel: ReturnType<typeof window.Echo.channel> | null = null
     private emitter = mitt<ServerEventMap>()
-    private wildcardHandlers = new Map<string, Set<EventHandler>>()
+    private wildcardHandlers = new Map<string, Set<WildcardEventHandler>>()
 
     mount() {
         if (!window.Echo || !window.Pusher) {
@@ -52,7 +53,13 @@ class ServerEventBus {
         this.wildcardHandlers.clear()
     }
 
-    on<TData = unknown>(eventName: string, handler: EventHandler<TData>): Unsubscribe {
+    on<TData = unknown>(eventName: '*', handler: WildcardEventHandler<TData>): Unsubscribe
+    on<TData = unknown>(eventName: `${string}*`, handler: WildcardEventHandler<TData>): Unsubscribe
+    on<TData = unknown>(eventName: string, handler: SpecificEventHandler<TData>): Unsubscribe
+    on<TData = unknown>(
+        eventName: string,
+        handler: SpecificEventHandler<TData> | WildcardEventHandler<TData>
+    ): Unsubscribe {
         if (eventName.endsWith('*') && eventName.length > 1) {
             const prefix = eventName.slice(0, -1)
             let set = this.wildcardHandlers.get(prefix)
@@ -60,18 +67,21 @@ class ServerEventBus {
                 set = new Set()
                 this.wildcardHandlers.set(prefix, set)
             }
-            set.add(handler as EventHandler)
-            return () => this.off(eventName, handler)
+            set.add(handler as WildcardEventHandler)
+            return () => this.off(eventName as `${string}*`, handler as WildcardEventHandler<TData>)
         }
 
         this.emitter.on(eventName, handler as () => void)
-        return () => this.off(eventName, handler)
+        return () => this.off(eventName, handler as SpecificEventHandler<TData>)
     }
 
-    off<TData = unknown>(eventName: string, handler: EventHandler<TData>): void {
+    off<TData = unknown>(eventName: '*', handler: WildcardEventHandler<TData>): void
+    off<TData = unknown>(eventName: `${string}*`, handler: WildcardEventHandler<TData>): void
+    off<TData = unknown>(eventName: string, handler: SpecificEventHandler<TData>): void
+    off<TData = unknown>(eventName: string, handler: SpecificEventHandler<TData> | WildcardEventHandler<TData>): void {
         if (eventName.endsWith('*') && eventName.length > 1) {
             const prefix = eventName.slice(0, -1)
-            this.wildcardHandlers.get(prefix)?.delete(handler as EventHandler)
+            this.wildcardHandlers.get(prefix)?.delete(handler as WildcardEventHandler)
             return
         }
 

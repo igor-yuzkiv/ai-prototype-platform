@@ -16,13 +16,13 @@ defineProps<{
 
     <Handle type="source" :position="Position.Right" />
     <div
-        class="rounded-lg gap-1 shadow-md bg-white dark:bg-shark-900 border-primary-600 flex h-full w-full flex-col overflow-hidden border-3"
+        class="rounded-lg gap-1 shadow-md bg-white dark:bg-ebony-950 border-primary-700 flex h-full w-full flex-col overflow-hidden border-3"
     >
-        <div class="px-3 py-2 bg-gray-50 dark:bg-shark-800 border-b">
+        <div class="px-3 py-2 bg-ebony-50 dark:bg-black-pearl-950 border-b">
             <h3 class="font-bold text-sm text-gray-700 dark:text-gray-300">{{ data.title }}</h3>
         </div>
 
-        <div class="p-3 max-h-[400px] overflow-auto">
+        <div class="p-3 overflow-auto">
             <pre class="text-xs text-gray-600 dark:text-gray-400 whitespace-pre-wrap">{{ data.content }}</pre>
         </div>
     </div>
