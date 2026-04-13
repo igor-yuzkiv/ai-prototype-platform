@@ -55,8 +55,8 @@ async function deletePrototype(prototype: IPrototypeSummary) {
 
 <template>
     <LoadingOverlay v-if="isLoading" message="Loading" />
-    <div class="flex h-full w-full overflow-hidden">
-        <div class="p-2 container mx-auto flex h-full flex-col overflow-hidden">
+    <div class="flex h-full w-full overflow-auto">
+        <div class="p-2 container mx-auto flex h-full flex-col">
             <div class="my-15 leading-tight flex flex-col items-center text-center">
                 <h1 class="font-semibold text-5xl">
                     Turn ideas <br />
@@ -94,7 +94,7 @@ async function deletePrototype(prototype: IPrototypeSummary) {
                 </div>
             </form>
 
-            <section class="flex flex-1 flex-col overflow-hidden">
+            <section class="flex flex-1 flex-col">
                 <h2 class="mb-5 text-base font-semibold">Recent Prototypes</h2>
 
                 <NoDataMessage
@@ -105,7 +105,7 @@ async function deletePrototype(prototype: IPrototypeSummary) {
                     icon="ant-design:experiment-outlined"
                 />
 
-                <div v-else class="gap-5 lg:grid-cols-3 grid grid-cols-1 overflow-auto">
+                <div v-else class="gap-5 lg:grid-cols-3 grid grid-cols-1">
                     <PrototypeCard
                         v-for="prototype in prototypes"
                         :key="prototype.id"
